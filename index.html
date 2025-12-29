@@ -1014,6 +1014,9 @@
         const filterBtns = document.querySelectorAll('.filter-btn');
         const sections = document.querySelectorAll('.section');
 
+        // Categories to hide when "All" is selected
+        const hiddenFromAll = ['core'];
+
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 // Update active button
@@ -1025,7 +1028,12 @@
                 // Show/hide sections
                 sections.forEach(section => {
                     if (filter === 'all') {
-                        section.style.display = 'block';
+                        // Show all EXCEPT hidden categories
+                        if (hiddenFromAll.includes(section.dataset.category)) {
+                            section.style.display = 'none';
+                        } else {
+                            section.style.display = 'block';
+                        }
                     } else if (section.dataset.category === filter) {
                         section.style.display = 'block';
                     } else {
@@ -1033,6 +1041,13 @@
                     }
                 });
             });
+        });
+
+        // Initialize: hide core sections on page load
+        sections.forEach(section => {
+            if (hiddenFromAll.includes(section.dataset.category)) {
+                section.style.display = 'none';
+            }
         });
     </script>
 </body>
