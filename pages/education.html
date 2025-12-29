@@ -3,170 +3,955 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Lux Markets Education - Resources and guides for CPG brands">
-    <title>Education | Lux Markets</title>
+    <meta name="description" content="Expert guides and resources to help your CPG brand grow. Learn email marketing, e-commerce strategies, packaging tips, and more from industry leaders.">
+    <title>Education & Guides | Lux Markets - CPG Brand Resources</title>
+
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Education & Guides | Lux Markets">
+    <meta property="og:description" content="Expert guides and resources to help your CPG brand grow and succeed in the Austin market.">
+    <meta property="og:url" content="https://luxmarketsbyjacob.org/pages/education.html">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="../src/css/styles.css">
+    <style>
+        /* Education Page Styles */
+
+        /* Skip Link for Accessibility */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--navy);
+            color: var(--white);
+            padding: 8px 16px;
+            z-index: 10000;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .skip-link:focus {
+            top: 0;
+        }
+
+        /* Hero Enhancement */
+        .education-hero {
+            background: linear-gradient(135deg, var(--navy) 0%, #1a3a5c 100%);
+            padding: var(--space-20) 0 var(--space-16);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .education-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+
+        .education-hero .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .education-hero__eyebrow {
+            display: inline-block;
+            font-family: var(--font-accent);
+            font-size: var(--text-sm);
+            font-weight: 600;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: var(--space-4);
+        }
+
+        .education-hero__title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: var(--space-4);
+            line-height: 1.1;
+        }
+
+        .education-hero__subtitle {
+            font-size: var(--text-lg);
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 600px;
+            margin: 0 auto var(--space-8);
+            line-height: 1.6;
+        }
+
+        .education-hero__stats {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-12);
+            margin-top: var(--space-8);
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat__number {
+            font-family: var(--font-display);
+            font-size: var(--text-3xl);
+            font-weight: 600;
+            color: var(--gold);
+        }
+
+        .hero-stat__label {
+            font-size: var(--text-sm);
+            color: rgba(255, 255, 255, 0.7);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Category Filter */
+        .category-filter {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-3);
+            padding: var(--space-8) 0;
+            background: var(--gray-50);
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: var(--space-2) var(--space-5);
+            font-size: var(--text-sm);
+            font-weight: 500;
+            color: var(--gray-600);
+            background: var(--white);
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            transition: var(--transition-base);
+        }
+
+        .filter-btn:hover {
+            border-color: var(--navy);
+            color: var(--navy);
+        }
+
+        .filter-btn:focus-visible {
+            outline: 3px solid var(--gold);
+            outline-offset: 2px;
+        }
+
+        .filter-btn.active {
+            background-color: var(--navy);
+            border-color: var(--navy);
+            color: var(--white);
+        }
+
+        /* Main Content */
+        main {
+            padding: var(--space-16) 0;
+            background: var(--white);
+        }
+
+        /* Featured Article */
+        .featured-article {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: var(--space-12);
+            background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%);
+            border-radius: var(--radius-2xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: var(--space-16);
+            border: 1px solid var(--gray-100);
+        }
+
+        .featured-article__image {
+            background: linear-gradient(135deg, var(--navy), var(--gold));
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-article__image-icon {
+            width: 120px;
+            height: 120px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .featured-article__image-icon svg {
+            width: 60px;
+            height: 60px;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .featured-article__content {
+            padding: var(--space-12);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .featured-article__badge {
+            display: inline-block;
+            padding: var(--space-1) var(--space-3);
+            background: var(--gold);
+            color: var(--navy);
+            font-size: var(--text-xs);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-radius: var(--radius-full);
+            margin-bottom: var(--space-4);
+            width: fit-content;
+        }
+
+        .featured-article__title {
+            font-family: var(--font-display);
+            font-size: var(--text-3xl);
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: var(--space-4);
+            line-height: 1.2;
+        }
+
+        .featured-article__excerpt {
+            color: var(--gray-600);
+            font-size: var(--text-base);
+            line-height: 1.7;
+            margin-bottom: var(--space-6);
+        }
+
+        .featured-article__meta {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+            margin-bottom: var(--space-6);
+        }
+
+        .featured-article__author {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .author-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--navy), var(--gold));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: 600;
+            font-size: var(--text-sm);
+        }
+
+        .author-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .author-name {
+            font-weight: 600;
+            color: var(--navy);
+            font-size: var(--text-sm);
+        }
+
+        .article-date {
+            font-size: var(--text-xs);
+            color: var(--gray-500);
+        }
+
+        .reading-time {
+            font-size: var(--text-sm);
+            color: var(--gray-500);
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+        }
+
+        .reading-time svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .featured-article__cta {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-weight: 600;
+            color: var(--navy);
+            text-decoration: none;
+            transition: var(--transition-base);
+        }
+
+        .featured-article__cta:hover {
+            color: var(--gold);
+        }
+
+        .featured-article__cta:focus-visible {
+            outline: 3px solid var(--gold);
+            outline-offset: 2px;
+        }
+
+        .featured-article__cta svg {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.2s ease;
+        }
+
+        .featured-article__cta:hover svg {
+            transform: translateX(4px);
+        }
+
+        /* Section Header */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-8);
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: var(--text-2xl);
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        .section-count {
+            font-size: var(--text-sm);
+            color: var(--gray-500);
+        }
+
+        /* Article Grid */
+        .article-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-8);
+        }
+
+        /* Article Card */
+        .article-card {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition-slow);
+            border: 1px solid var(--gray-100);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .article-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .article-card:focus-within {
+            outline: 3px solid var(--gold);
+            outline-offset: 2px;
+        }
+
+        .article-card__image {
+            aspect-ratio: 16/9;
+            background: linear-gradient(135deg, var(--gray-100), var(--gray-200));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .article-card__category {
+            position: absolute;
+            top: var(--space-3);
+            left: var(--space-3);
+            padding: var(--space-1) var(--space-3);
+            background: var(--white);
+            color: var(--navy);
+            font-size: var(--text-xs);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-radius: var(--radius-full);
+        }
+
+        .article-card__image-icon {
+            color: var(--gray-400);
+        }
+
+        .article-card__image-icon svg {
+            width: 48px;
+            height: 48px;
+        }
+
+        .article-card__content {
+            padding: var(--space-6);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .article-card__title {
+            font-size: var(--text-lg);
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: var(--space-3);
+            line-height: 1.3;
+            flex: 1;
+        }
+
+        .article-card__title a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .article-card__title a:hover {
+            color: var(--gold);
+        }
+
+        .article-card__meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: var(--text-sm);
+            color: var(--gray-500);
+            padding-top: var(--space-4);
+            border-top: 1px solid var(--gray-100);
+            margin-top: auto;
+        }
+
+        .article-card__author {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .article-card__author .author-avatar {
+            width: 28px;
+            height: 28px;
+            font-size: var(--text-xs);
+        }
+
+        /* Newsletter Section */
+        .newsletter-section {
+            background: linear-gradient(135deg, var(--navy) 0%, #1a3a5c 100%);
+            padding: var(--space-16) 0;
+            margin-top: var(--space-16);
+        }
+
+        .newsletter-content {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .newsletter-title {
+            font-family: var(--font-display);
+            font-size: var(--text-3xl);
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: var(--space-4);
+        }
+
+        .newsletter-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: var(--space-8);
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: var(--space-3);
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        .newsletter-form input[type="email"] {
+            flex: 1;
+            padding: var(--space-4) var(--space-5);
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: var(--radius-lg);
+            background: rgba(255,255,255,0.1);
+            color: var(--white);
+            font-size: var(--text-base);
+        }
+
+        .newsletter-form input[type="email"]::placeholder {
+            color: rgba(255,255,255,0.5);
+        }
+
+        .newsletter-form input[type="email"]:focus {
+            outline: none;
+            border-color: var(--gold);
+            background: rgba(255,255,255,0.15);
+        }
+
+        .newsletter-form button {
+            padding: var(--space-4) var(--space-6);
+            background: var(--gold);
+            color: var(--navy);
+            border: none;
+            border-radius: var(--radius-lg);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-base);
+            white-space: nowrap;
+        }
+
+        .newsletter-form button:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+        }
+
+        .newsletter-form button:focus-visible {
+            outline: 3px solid var(--white);
+            outline-offset: 2px;
+        }
+
+        .newsletter-note {
+            font-size: var(--text-sm);
+            color: rgba(255,255,255,0.6);
+            margin-top: var(--space-4);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .featured-article {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-article__image {
+                min-height: 250px;
+            }
+
+            .article-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .education-hero__stats {
+                gap: var(--space-8);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .article-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .education-hero__stats {
+                flex-direction: column;
+                gap: var(--space-4);
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--space-2);
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- Skip Link for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Announcement Bar -->
+    <div class="announcement-bar">
+        Now accepting applications for Q1 2025 markets. <a href="contact.html">Apply now</a> to secure your spot.
+    </div>
+
     <!-- Navigation -->
     <header class="header">
-        <nav class="nav">
-            <div class="nav__logo">
-                <a href="../index.html">Lux Markets</a>
-            </div>
-            <ul class="nav__menu">
-                <li><a href="our-markets.html">Our Markets</a></li>
-                <li><a href="education.html" class="active">Education</a></li>
-                <li><a href="pricing.html">Pricing</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li class="nav__item nav__item--dropdown nav__item--allpages">
-                    <a href="#" class="nav__link nav__link--allpages">
-                        All Pages
-                        <svg class="nav__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        <div class="container">
+            <nav class="nav" aria-label="Main navigation">
+                <a href="../index.html" class="nav__logo">
+                    <span class="logo-text">LUX MARKETS</span>
+                    <span class="logo-subtext">AUSTIN, TX</span>
+                </a>
+                <ul class="nav__menu">
+                    <li class="nav__item nav__item--dropdown">
+                        <a href="#" class="nav__link">
+                            Solutions
+                            <svg class="nav__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                        </a>
+                        <div class="dropdown">
+                            <a href="for-properties.html" class="dropdown__item">
+                                <span class="dropdown__icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 21h18M3 7v14M21 7v14M6 11h4M6 15h4M14 11h4M14 15h4M9 21V17a2 2 0 012-2h2a2 2 0 012 2v4"/></svg>
+                                </span>
+                                <span class="dropdown__text">
+                                    <span class="dropdown__title">For Properties</span>
+                                    <span class="dropdown__desc">Luxury apartment communities</span>
+                                </span>
+                            </a>
+                            <a href="for-brands.html" class="dropdown__item">
+                                <span class="dropdown__icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                                </span>
+                                <span class="dropdown__text">
+                                    <span class="dropdown__title">For Brands</span>
+                                    <span class="dropdown__desc">CPG brands and vendors</span>
+                                </span>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav__item"><a href="our-markets.html" class="nav__link">Our Markets</a></li>
+                    <li class="nav__item"><a href="pricing.html" class="nav__link">Pricing</a></li>
+                    <li class="nav__item"><a href="resources.html" class="nav__link">Resources</a></li>
+                    <li class="nav__item nav__item--dropdown nav__item--allpages">
+                        <a href="#" class="nav__link nav__link--allpages">
+                            All Pages
+                            <svg class="nav__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                        </a>
+                        <div class="dropdown dropdown--allpages">
+                            <div class="dropdown__section"><span class="dropdown__section-title">Main</span><a href="../index.html" class="dropdown__item dropdown__item--simple">Home</a><a href="about.html" class="dropdown__item dropdown__item--simple">About</a><a href="contact.html" class="dropdown__item dropdown__item--simple">Contact</a></div>
+                            <div class="dropdown__section"><span class="dropdown__section-title">Solutions</span><a href="for-properties.html" class="dropdown__item dropdown__item--simple">For Properties</a><a href="for-brands.html" class="dropdown__item dropdown__item--simple">For Brands</a><a href="pricing.html" class="dropdown__item dropdown__item--simple">Pricing</a></div>
+                            <div class="dropdown__section"><span class="dropdown__section-title">Markets</span><a href="our-markets.html" class="dropdown__item dropdown__item--simple">Our Markets</a><a href="market-rules.html" class="dropdown__item dropdown__item--simple">Market Rules</a></div>
+                            <div class="dropdown__section"><span class="dropdown__section-title">Resources</span><a href="resources.html" class="dropdown__item dropdown__item--simple">Resources</a><a href="education.html" class="dropdown__item dropdown__item--simple">Education</a><a href="../market-research.html" class="dropdown__item dropdown__item--simple">Market Research</a></div>
+                            <div class="dropdown__section"><span class="dropdown__section-title">Legal</span><a href="terms-of-service.html" class="dropdown__item dropdown__item--simple">Terms of Service</a></div>
+                            <div class="dropdown__section"><span class="dropdown__section-title">Explore</span><a href="../index-journey.html" class="dropdown__item dropdown__item--simple">Journey</a><a href="../index-neo.html" class="dropdown__item dropdown__item--simple">Neo</a><a href="../index-refresh.html" class="dropdown__item dropdown__item--simple">Refresh</a><a href="../digital-profile.html" class="dropdown__item dropdown__item--simple">Digital Profile</a><a href="../pitch-deck.html" class="dropdown__item dropdown__item--simple">Pitch Deck</a><a href="../challenges.html" class="dropdown__item dropdown__item--simple">Challenges</a></div>
+                            <div class="dropdown__section"><span class="dropdown__section-title">Archive</span><a href="../Landfill_index-estate.html" class="dropdown__item dropdown__item--simple">Estate Design</a><a href="../Landfill_index-gallery.html" class="dropdown__item dropdown__item--simple">Gallery Design</a><a href="../Landfill_index-maison.html" class="dropdown__item dropdown__item--simple">Maison Design</a></div>
+                            <div class="dropdown__section"><span class="dropdown__section-title">Dev</span><a href="dev/insights.html" class="dropdown__item dropdown__item--simple">Insights</a></div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="nav__actions">
+                    <a href="https://instagram.com/luxmarkets_" class="nav__social" target="_blank" rel="noopener" aria-label="Follow us on Instagram">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="20" height="20"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="18" cy="6" r="1.5" fill="currentColor"/></svg>
                     </a>
-                    <div class="dropdown dropdown--allpages">
-                        <div class="dropdown__section"><span class="dropdown__section-title">Main</span><a href="../index.html" class="dropdown__item dropdown__item--simple">Home</a><a href="about.html" class="dropdown__item dropdown__item--simple">About</a><a href="contact.html" class="dropdown__item dropdown__item--simple">Contact</a></div>
-                        <div class="dropdown__section"><span class="dropdown__section-title">Solutions</span><a href="for-properties.html" class="dropdown__item dropdown__item--simple">For Properties</a><a href="for-brands.html" class="dropdown__item dropdown__item--simple">For Brands</a><a href="pricing.html" class="dropdown__item dropdown__item--simple">Pricing</a></div>
-                        <div class="dropdown__section"><span class="dropdown__section-title">Markets</span><a href="our-markets.html" class="dropdown__item dropdown__item--simple">Our Markets</a><a href="market-rules.html" class="dropdown__item dropdown__item--simple">Market Rules</a></div>
-                        <div class="dropdown__section"><span class="dropdown__section-title">Resources</span><a href="resources.html" class="dropdown__item dropdown__item--simple">Resources</a><a href="education.html" class="dropdown__item dropdown__item--simple">Education</a><a href="../market-research.html" class="dropdown__item dropdown__item--simple">Market Research</a></div>
-                        <div class="dropdown__section"><span class="dropdown__section-title">Legal</span><a href="terms-of-service.html" class="dropdown__item dropdown__item--simple">Terms of Service</a></div>
-                        <div class="dropdown__section"><span class="dropdown__section-title">Explore</span><a href="../index-journey.html" class="dropdown__item dropdown__item--simple">Journey</a><a href="../index-neo.html" class="dropdown__item dropdown__item--simple">Neo</a><a href="../index-refresh.html" class="dropdown__item dropdown__item--simple">Refresh</a><a href="../digital-profile.html" class="dropdown__item dropdown__item--simple">Digital Profile</a><a href="../pitch-deck.html" class="dropdown__item dropdown__item--simple">Pitch Deck</a><a href="../challenges.html" class="dropdown__item dropdown__item--simple">Challenges</a></div>
-                        <div class="dropdown__section"><span class="dropdown__section-title">Archive</span><a href="../Landfill_index-estate.html" class="dropdown__item dropdown__item--simple">Estate Design</a><a href="../Landfill_index-gallery.html" class="dropdown__item dropdown__item--simple">Gallery Design</a><a href="../Landfill_index-maison.html" class="dropdown__item dropdown__item--simple">Maison Design</a></div>
-                        <div class="dropdown__section"><span class="dropdown__section-title">Dev</span><a href="dev/insights.html" class="dropdown__item dropdown__item--simple">Insights</a></div>
-                    </div>
-                </li>
-            </ul>
-            <div class="nav__actions">
-                <a href="https://instagram.com/luxmarkets_" class="nav__social" target="_blank" rel="noopener">Instagram</a>
-                <a href="https://app.luxmarkets.org/login" class="btn btn--primary">Login</a>
-            </div>
-            <button class="nav__toggle" aria-label="Toggle menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </nav>
+                    <a href="contact.html" class="btn btn--secondary btn--sm">Get Started</a>
+                    <a href="https://app.luxmarkets.org/login" class="btn btn--primary btn--sm">Login</a>
+                </div>
+                <button class="nav__toggle" aria-label="Toggle menu" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </nav>
+        </div>
     </header>
 
     <!-- Hero Section -->
-    <section class="page-hero">
+    <section class="education-hero" aria-labelledby="hero-title">
         <div class="container">
-            <h1 class="page-hero__title">Education</h1>
-            <p class="page-hero__subtitle">Resources and guides to help your CPG brand grow and succeed.</p>
+            <span class="education-hero__eyebrow">Learn & Grow</span>
+            <h1 id="hero-title" class="education-hero__title">CPG Brand Education</h1>
+            <p class="education-hero__subtitle">Expert guides, industry insights, and actionable strategies to help your brand succeed in the Austin market and beyond.</p>
+            <div class="education-hero__stats">
+                <div class="hero-stat">
+                    <div class="hero-stat__number">12</div>
+                    <div class="hero-stat__label">Guides</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat__number">5</div>
+                    <div class="hero-stat__label">Categories</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat__number">Free</div>
+                    <div class="hero-stat__label">Always</div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- Blog Grid -->
-    <section class="blog-section">
+    <!-- Category Filter -->
+    <nav class="category-filter" aria-label="Filter articles by category">
+        <button class="filter-btn active" data-category="all" aria-pressed="true">All Articles</button>
+        <button class="filter-btn" data-category="marketing" aria-pressed="false">Marketing</button>
+        <button class="filter-btn" data-category="ecommerce" aria-pressed="false">E-Commerce</button>
+        <button class="filter-btn" data-category="operations" aria-pressed="false">Operations</button>
+        <button class="filter-btn" data-category="branding" aria-pressed="false">Branding</button>
+        <button class="filter-btn" data-category="local" aria-pressed="false">Local Austin</button>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content">
         <div class="container">
-            <div class="blog-grid">
-                <article class="blog-card">
-                    <div class="blog-card__content">
-                        <span class="blog-card__date">May 31, 2024</span>
-                        <h3 class="blog-card__title">Effective Email Marketing Strategy for Emerging CPG Brands</h3>
-                        <p class="blog-card__author">By Sam Lillie</p>
-                        <a href="#" class="blog-card__link">Read More</a>
+
+            <!-- Featured Article -->
+            <article class="featured-article" data-category="marketing">
+                <div class="featured-article__image">
+                    <div class="featured-article__image-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="featured-article__content">
+                    <span class="featured-article__badge">Featured</span>
+                    <h2 class="featured-article__title">Effective Email Marketing Strategy for Emerging CPG Brands</h2>
+                    <p class="featured-article__excerpt">Learn how to build and nurture an email list that converts. From welcome sequences to abandoned cart flows, discover the strategies that successful CPG brands use to drive repeat purchases.</p>
+                    <div class="featured-article__meta">
+                        <div class="featured-article__author">
+                            <div class="author-avatar">SL</div>
+                            <div class="author-info">
+                                <span class="author-name">Sam Lillie</span>
+                                <span class="article-date">May 31, 2024</span>
+                            </div>
+                        </div>
+                        <span class="reading-time">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                            8 min read
+                        </span>
+                    </div>
+                    <a href="#" class="featured-article__cta" aria-label="Read full article: Effective Email Marketing Strategy for Emerging CPG Brands">
+                        Read Article
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </article>
+
+            <!-- Articles Section -->
+            <div class="section-header">
+                <h2 class="section-title">All Articles</h2>
+                <span class="section-count">12 articles</span>
+            </div>
+
+            <div class="article-grid">
+                <article class="article-card" data-category="ecommerce">
+                    <div class="article-card__image">
+                        <span class="article-card__category">E-Commerce</span>
+                        <div class="article-card__image-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                        </div>
+                    </div>
+                    <div class="article-card__content">
+                        <h3 class="article-card__title"><a href="#">Why Shopify Is The Best E-Commerce Platform for CPG Startups</a></h3>
+                        <div class="article-card__meta">
+                            <div class="article-card__author">
+                                <div class="author-avatar">SL</div>
+                                <span>Sam Lillie</span>
+                            </div>
+                            <span>6 min</span>
+                        </div>
                     </div>
                 </article>
 
-                <article class="blog-card">
-                    <div class="blog-card__content">
-                        <span class="blog-card__date">May 30, 2024</span>
-                        <h3 class="blog-card__title">Why Shopify Is The Best E-Commerce Platform for CPG Startups</h3>
-                        <p class="blog-card__author">By Sam Lillie</p>
-                        <a href="#" class="blog-card__link">Read More</a>
+                <article class="article-card" data-category="local">
+                    <div class="article-card__image">
+                        <span class="article-card__category">Local Austin</span>
+                        <div class="article-card__image-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        </div>
+                    </div>
+                    <div class="article-card__content">
+                        <h3 class="article-card__title"><a href="#">Top 10 Commercial Kitchens in Austin</a></h3>
+                        <div class="article-card__meta">
+                            <div class="article-card__author">
+                                <div class="author-avatar">SL</div>
+                                <span>Sam Lillie</span>
+                            </div>
+                            <span>10 min</span>
+                        </div>
                     </div>
                 </article>
 
-                <article class="blog-card">
-                    <div class="blog-card__content">
-                        <span class="blog-card__date">May 30, 2024</span>
-                        <h3 class="blog-card__title">Top 10 Commercial Kitchens in Austin</h3>
-                        <p class="blog-card__author">By Sam Lillie</p>
-                        <a href="#" class="blog-card__link">Read More</a>
+                <article class="article-card" data-category="marketing">
+                    <div class="article-card__image">
+                        <span class="article-card__category">Marketing</span>
+                        <div class="article-card__image-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/></svg>
+                        </div>
+                    </div>
+                    <div class="article-card__content">
+                        <h3 class="article-card__title"><a href="#">The Power of Brand Activations</a></h3>
+                        <div class="article-card__meta">
+                            <div class="article-card__author">
+                                <div class="author-avatar">SL</div>
+                                <span>Sam Lillie</span>
+                            </div>
+                            <span>5 min</span>
+                        </div>
                     </div>
                 </article>
 
-                <article class="blog-card">
-                    <div class="blog-card__content">
-                        <span class="blog-card__date">May 30, 2024</span>
-                        <h3 class="blog-card__title">The Power of Brand Activations</h3>
-                        <p class="blog-card__author">By Sam Lillie</p>
-                        <a href="#" class="blog-card__link">Read More</a>
+                <article class="article-card" data-category="local">
+                    <div class="article-card__image">
+                        <span class="article-card__category">Local Austin</span>
+                        <div class="article-card__image-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3v18h18"/><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/></svg>
+                        </div>
+                    </div>
+                    <div class="article-card__content">
+                        <h3 class="article-card__title"><a href="#">Top 10 Farmers Markets in Austin, Texas</a></h3>
+                        <div class="article-card__meta">
+                            <div class="article-card__author">
+                                <div class="author-avatar">SL</div>
+                                <span>Sam Lillie</span>
+                            </div>
+                            <span>8 min</span>
+                        </div>
                     </div>
                 </article>
 
-                <article class="blog-card">
-                    <div class="blog-card__content">
-                        <span class="blog-card__date">May 30, 2024</span>
-                        <h3 class="blog-card__title">Top 10 Farmers Markets in Austin, Texas</h3>
-                        <p class="blog-card__author">By Sam Lillie</p>
-                        <a href="#" class="blog-card__link">Read More</a>
+                <article class="article-card" data-category="ecommerce">
+                    <div class="article-card__image">
+                        <span class="article-card__category">E-Commerce</span>
+                        <div class="article-card__image-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                        </div>
+                    </div>
+                    <div class="article-card__content">
+                        <h3 class="article-card__title"><a href="#">Effective E-Commerce Marketing Strategy for Early-Stage CPG Brands</a></h3>
+                        <div class="article-card__meta">
+                            <div class="article-card__author">
+                                <div class="author-avatar">SL</div>
+                                <span>Sam Lillie</span>
+                            </div>
+                            <span>12 min</span>
+                        </div>
                     </div>
                 </article>
 
-                <article class="blog-card">
-                    <div class="blog-card__content">
-                        <span class="blog-card__date">May 28, 2024</span>
-                        <h3 class="blog-card__title">Effective E-Commerce Marketing Strategy for Early-Stage CPG Brands</h3>
-                        <p class="blog-card__author">By Sam Lillie</p>
-                        <a href="#" class="blog-card__link">Read More</a>
+                <article class="article-card" data-category="operations">
+                    <div class="article-card__image">
+                        <span class="article-card__category">Operations</span>
+                        <div class="article-card__image-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                        </div>
+                    </div>
+                    <div class="article-card__content">
+                        <h3 class="article-card__title"><a href="#">The Pros and Cons of Working with a CPG Broker</a></h3>
+                        <div class="article-card__meta">
+                            <div class="article-card__author">
+                                <div class="author-avatar">SL</div>
+                                <span>Sam Lillie</span>
+                            </div>
+                            <span>7 min</span>
+                        </div>
                     </div>
                 </article>
 
-                <article class="blog-card">
-                    <div class="blog-card__content">
-                        <span class="blog-card__date">May 28, 2024</span>
-                        <h3 class="blog-card__title">The Pros and Cons of Working with a CPG Broker</h3>
-                        <p class="blog-card__author">By Sam Lillie</p>
-                        <a href="#" class="blog-card__link">Read More</a>
+                <article class="article-card" data-category="marketing">
+                    <div class="article-card__image">
+                        <span class="article-card__category">Marketing</span>
+                        <div class="article-card__image-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
+                        </div>
+                    </div>
+                    <div class="article-card__content">
+                        <h3 class="article-card__title"><a href="#">The Top 6 CPG Podcasts of 2024</a></h3>
+                        <div class="article-card__meta">
+                            <div class="article-card__author">
+                                <div class="author-avatar">SL</div>
+                                <span>Sam Lillie</span>
+                            </div>
+                            <span>4 min</span>
+                        </div>
                     </div>
                 </article>
 
-                <article class="blog-card">
-                    <div class="blog-card__content">
-                        <span class="blog-card__date">May 28, 2024</span>
-                        <h3 class="blog-card__title">The Top 6 CPG Podcasts of 2024</h3>
-                        <p class="blog-card__author">By Sam Lillie</p>
-                        <a href="#" class="blog-card__link">Read More</a>
+                <article class="article-card" data-category="operations">
+                    <div class="article-card__image">
+                        <span class="article-card__category">Operations</span>
+                        <div class="article-card__image-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        </div>
+                    </div>
+                    <div class="article-card__content">
+                        <h3 class="article-card__title"><a href="#">Top Co-Manufacturers in Texas for Emerging CPG Brands</a></h3>
+                        <div class="article-card__meta">
+                            <div class="article-card__author">
+                                <div class="author-avatar">SL</div>
+                                <span>Sam Lillie</span>
+                            </div>
+                            <span>9 min</span>
+                        </div>
                     </div>
                 </article>
 
-                <article class="blog-card">
-                    <div class="blog-card__content">
-                        <span class="blog-card__date">May 28, 2024</span>
-                        <h3 class="blog-card__title">Top Co-Manufacturers in Texas for Emerging CPG Brands</h3>
-                        <p class="blog-card__author">By Sam Lillie</p>
-                        <a href="#" class="blog-card__link">Read More</a>
+                <article class="article-card" data-category="operations">
+                    <div class="article-card__image">
+                        <span class="article-card__category">Operations</span>
+                        <div class="article-card__image-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+                        </div>
+                    </div>
+                    <div class="article-card__content">
+                        <h3 class="article-card__title"><a href="#">The Best Distributors for Emerging CPG Brands</a></h3>
+                        <div class="article-card__meta">
+                            <div class="article-card__author">
+                                <div class="author-avatar">SL</div>
+                                <span>Sam Lillie</span>
+                            </div>
+                            <span>11 min</span>
+                        </div>
                     </div>
                 </article>
 
-                <article class="blog-card">
-                    <div class="blog-card__content">
-                        <span class="blog-card__date">May 28, 2024</span>
-                        <h3 class="blog-card__title">The Best Distributors for Emerging CPG Brands</h3>
-                        <p class="blog-card__author">By Sam Lillie</p>
-                        <a href="#" class="blog-card__link">Read More</a>
+                <article class="article-card" data-category="branding">
+                    <div class="article-card__image">
+                        <span class="article-card__category">Branding</span>
+                        <div class="article-card__image-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg>
+                        </div>
+                    </div>
+                    <div class="article-card__content">
+                        <h3 class="article-card__title"><a href="#">Tips and Tricks for Branding and Packaging for CPG Products</a></h3>
+                        <div class="article-card__meta">
+                            <div class="article-card__author">
+                                <div class="author-avatar">SL</div>
+                                <span>Sam Lillie</span>
+                            </div>
+                            <span>8 min</span>
+                        </div>
                     </div>
                 </article>
 
-                <article class="blog-card">
-                    <div class="blog-card__content">
-                        <span class="blog-card__date">May 28, 2024</span>
-                        <h3 class="blog-card__title">Tips and Tricks for Branding and Packaging for CPG Products</h3>
-                        <p class="blog-card__author">By Sam Lillie</p>
-                        <a href="#" class="blog-card__link">Read More</a>
+                <article class="article-card" data-category="marketing">
+                    <div class="article-card__image">
+                        <span class="article-card__category">Marketing</span>
+                        <div class="article-card__image-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                        </div>
+                    </div>
+                    <div class="article-card__content">
+                        <h3 class="article-card__title"><a href="#">Mastering Event Marketing</a></h3>
+                        <div class="article-card__meta">
+                            <div class="article-card__author">
+                                <div class="author-avatar">SL</div>
+                                <span>Sam Lillie</span>
+                            </div>
+                            <span>6 min</span>
+                        </div>
                     </div>
                 </article>
+            </div>
+        </div>
+    </main>
 
-                <article class="blog-card">
-                    <div class="blog-card__content">
-                        <span class="blog-card__date">May 28, 2024</span>
-                        <h3 class="blog-card__title">Mastering Event Marketing</h3>
-                        <p class="blog-card__author">By Sam Lillie</p>
-                        <a href="#" class="blog-card__link">Read More</a>
-                    </div>
-                </article>
+    <!-- Newsletter Section -->
+    <section class="newsletter-section" aria-labelledby="newsletter-title">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2 id="newsletter-title" class="newsletter-title">Stay Ahead of the Curve</h2>
+                <p class="newsletter-subtitle">Get the latest CPG insights, market trends, and exclusive tips delivered to your inbox.</p>
+                <form class="newsletter-form" action="#" method="POST">
+                    <label for="newsletter-email" class="visually-hidden">Email address</label>
+                    <input type="email" id="newsletter-email" name="email" placeholder="Enter your email" required aria-describedby="newsletter-note">
+                    <button type="submit">Subscribe</button>
+                </form>
+                <p id="newsletter-note" class="newsletter-note">No spam, ever. Unsubscribe anytime.</p>
             </div>
         </div>
     </section>
@@ -174,24 +959,93 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <div class="footer__content">
+            <div class="footer__grid">
                 <div class="footer__brand">
-                    <h3>Lux Markets</h3>
-                    <p>Austin, TX</p>
-                    <a href="https://instagram.com/luxmarkets_" target="_blank" rel="noopener">@luxmarkets_</a>
+                    <a href="../index.html" class="footer__logo">
+                        <span class="logo-text">LUX MARKETS</span>
+                    </a>
+                    <p class="footer__tagline">Where exceptional brands meet discerning customers.</p>
+                    <div class="footer__location">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        Austin, Texas
+                    </div>
                 </div>
                 <div class="footer__links">
-                    <a href="terms-of-service.html">Terms of Service</a>
-                    <a href="market-rules.html">Market Rules</a>
-                    <a href="contact.html">Contact Us</a>
+                    <div class="footer__col">
+                        <h4>Solutions</h4>
+                        <a href="for-properties.html">For Properties</a>
+                        <a href="for-brands.html">For Brands</a>
+                        <a href="pricing.html">Pricing</a>
+                    </div>
+                    <div class="footer__col">
+                        <h4>Resources</h4>
+                        <a href="our-markets.html">Our Markets</a>
+                        <a href="resources.html">Resources</a>
+                        <a href="education.html">Education</a>
+                    </div>
+                    <div class="footer__col">
+                        <h4>Company</h4>
+                        <a href="about.html">About</a>
+                        <a href="contact.html">Contact</a>
+                        <a href="terms-of-service.html">Terms</a>
+                    </div>
+                </div>
+                <div class="footer__social">
+                    <h4>Follow Us</h4>
+                    <div class="footer__social-links">
+                        <a href="https://instagram.com/luxmarkets_" target="_blank" rel="noopener" aria-label="Follow Lux Markets on Instagram">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="18" cy="6" r="1.5" fill="currentColor"/></svg>
+                        </a>
+                        <a href="https://linkedin.com/company/luxmarkets" target="_blank" rel="noopener" aria-label="Follow Lux Markets on LinkedIn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 6a2 2 0 100-4 2 2 0 000 4z"/></svg>
+                        </a>
+                    </div>
                 </div>
             </div>
             <div class="footer__bottom">
-                <p>&copy; 2024 Lux Markets LLC</p>
+                <p>&copy; 2025 Lux Markets LLC. All rights reserved.</p>
+                <div class="footer__bottom-links">
+                    <a href="terms-of-service.html">Privacy Policy</a>
+                    <a href="market-rules.html">Market Rules</a>
+                </div>
             </div>
         </div>
     </footer>
 
     <script src="../src/js/main.js"></script>
+    <script>
+        // Category Filter Functionality
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const articles = document.querySelectorAll('.article-card, .featured-article');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update active state
+                filterBtns.forEach(b => {
+                    b.classList.remove('active');
+                    b.setAttribute('aria-pressed', 'false');
+                });
+                btn.classList.add('active');
+                btn.setAttribute('aria-pressed', 'true');
+
+                const category = btn.dataset.category;
+
+                // Filter articles
+                articles.forEach(article => {
+                    if (category === 'all' || article.dataset.category === category) {
+                        article.style.display = '';
+                    } else {
+                        article.style.display = 'none';
+                    }
+                });
+
+                // Update count
+                const visibleArticles = document.querySelectorAll('.article-card:not([style*="display: none"])');
+                const featuredVisible = document.querySelector('.featured-article:not([style*="display: none"])');
+                const count = visibleArticles.length + (featuredVisible ? 1 : 0);
+                document.querySelector('.section-count').textContent = count + ' article' + (count !== 1 ? 's' : '');
+            });
+        });
+    </script>
 </body>
 </html>
