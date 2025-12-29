@@ -1,0 +1,26 @@
+{
+  "name": "lux_markets",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JHGruver/luxmarkets.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JHGruver/luxmarkets/issues"
+  },
+  "homepage": "https://github.com/JHGruver/luxmarkets#readme",
+  "dependencies": {
+    "puppeteer": "^24.34.0"
+  }
+}

@@ -1,0 +1,4 @@
+node_modules/
+package-lock.json
+capture-thumbnails.js
+.DS_Store
