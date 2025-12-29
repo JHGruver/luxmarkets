@@ -230,6 +230,18 @@
             overflow: hidden;
         }
 
+        .card__preview-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover .card__preview-img {
+            transform: scale(1.05);
+        }
+
         .card__preview-icon {
             width: 60px;
             height: 60px;
@@ -478,13 +490,7 @@
 
                 <a href="index-journey.html" class="card card--featured">
                     <div class="card__preview">
-                        <div class="card__preview-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                                <path d="M2 17l10 5 10-5"/>
-                                <path d="M2 12l10 5 10-5"/>
-                            </svg>
-                        </div>
+                        <img src="assets/images/thumbnails/index-journey.png" alt="The Journey Homepage" class="card__preview-img" onerror="this.style.display='none'">
                         <span class="card__badge card__badge--explore">Exploration</span>
                     </div>
                     <div class="card__content">
@@ -503,11 +509,7 @@
 
                 <a href="index-neo.html" class="card card--featured">
                     <div class="card__preview">
-                        <div class="card__preview-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
-                            </svg>
-                        </div>
+                        <img src="assets/images/thumbnails/index-neo.png" alt="Neo-High Class Homepage" class="card__preview-img" onerror="this.style.display='none'">
                         <span class="card__badge card__badge--explore">Exploration</span>
                     </div>
                     <div class="card__content">
@@ -526,13 +528,7 @@
 
                 <a href="index-refresh.html" class="card card--featured">
                     <div class="card__preview">
-                        <div class="card__preview-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <path d="M23 4v6h-6"/>
-                                <path d="M1 20v-6h6"/>
-                                <path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/>
-                            </svg>
-                        </div>
+                        <img src="assets/images/thumbnails/index-refresh.png" alt="The Refresh Homepage" class="card__preview-img" onerror="this.style.display='none'">
                         <span class="card__badge card__badge--explore">Exploration</span>
                     </div>
                     <div class="card__content">
@@ -551,13 +547,7 @@
 
                 <a href="Landfill_index.html" class="card card--featured">
                     <div class="card__preview">
-                        <div class="card__preview-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <rect x="3" y="3" width="18" height="18" rx="2"/>
-                                <path d="M3 9h18"/>
-                                <path d="M9 21V9"/>
-                            </svg>
-                        </div>
+                        <img src="assets/images/thumbnails/landfill-index.png" alt="Original Homepage" class="card__preview-img" onerror="this.style.display='none'">
                         <span class="card__badge card__badge--archive">Archive</span>
                     </div>
                     <div class="card__content">
@@ -576,16 +566,7 @@
 
                 <a href="Landfill_index-estate.html" class="card card--featured">
                     <div class="card__preview">
-                        <div class="card__preview-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <path d="M3 21h18"/>
-                                <path d="M5 21V7l8-4v18"/>
-                                <path d="M19 21V11l-6-4"/>
-                                <path d="M9 9v.01"/>
-                                <path d="M9 12v.01"/>
-                                <path d="M9 15v.01"/>
-                            </svg>
-                        </div>
+                        <img src="assets/images/thumbnails/landfill-estate.png" alt="The Estate Homepage" class="card__preview-img" onerror="this.style.display='none'">
                         <span class="card__badge card__badge--archive">Archive</span>
                     </div>
                     <div class="card__content">
@@ -604,13 +585,7 @@
 
                 <a href="Landfill_index-gallery.html" class="card card--featured">
                     <div class="card__preview">
-                        <div class="card__preview-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <rect x="3" y="3" width="18" height="18" rx="2"/>
-                                <circle cx="8.5" cy="8.5" r="1.5"/>
-                                <polyline points="21,15 16,10 5,21"/>
-                            </svg>
-                        </div>
+                        <img src="assets/images/thumbnails/landfill-gallery.png" alt="The Gallery Homepage" class="card__preview-img" onerror="this.style.display='none'">
                         <span class="card__badge card__badge--archive">Archive</span>
                     </div>
                     <div class="card__content">
@@ -629,13 +604,7 @@
 
                 <a href="Landfill_index-maison.html" class="card card--featured">
                     <div class="card__preview">
-                        <div class="card__preview-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                                <path d="M2 17l10 5 10-5"/>
-                                <path d="M2 12l10 5 10-5"/>
-                            </svg>
-                        </div>
+                        <img src="assets/images/thumbnails/landfill-maison.png" alt="The Maison Homepage" class="card__preview-img" onerror="this.style.display='none'">
                         <span class="card__badge card__badge--archive">Archive</span>
                     </div>
                     <div class="card__content">
@@ -671,14 +640,7 @@
 
                 <a href="pages/about.html" class="card">
                     <div class="card__preview">
-                        <div class="card__preview-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
-                                <circle cx="9" cy="7" r="4"/>
-                                <path d="M23 21v-2a4 4 0 00-3-3.87"/>
-                                <path d="M16 3.13a4 4 0 010 7.75"/>
-                            </svg>
-                        </div>
+                        <img src="assets/images/thumbnails/about.png" alt="About Us" class="card__preview-img" onerror="this.style.display='none'">
                         <span class="card__badge card__badge--live">Live</span>
                     </div>
                     <div class="card__content">
@@ -697,13 +659,7 @@
 
                 <a href="pages/for-properties.html" class="card">
                     <div class="card__preview">
-                        <div class="card__preview-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <rect x="3" y="3" width="18" height="18" rx="2"/>
-                                <path d="M3 9h18"/>
-                                <path d="M9 21V9"/>
-                            </svg>
-                        </div>
+                        <img src="assets/images/thumbnails/for-properties.png" alt="For Properties" class="card__preview-img" onerror="this.style.display='none'">
                         <span class="card__badge card__badge--live">Live</span>
                     </div>
                     <div class="card__content">
@@ -722,13 +678,7 @@
 
                 <a href="pages/for-brands.html" class="card">
                     <div class="card__preview">
-                        <div class="card__preview-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
-                                <line x1="3" y1="6" x2="21" y2="6"/>
-                                <path d="M16 10a4 4 0 01-8 0"/>
-                            </svg>
-                        </div>
+                        <img src="assets/images/thumbnails/for-brands.png" alt="For Brands" class="card__preview-img" onerror="this.style.display='none'">
                         <span class="card__badge card__badge--live">Live</span>
                     </div>
                     <div class="card__content">
@@ -747,12 +697,7 @@
 
                 <a href="pages/our-markets.html" class="card">
                     <div class="card__preview">
-                        <div class="card__preview-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-                                <circle cx="12" cy="10" r="3"/>
-                            </svg>
-                        </div>
+                        <img src="assets/images/thumbnails/our-markets.png" alt="Our Markets" class="card__preview-img" onerror="this.style.display='none'">
                         <span class="card__badge card__badge--live">Live</span>
                     </div>
                     <div class="card__content">
@@ -771,12 +716,7 @@
 
                 <a href="pages/pricing.html" class="card">
                     <div class="card__preview">
-                        <div class="card__preview-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <line x1="12" y1="1" x2="12" y2="23"/>
-                                <path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
-                            </svg>
-                        </div>
+                        <img src="assets/images/thumbnails/pricing.png" alt="Pricing" class="card__preview-img" onerror="this.style.display='none'">
                         <span class="card__badge card__badge--live">Live</span>
                     </div>
                     <div class="card__content">
@@ -795,12 +735,7 @@
 
                 <a href="pages/contact.html" class="card">
                     <div class="card__preview">
-                        <div class="card__preview-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                                <polyline points="22,6 12,13 2,6"/>
-                            </svg>
-                        </div>
+                        <img src="assets/images/thumbnails/contact.png" alt="Contact" class="card__preview-img" onerror="this.style.display='none'">
                         <span class="card__badge card__badge--live">Live</span>
                     </div>
                     <div class="card__content">
@@ -836,13 +771,7 @@
 
                 <a href="pages/resources.html" class="card">
                     <div class="card__preview">
-                        <div class="card__preview-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
-                                <polyline points="3.27,6.96 12,12.01 20.73,6.96"/>
-                                <line x1="12" y1="22.08" x2="12" y2="12"/>
-                            </svg>
-                        </div>
+                        <img src="assets/images/thumbnails/resources.png" alt="Resources" class="card__preview-img" onerror="this.style.display='none'">
                         <span class="card__badge card__badge--live">Live</span>
                     </div>
                     <div class="card__content">
@@ -861,12 +790,7 @@
 
                 <a href="pages/education.html" class="card">
                     <div class="card__preview">
-                        <div class="card__preview-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-                                <path d="M6 12v5c3 3 9 3 12 0v-5"/>
-                            </svg>
-                        </div>
+                        <img src="assets/images/thumbnails/education.png" alt="Education" class="card__preview-img" onerror="this.style.display='none'">
                         <span class="card__badge card__badge--live">Live</span>
                     </div>
                     <div class="card__content">
@@ -885,13 +809,7 @@
 
                 <a href="market-research.html" class="card">
                     <div class="card__preview">
-                        <div class="card__preview-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <line x1="18" y1="20" x2="18" y2="10"/>
-                                <line x1="12" y1="20" x2="12" y2="4"/>
-                                <line x1="6" y1="20" x2="6" y2="14"/>
-                            </svg>
-                        </div>
+                        <img src="assets/images/thumbnails/market-research.png" alt="Market Research" class="card__preview-img" onerror="this.style.display='none'">
                         <span class="card__badge card__badge--strategy">Strategy</span>
                     </div>
                     <div class="card__content">
@@ -930,11 +848,7 @@
 
                 <a href="pages/terms-of-service.html" class="card">
                     <div class="card__preview">
-                        <div class="card__preview-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                            </svg>
-                        </div>
+                        <img src="assets/images/thumbnails/terms-of-service.png" alt="Terms of Service" class="card__preview-img" onerror="this.style.display='none'">
                         <span class="card__badge card__badge--live">Live</span>
                     </div>
                     <div class="card__content">
@@ -953,12 +867,7 @@
 
                 <a href="pages/market-rules.html" class="card">
                     <div class="card__preview">
-                        <div class="card__preview-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <polyline points="9,11 12,14 22,4"/>
-                                <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
-                            </svg>
-                        </div>
+                        <img src="assets/images/thumbnails/market-rules.png" alt="Market Rules" class="card__preview-img" onerror="this.style.display='none'">
                         <span class="card__badge card__badge--live">Live</span>
                     </div>
                     <div class="card__content">
@@ -995,13 +904,7 @@
 
                 <a href="pitch-deck.html" class="card">
                     <div class="card__preview">
-                        <div class="card__preview-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <rect x="2" y="3" width="20" height="14" rx="2"/>
-                                <line x1="8" y1="21" x2="16" y2="21"/>
-                                <line x1="12" y1="17" x2="12" y2="21"/>
-                            </svg>
-                        </div>
+                        <img src="assets/images/thumbnails/pitch-deck.png" alt="Pitch Deck" class="card__preview-img" onerror="this.style.display='none'">
                         <span class="card__badge card__badge--strategy">Strategy</span>
                     </div>
                     <div class="card__content">
@@ -1020,12 +923,7 @@
 
                 <a href="digital-profile.html" class="card">
                     <div class="card__preview">
-                        <div class="card__preview-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
-                                <circle cx="12" cy="7" r="4"/>
-                            </svg>
-                        </div>
+                        <img src="assets/images/thumbnails/digital-profile.png" alt="Digital Profile" class="card__preview-img" onerror="this.style.display='none'">
                         <span class="card__badge card__badge--strategy">Strategy</span>
                     </div>
                     <div class="card__content">
@@ -1044,13 +942,7 @@
 
                 <a href="challenges.html" class="card">
                     <div class="card__preview">
-                        <div class="card__preview-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
-                                <line x1="12" y1="9" x2="12" y2="13"/>
-                                <line x1="12" y1="17" x2="12.01" y2="17"/>
-                            </svg>
-                        </div>
+                        <img src="assets/images/thumbnails/challenges.png" alt="Challenges" class="card__preview-img" onerror="this.style.display='none'">
                         <span class="card__badge card__badge--internal">Internal</span>
                     </div>
                     <div class="card__content">
@@ -1086,13 +978,7 @@
 
                 <a href="pages/dev/insights.html" class="card">
                     <div class="card__preview">
-                        <div class="card__preview-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <line x1="18" y1="20" x2="18" y2="10"/>
-                                <line x1="12" y1="20" x2="12" y2="4"/>
-                                <line x1="6" y1="20" x2="6" y2="14"/>
-                            </svg>
-                        </div>
+                        <img src="assets/images/thumbnails/insights.png" alt="Insights Dashboard" class="card__preview-img" onerror="this.style.display='none'">
                         <span class="card__badge card__badge--internal">Internal</span>
                     </div>
                     <div class="card__content">
