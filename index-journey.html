@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lux Markets | Designer's Dream</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================
+           DESIGNER'S DREAM - Immersive Journey
+           Parallax, depth, extreme animations
+           ============================================ */
+
+        :root {
+            --black: #000000;
+            --obsidian: #0A0A0A;
+            --charcoal: #1A1A1A;
+            --graphite: #2A2A2A;
+            --silver: #888888;
+            --pearl: #CCCCCC;
+            --ivory: #F5F5F0;
+            --white: #FFFFFF;
+
+            --gold-light: #E5C87A;
+            --gold: #C9A227;
+            --gold-dark: #8B7019;
+            --gold-gradient: linear-gradient(135deg, #E5C87A 0%, #C9A227 50%, #8B7019 100%);
+
+            --font-serif: 'Playfair Display', Georgia, serif;
+            --font-sans: 'Space Grotesk', -apple-system, sans-serif;
+
+            --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+            --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: auto; /* We handle smooth scroll in JS */
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* ============================================
+           DESIGN BADGE
+           ============================================ */
+        .design-badge {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            background: var(--gold-gradient);
+            color: var(--black);
+            padding: 12px 24px;
+            border-radius: 100px;
+            font-family: var(--font-sans);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            box-shadow: 0 8px 32px rgba(201, 162, 39, 0.4);
+        }
+
+        /* ============================================
+           SMOOTH SCROLL CONTAINER
+           ============================================ */
+        .smooth-scroll {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            will-change: transform;
+        }
+
+        /* ============================================
+           NAVIGATION - Floating minimal
+           ============================================ */
+        .nav {
+            position: fixed;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            padding: 14px 36px;
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 100px;
+        }
+
+        .nav__logo img {
+            height: 52px;
+            width: auto;
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
+        }
+
+        .nav__links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav__link {
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: var(--pearl);
+            letter-spacing: 0.02em;
+            transition: color 0.3s ease;
+        }
+
+        .nav__link:hover {
+            color: var(--gold);
+        }
+
+        .nav__cta {
+            padding: 12px 28px;
+            background: var(--gold);
+            color: var(--black);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            border-radius: 100px;
+            transition: all 0.4s var(--ease-out-expo);
+        }
+
+        .nav__cta:hover {
+            background: var(--white);
+            transform: scale(1.05);
+        }
+
+        /* All Pages Dropdown */
+        .nav__item--allpages { position: relative; list-style: none; }
+        .nav__link--allpages { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+        .nav__arrow { width: 14px; height: 14px; transition: transform 0.3s; }
+        .nav__item--allpages.expanded .nav__arrow { transform: rotate(180deg); }
+        .dropdown--allpages {
+            position: absolute; top: 100%; right: 0; width: 280px; max-height: 70vh;
+            overflow-y: auto; background: var(--white); border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3); padding: 16px;
+            opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s; z-index: 1000;
+        }
+        .nav__item--allpages.expanded .dropdown--allpages { opacity: 1; visibility: visible; transform: translateY(0); }
+        .dropdown__section { margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .dropdown__section:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+        .dropdown__section-title { display: block; font-size: 0.7rem; font-weight: 600; color: var(--gold); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+        .dropdown__item--simple { display: block; padding: 6px 12px; font-size: 0.85rem; color: var(--black); border-radius: 6px; transition: background 0.2s; }
+        .dropdown__item--simple:hover { background: rgba(201,162,39,0.1); }
+
+        /* ============================================
+           PROGRESS BAR
+           ============================================ */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--gold-gradient);
+            z-index: 9999;
+            transform-origin: left;
+            transform: scaleX(0);
+        }
+
+        /* ============================================
+           CHAPTER INDICATOR
+           ============================================ */
+        .chapter-indicator {
+            position: fixed;
+            left: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .chapter-dot {
+            width: 12px;
+            height: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.4s var(--ease-out-expo);
+            position: relative;
+        }
+
+        .chapter-dot.active {
+            border-color: var(--gold);
+            background: var(--gold);
+        }
+
+        .chapter-dot::after {
+            content: attr(data-label);
+            position: absolute;
+            left: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--silver);
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .chapter-dot:hover::after,
+        .chapter-dot.active::after {
+            opacity: 1;
+        }
+
+        /* ============================================
+           SECTION - Base styles
+           ============================================ */
+        .section {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* ============================================
+           CHAPTER 1 - HERO: The Opening
+           ============================================ */
+        .hero {
+            height: 200vh;
+            background: var(--black);
+        }
+
+        .hero__sticky {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero__background {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .hero__image {
+            position: absolute;
+            inset: -100px;
+            width: calc(100% + 200px);
+            height: calc(100% + 200px);
+            object-fit: cover;
+            filter: brightness(0.6);
+            transform: scale(1.1);
+            transition: transform 1.5s var(--ease-out-expo);
+        }
+
+        .hero__gradient {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.7) 100%);
+        }
+
+        .hero__vignette {
+            position: absolute;
+            inset: 0;
+            box-shadow: inset 0 0 200px rgba(0,0,0,0.8);
+        }
+
+        .hero__content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 1000px;
+            padding: 0 40px;
+        }
+
+        .hero__logo {
+            width: 120px;
+            height: auto;
+            margin: 0 auto 60px;
+            opacity: 0;
+            transform: translateY(40px);
+            animation: fadeUp 1.2s var(--ease-out-expo) 0.3s forwards;
+        }
+
+        .hero__title {
+            font-family: var(--font-serif);
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 300;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            opacity: 0;
+            transform: translateY(60px);
+            animation: fadeUp 1.2s var(--ease-out-expo) 0.5s forwards;
+        }
+
+        .hero__title-line {
+            display: block;
+            overflow: hidden;
+        }
+
+        .hero__title em {
+            font-style: italic;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero__subtitle {
+            font-family: var(--font-sans);
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: var(--pearl);
+            margin-top: 40px;
+            opacity: 0;
+            transform: translateY(40px);
+            animation: fadeUp 1.2s var(--ease-out-expo) 0.8s forwards;
+        }
+
+        .hero__scroll-hint {
+            position: absolute;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            opacity: 0;
+            animation: fadeUp 1.2s var(--ease-out-expo) 1.2s forwards;
+        }
+
+        .hero__scroll-text {
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--silver);
+        }
+
+        .hero__scroll-line {
+            width: 1px;
+            height: 80px;
+            background: linear-gradient(to bottom, var(--gold), transparent);
+            animation: scrollLine 2s ease-in-out infinite;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scrollLine {
+            0%, 100% { opacity: 0.3; transform: scaleY(0.8); }
+            50% { opacity: 1; transform: scaleY(1); }
+        }
+
+        /* ============================================
+           CHAPTER 2 - THE PROBLEM: Split Reveal
+           ============================================ */
+        .chapter-problem {
+            min-height: 200vh;
+            background: var(--obsidian);
+        }
+
+        .chapter-problem__sticky {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .problem-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 80px;
+            position: relative;
+        }
+
+        .problem-panel--left {
+            background: var(--charcoal);
+            border-right: 1px solid var(--graphite);
+        }
+
+        .problem-panel--right {
+            background: var(--obsidian);
+        }
+
+        .problem-panel__eyebrow {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 24px;
+        }
+
+        .problem-panel__title {
+            font-family: var(--font-serif);
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 400;
+            line-height: 1.1;
+            margin-bottom: 32px;
+        }
+
+        .problem-panel__quote {
+            font-family: var(--font-serif);
+            font-size: 1.3rem;
+            font-style: italic;
+            color: var(--pearl);
+            line-height: 1.6;
+            padding-left: 24px;
+            border-left: 2px solid var(--gold);
+            margin-bottom: 40px;
+        }
+
+        .problem-panel__solution {
+            padding: 32px;
+            background: rgba(201, 162, 39, 0.1);
+            border: 1px solid rgba(201, 162, 39, 0.2);
+            border-radius: 16px;
+        }
+
+        .problem-panel__solution-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 12px;
+        }
+
+        .problem-panel__solution-text {
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: var(--pearl);
+            line-height: 1.7;
+        }
+
+        .problem-panel__icon {
+            position: absolute;
+            top: 80px;
+            right: 80px;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(201, 162, 39, 0.1);
+            border: 1px solid rgba(201, 162, 39, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .problem-panel__icon svg {
+            width: 32px;
+            height: 32px;
+            stroke: var(--gold);
+        }
+
+        /* ============================================
+           CHAPTER 3 - EXPERIENCE: Full Bleed Gallery
+           ============================================ */
+        .chapter-experience {
+            min-height: 300vh;
+            background: var(--black);
+            position: relative;
+        }
+
+        .experience-intro {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .experience-intro__content {
+            text-align: center;
+            max-width: 800px;
+            padding: 0 40px;
+        }
+
+        .experience-intro__eyebrow {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 24px;
+        }
+
+        .experience-intro__title {
+            font-family: var(--font-serif);
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 300;
+            line-height: 1.1;
+            margin-bottom: 32px;
+        }
+
+        .experience-intro__title em {
+            font-style: italic;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .experience-gallery {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .gallery-row {
+            display: flex;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+        }
+
+        .gallery-row--reverse {
+            flex-direction: row-reverse;
+        }
+
+        .gallery-image {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gallery-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.2);
+            transition: transform 1.5s var(--ease-out-expo);
+        }
+
+        .gallery-image:hover img {
+            transform: scale(1);
+        }
+
+        .gallery-image__overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%);
+            display: flex;
+            align-items: flex-end;
+            padding: 60px;
+        }
+
+        .gallery-image__caption {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: var(--white);
+        }
+
+        .gallery-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 80px;
+            background: var(--charcoal);
+        }
+
+        .gallery-content__number {
+            font-family: var(--font-serif);
+            font-size: 6rem;
+            font-weight: 300;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 24px;
+        }
+
+        .gallery-content__title {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+
+        .gallery-content__text {
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: var(--pearl);
+            line-height: 1.8;
+        }
+
+        /* ============================================
+           CHAPTER 4 - STATS: Dramatic Numbers
+           ============================================ */
+        .chapter-stats {
+            min-height: 100vh;
+            background: var(--obsidian);
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-bg-number {
+            position: absolute;
+            font-family: var(--font-serif);
+            font-size: 50vw;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.02);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2px;
+            width: 100%;
+            max-width: 1600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-card {
+            padding: 80px 40px;
+            background: var(--charcoal);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s var(--ease-out-expo);
+        }
+
+        .stat-card:hover {
+            background: var(--graphite);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gold-gradient);
+            transform: scaleX(0);
+            transition: transform 0.5s var(--ease-out-expo);
+        }
+
+        .stat-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .stat-card__number {
+            font-family: var(--font-serif);
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 300;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 16px;
+        }
+
+        .stat-card__label {
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: var(--silver);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* ============================================
+           CHAPTER 5 - TESTIMONIAL: Cinematic
+           ============================================ */
+        .chapter-testimonial {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background: var(--black);
+        }
+
+        .testimonial-bg {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(201, 162, 39, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(201, 162, 39, 0.05) 0%, transparent 50%);
+        }
+
+        .testimonial-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 80px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .testimonial-quote-mark {
+            font-family: var(--font-serif);
+            font-size: 15rem;
+            font-weight: 300;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 0.5;
+            margin-bottom: -40px;
+            opacity: 0.5;
+        }
+
+        .testimonial-quote {
+            font-family: var(--font-serif);
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-weight: 300;
+            line-height: 1.5;
+            color: var(--white);
+            margin-bottom: 60px;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .testimonial-author__avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--gold-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            color: var(--black);
+        }
+
+        .testimonial-author__info h4 {
+            font-family: var(--font-sans);
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .testimonial-author__info p {
+            font-size: 0.9rem;
+            color: var(--silver);
+        }
+
+        .testimonial-results {
+            display: flex;
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .testimonial-result {
+            padding: 16px 32px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 100px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* ============================================
+           CHAPTER 6 - CTA: The Finale
+           ============================================ */
+        .chapter-cta {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: var(--obsidian);
+            overflow: hidden;
+        }
+
+        .cta-bg-shapes {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+
+        .cta-bg-shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+        }
+
+        .cta-bg-shape--1 {
+            width: 600px;
+            height: 600px;
+            background: rgba(201, 162, 39, 0.15);
+            top: -200px;
+            right: -200px;
+        }
+
+        .cta-bg-shape--2 {
+            width: 400px;
+            height: 400px;
+            background: rgba(201, 162, 39, 0.1);
+            bottom: -100px;
+            left: -100px;
+        }
+
+        .cta-container {
+            text-align: center;
+            max-width: 800px;
+            padding: 0 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-eyebrow {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 32px;
+        }
+
+        .cta-title {
+            font-family: var(--font-serif);
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 300;
+            line-height: 1.1;
+            margin-bottom: 32px;
+        }
+
+        .cta-subtitle {
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: var(--pearl);
+            line-height: 1.7;
+            margin-bottom: 48px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 20px 48px;
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            border-radius: 100px;
+            transition: all 0.5s var(--ease-out-expo);
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-btn--primary {
+            background: var(--gold-gradient);
+            color: var(--black);
+        }
+
+        .cta-btn--primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(201, 162, 39, 0.4);
+        }
+
+        .cta-btn--secondary {
+            background: transparent;
+            color: var(--white);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .cta-btn--secondary:hover {
+            background: var(--white);
+            color: var(--black);
+            border-color: var(--white);
+        }
+
+        /* ============================================
+           FOOTER: Minimal
+           ============================================ */
+        .footer {
+            padding: 60px 80px;
+            background: var(--black);
+            border-top: 1px solid var(--graphite);
+        }
+
+        .footer-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-logo img {
+            height: 40px;
+            filter: brightness(0) invert(1);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .footer-links a {
+            font-size: 0.85rem;
+            color: var(--silver);
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+
+        .footer-copyright {
+            font-size: 0.8rem;
+            color: var(--silver);
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 1024px) {
+            .nav {
+                padding: 12px 24px;
+                gap: 30px;
+            }
+
+            .nav__links {
+                display: none;
+            }
+
+            .chapter-problem__sticky {
+                flex-direction: column;
+            }
+
+            .problem-panel {
+                padding: 60px 40px;
+            }
+
+            .problem-panel__icon {
+                top: 40px;
+                right: 40px;
+                width: 60px;
+                height: 60px;
+            }
+
+            .gallery-row {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .gallery-row--reverse {
+                flex-direction: column;
+            }
+
+            .gallery-image,
+            .gallery-content {
+                min-height: 60vh;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .chapter-indicator {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .testimonial-container {
+                padding: 0 40px;
+            }
+
+            .testimonial-results {
+                flex-direction: column;
+            }
+
+            .footer-container {
+                flex-direction: column;
+                gap: 32px;
+                text-align: center;
+            }
+
+            .footer-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <a href="index.html" class="nav__logo">
+            <img src="assets/images/logos/lux-markets-logo.png" alt="Lux Markets">
+        </a>
+        <ul class="nav__links">
+            <li><a href="#" class="nav__link">Solutions</a></li>
+            <li><a href="#" class="nav__link">Markets</a></li>
+            <li><a href="#" class="nav__link">About</a></li>
+            <li class="nav__item--allpages">
+                <a href="#" class="nav__link nav__link--allpages" onclick="event.preventDefault(); this.parentElement.classList.toggle('expanded');">
+                    All Pages
+                    <svg class="nav__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </a>
+                <div class="dropdown--allpages">
+                    <div class="dropdown__section"><span class="dropdown__section-title">Main</span><a href="index.html" class="dropdown__item--simple">Home</a><a href="pages/about.html" class="dropdown__item--simple">About</a><a href="pages/contact.html" class="dropdown__item--simple">Contact</a></div>
+                    <div class="dropdown__section"><span class="dropdown__section-title">Solutions</span><a href="pages/for-properties.html" class="dropdown__item--simple">For Properties</a><a href="pages/for-brands.html" class="dropdown__item--simple">For Brands</a><a href="pages/pricing.html" class="dropdown__item--simple">Pricing</a></div>
+                    <div class="dropdown__section"><span class="dropdown__section-title">Markets</span><a href="pages/our-markets.html" class="dropdown__item--simple">Our Markets</a><a href="pages/market-rules.html" class="dropdown__item--simple">Market Rules</a></div>
+                    <div class="dropdown__section"><span class="dropdown__section-title">Resources</span><a href="pages/resources.html" class="dropdown__item--simple">Resources</a><a href="pages/education.html" class="dropdown__item--simple">Education</a><a href="market-research.html" class="dropdown__item--simple">Market Research</a></div>
+                    <div class="dropdown__section"><span class="dropdown__section-title">Legal</span><a href="pages/terms-of-service.html" class="dropdown__item--simple">Terms of Service</a></div>
+                    <div class="dropdown__section"><span class="dropdown__section-title">Explore</span><a href="index-journey.html" class="dropdown__item--simple">Journey</a><a href="index-neo.html" class="dropdown__item--simple">Neo</a><a href="index-refresh.html" class="dropdown__item--simple">Refresh</a><a href="digital-profile.html" class="dropdown__item--simple">Digital Profile</a><a href="pitch-deck.html" class="dropdown__item--simple">Pitch Deck</a><a href="challenges.html" class="dropdown__item--simple">Challenges</a></div>
+                    <div class="dropdown__section"><span class="dropdown__section-title">Archive</span><a href="Landfill_index-estate.html" class="dropdown__item--simple">Estate Design</a><a href="Landfill_index-gallery.html" class="dropdown__item--simple">Gallery Design</a><a href="Landfill_index-maison.html" class="dropdown__item--simple">Maison Design</a></div>
+                    <div class="dropdown__section"><span class="dropdown__section-title">Dev</span><a href="pages/dev/insights.html" class="dropdown__item--simple">Insights</a></div>
+                </div>
+            </li>
+        </ul>
+        <a href="#" class="nav__cta">Get Started</a>
+    </nav>
+
+    <!-- Chapter Indicator -->
+    <div class="chapter-indicator">
+        <div class="chapter-dot active" data-label="Opening" data-chapter="1"></div>
+        <div class="chapter-dot" data-label="The Problem" data-chapter="2"></div>
+        <div class="chapter-dot" data-label="Experience" data-chapter="3"></div>
+        <div class="chapter-dot" data-label="Results" data-chapter="4"></div>
+        <div class="chapter-dot" data-label="Stories" data-chapter="5"></div>
+        <div class="chapter-dot" data-label="Join Us" data-chapter="6"></div>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Chapter 1: Hero -->
+        <section class="hero" data-chapter="1">
+            <div class="hero__sticky">
+                <div class="hero__background">
+                    <img src="assets/images/features/apartment-onion-creek.png" alt="Luxury Venue" class="hero__image" id="heroImage">
+                    <div class="hero__gradient"></div>
+                    <div class="hero__vignette"></div>
+                </div>
+
+                <div class="hero__content">
+                    <h1 class="hero__title">
+                        <span class="hero__title-line">Where <em>Exceptional</em></span>
+                        <span class="hero__title-line">Brands Meet</span>
+                        <span class="hero__title-line">Discerning Customers</span>
+                    </h1>
+                    <p class="hero__subtitle">A journey through curated luxury experiences</p>
+                </div>
+
+                <div class="hero__scroll-hint">
+                    <span class="hero__scroll-text">Begin the Journey</span>
+                    <div class="hero__scroll-line"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 2: The Problem -->
+        <section class="chapter-problem" data-chapter="2">
+            <div class="chapter-problem__sticky">
+                <div class="problem-panel problem-panel--left">
+                    <div class="problem-panel__icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                            <polyline points="9,22 9,12 15,12 15,22"/>
+                        </svg>
+                    </div>
+                    <p class="problem-panel__eyebrow">For Properties</p>
+                    <h2 class="problem-panel__title">Residents Expect More</h2>
+                    <blockquote class="problem-panel__quote">
+                        "Our residents expect exceptional experiences, but our team is stretched thin. We need differentiation without the operational burden."
+                    </blockquote>
+                    <div class="problem-panel__solution">
+                        <p class="problem-panel__solution-label">The Lux Markets Solution</p>
+                        <p class="problem-panel__solution-text">Turnkey market events that elevate your resident experience. We handle everything—you take the credit.</p>
+                    </div>
+                </div>
+
+                <div class="problem-panel problem-panel--right">
+                    <div class="problem-panel__icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 6v6l4 2"/>
+                        </svg>
+                    </div>
+                    <p class="problem-panel__eyebrow">For Brands</p>
+                    <h2 class="problem-panel__title">Finding The Right Customers</h2>
+                    <blockquote class="problem-panel__quote">
+                        "I make an amazing product, but getting in front of the RIGHT customers is impossible. Farmers markets are hit or miss."
+                    </blockquote>
+                    <div class="problem-panel__solution">
+                        <p class="problem-panel__solution-label">The Lux Markets Solution</p>
+                        <p class="problem-panel__solution-text">Exclusive access to affluent customers in curated settings. Less competition, higher sales, premium positioning.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 3: Experience Gallery -->
+        <section class="chapter-experience" data-chapter="3">
+            <div class="experience-intro">
+                <div class="experience-intro__content">
+                    <p class="experience-intro__eyebrow">The Experience</p>
+                    <h2 class="experience-intro__title">More Than a Market.<br><em>A Lifestyle Moment.</em></h2>
+                </div>
+            </div>
+
+            <div class="experience-gallery">
+                <div class="gallery-row">
+                    <div class="gallery-image">
+                        <img src="assets/images/features/feature-design.png" alt="Market Setup">
+                        <div class="gallery-image__overlay">
+                            <span class="gallery-image__caption">Premium Venue Setup</span>
+                        </div>
+                    </div>
+                    <div class="gallery-content">
+                        <div class="gallery-content__number">01</div>
+                        <h3 class="gallery-content__title">We Consult</h3>
+                        <p class="gallery-content__text">We learn about your property, residents, and vision for community experiences. Every detail matters.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-row gallery-row--reverse">
+                    <div class="gallery-image">
+                        <img src="assets/images/features/dashboard-1.png" alt="Vendor Dashboard">
+                        <div class="gallery-image__overlay">
+                            <span class="gallery-image__caption">Curated Vendor Selection</span>
+                        </div>
+                    </div>
+                    <div class="gallery-content">
+                        <div class="gallery-content__number">02</div>
+                        <h3 class="gallery-content__title">We Curate</h3>
+                        <p class="gallery-content__text">We hand-select vendors that align with your property's caliber and resident preferences.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 4: Stats -->
+        <section class="chapter-stats" data-chapter="4">
+            <div class="stats-bg-number">91%</div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-card__number">500+</div>
+                    <div class="stat-card__label">Markets Hosted</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card__number">91%</div>
+                    <div class="stat-card__label">Resident Satisfaction</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card__number">2.8x</div>
+                    <div class="stat-card__label">Sales Increase</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card__number">$2M+</div>
+                    <div class="stat-card__label">Vendor Revenue</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 5: Testimonial -->
+        <section class="chapter-testimonial" data-chapter="5">
+            <div class="testimonial-bg"></div>
+            <div class="testimonial-container">
+                <div class="testimonial-quote-mark">"</div>
+                <blockquote class="testimonial-quote">
+                    Lux Markets has transformed our resident programming. Our satisfaction scores are up 23%, and I spend zero time managing the events. It's the best decision we've made for our community.
+                </blockquote>
+                <div class="testimonial-author">
+                    <div class="testimonial-author__avatar">SM</div>
+                    <div class="testimonial-author__info">
+                        <h4>Sarah Mitchell</h4>
+                        <p>Community Director, AMLI Downtown</p>
+                    </div>
+                </div>
+                <div class="testimonial-results">
+                    <span class="testimonial-result">+23% Satisfaction Score</span>
+                    <span class="testimonial-result">12 Events Hosted</span>
+                    <span class="testimonial-result">Zero Complaints</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 6: CTA -->
+        <section class="chapter-cta" data-chapter="6">
+            <div class="cta-bg-shapes">
+                <div class="cta-bg-shape cta-bg-shape--1"></div>
+                <div class="cta-bg-shape cta-bg-shape--2"></div>
+            </div>
+
+            <div class="cta-container">
+                <p class="cta-eyebrow">Begin Your Journey</p>
+                <h2 class="cta-title">Ready to Transform Your Experience?</h2>
+                <p class="cta-subtitle">Whether you're a property seeking remarkable resident events or a brand looking for premium customers, we're here to connect you.</p>
+                <div class="cta-buttons">
+                    <button class="cta-btn cta-btn--primary">
+                        I'm a Property
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                    <button class="cta-btn cta-btn--secondary">
+                        I'm a Brand
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <a href="index.html" class="footer-logo">
+                <img src="assets/images/logos/lux-markets-logo.png" alt="Lux Markets">
+            </a>
+            <ul class="footer-links">
+                <li><a href="#">Solutions</a></li>
+                <li><a href="#">Markets</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Terms</a></li>
+                <li><a href="#">Privacy</a></li>
+            </ul>
+            <p class="footer-copyright">&copy; 2024 Lux Markets LLC</p>
+        </div>
+    </footer>
+
+    <script>
+        // Progress bar
+        const progressBar = document.getElementById('progressBar');
+
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = scrollTop / docHeight;
+            progressBar.style.transform = `scaleX(${progress})`;
+        });
+
+        // Chapter indicator - improved detection for tall sections
+        const chapters = document.querySelectorAll('[data-chapter]');
+        const dots = document.querySelectorAll('.chapter-dot');
+
+        function updateChapterIndicator() {
+            const scrollY = window.scrollY;
+            const windowHeight = window.innerHeight;
+            const viewportCenter = scrollY + (windowHeight / 2);
+
+            let currentChapter = '1';
+
+            chapters.forEach(chapter => {
+                const rect = chapter.getBoundingClientRect();
+                const chapterTop = scrollY + rect.top;
+                const chapterBottom = chapterTop + rect.height;
+
+                // Check if viewport center is within this chapter
+                if (viewportCenter >= chapterTop && viewportCenter < chapterBottom) {
+                    currentChapter = chapter.getAttribute('data-chapter');
+                }
+            });
+
+            dots.forEach(dot => {
+                dot.classList.remove('active');
+                if (dot.getAttribute('data-chapter') === currentChapter) {
+                    dot.classList.add('active');
+                }
+            });
+        }
+
+        // Update on scroll
+        window.addEventListener('scroll', updateChapterIndicator);
+        // Initial check
+        updateChapterIndicator();
+
+        // Make dots clickable to navigate to sections
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const chapterNum = dot.getAttribute('data-chapter');
+                const targetSection = document.querySelector(`[data-chapter="${chapterNum}"]`);
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Parallax hero image
+        const heroImage = document.getElementById('heroImage');
+        window.addEventListener('scroll', () => {
+            const scrolled = window.scrollY;
+            if (scrolled < window.innerHeight * 2) {
+                heroImage.style.transform = `scale(${1.1 + scrolled * 0.0002}) translateY(${scrolled * 0.1}px)`;
+            }
+        });
+
+        // Animate stats on scroll
+        const statCards = document.querySelectorAll('.stat-card');
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.2 });
+
+        statCards.forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(50px)';
+            card.style.transition = `all 0.8s cubic-bezier(0.19, 1, 0.22, 1) ${index * 0.1}s`;
+            statsObserver.observe(card);
+        });
+
+        // Gallery reveal animations
+        const galleryItems = document.querySelectorAll('.gallery-row');
+        const galleryObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.2 });
+
+        galleryItems.forEach(item => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(80px)';
+            item.style.transition = 'all 1s cubic-bezier(0.19, 1, 0.22, 1)';
+            galleryObserver.observe(item);
+        });
+    </script>
+</body>
+</html>

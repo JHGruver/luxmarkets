@@ -1,0 +1,2291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lux Markets | Digital Profile System</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Outfit:wght@200;300;400;500;600&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Core Palette */
+            --obsidian: #0A0A0B;
+            --charcoal: #1A1A1C;
+            --graphite: #2D2D30;
+            --slate: #4A4A4F;
+            --silver: #9A9AA0;
+            --pearl: #E8E8EC;
+            --ivory: #F8F7F5;
+            --pure: #FFFFFF;
+
+            /* Gold Gradient */
+            --gold-light: #E5C87A;
+            --gold: #C9A227;
+            --gold-dark: #A68B1F;
+            --gold-gradient: linear-gradient(135deg, #E5C87A 0%, #C9A227 50%, #A68B1F 100%);
+
+            /* Tier Colors */
+            --tier-bronze: #CD7F32;
+            --tier-bronze-light: #E8A858;
+            --tier-silver: #C0C0C0;
+            --tier-silver-light: #E8E8E8;
+            --tier-gold: #C9A227;
+            --tier-gold-light: #E5C87A;
+            --tier-platinum: #E5E4E2;
+            --tier-platinum-shine: #F5F5F5;
+
+            /* Status Colors */
+            --success: #2E7D4A;
+            --success-light: #E8F5EC;
+            --warning: #B8860B;
+            --warning-light: #FFF8E1;
+            --info: #1976D2;
+            --info-light: #E3F2FD;
+
+            /* Typography */
+            --font-display: 'Cormorant Garamond', Georgia, serif;
+            --font-heading: 'Syne', sans-serif;
+            --font-body: 'Outfit', -apple-system, sans-serif;
+
+            /* Spacing */
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 1.5rem;
+            --space-lg: 2.5rem;
+            --space-xl: 4rem;
+            --space-2xl: 6rem;
+            --space-3xl: 10rem;
+
+            /* Curves */
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-pill: 100px;
+
+            /* Transitions */
+            --ease-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--ivory);
+            color: var(--charcoal);
+            line-height: 1.6;
+        }
+
+        img { max-width: 100%; display: block; }
+        a { text-decoration: none; color: inherit; }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 var(--space-lg);
+        }
+
+        /* ============================================
+           NAVIGATION
+           ============================================ */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: var(--space-md) var(--space-xl);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(248, 247, 245, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav__logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .nav__menu {
+            display: flex;
+            gap: var(--space-lg);
+            list-style: none;
+        }
+
+        .nav__link {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--charcoal);
+            transition: color 0.3s;
+        }
+
+        .nav__link:hover {
+            color: var(--gold);
+        }
+
+        .nav__cta {
+            padding: 12px 28px;
+            background: var(--gold-gradient);
+            color: var(--obsidian);
+            font-weight: 600;
+            border-radius: var(--radius-pill);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .nav__cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(201, 162, 39, 0.3);
+        }
+
+        /* All Pages Dropdown */
+        .nav__item--allpages { position: relative; }
+        .nav__link--allpages { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+        .nav__arrow { width: 14px; height: 14px; transition: transform 0.3s; }
+        .nav__item--allpages.expanded .nav__arrow { transform: rotate(180deg); }
+        .dropdown--allpages {
+            position: absolute; top: 100%; right: 0; width: 280px; max-height: 70vh;
+            overflow-y: auto; background: var(--pure); border-radius: var(--radius-md);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15); padding: var(--space-md);
+            opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s; z-index: 1000;
+        }
+        .nav__item--allpages.expanded .dropdown--allpages { opacity: 1; visibility: visible; transform: translateY(0); }
+        .dropdown__section { margin-bottom: var(--space-sm); padding-bottom: var(--space-sm); border-bottom: 1px solid var(--pearl); }
+        .dropdown__section:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+        .dropdown__section-title { display: block; font-size: 0.7rem; font-weight: 600; color: var(--gold); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+        .dropdown__item--simple { display: block; padding: 6px 12px; font-size: 0.85rem; color: var(--charcoal); border-radius: var(--radius-sm); transition: background 0.2s; }
+        .dropdown__item--simple:hover { background: var(--pearl); }
+
+        /* ============================================
+           HERO SECTION
+           ============================================ */
+        .hero {
+            padding: 180px 0 100px;
+            background: linear-gradient(135deg, var(--obsidian) 0%, var(--charcoal) 100%);
+            color: var(--pure);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="%23C9A227" opacity="0.1"/></svg>');
+            background-size: 50px 50px;
+            opacity: 0.5;
+        }
+
+        .hero__content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero__badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(201, 162, 39, 0.2);
+            border: 1px solid var(--gold);
+            border-radius: var(--radius-pill);
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--gold-light);
+            margin-bottom: var(--space-md);
+        }
+
+        .hero__title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 400;
+            line-height: 1.2;
+            margin-bottom: var(--space-md);
+        }
+
+        .hero__title span {
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero__subtitle {
+            font-size: 1.2rem;
+            color: var(--silver);
+            max-width: 700px;
+            margin: 0 auto var(--space-xl);
+        }
+
+        /* ============================================
+           OVERVIEW SECTION
+           ============================================ */
+        .overview {
+            padding: var(--space-3xl) 0;
+            background: var(--pure);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--space-2xl);
+        }
+
+        .section-header__eyebrow {
+            font-size: 0.8rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: var(--space-sm);
+        }
+
+        .section-header__title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 400;
+            color: var(--charcoal);
+            margin-bottom: var(--space-sm);
+        }
+
+        .section-header__desc {
+            font-size: 1.1rem;
+            color: var(--slate);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Feedback Loop Diagram */
+        .feedback-loop {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-lg);
+            margin-bottom: var(--space-2xl);
+            position: relative;
+        }
+
+        .feedback-loop::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: var(--gold-gradient);
+            z-index: 0;
+        }
+
+        .loop-node {
+            background: var(--pure);
+            border: 2px solid var(--pearl);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s var(--ease-smooth);
+        }
+
+        .loop-node:hover {
+            border-color: var(--gold);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(201, 162, 39, 0.15);
+        }
+
+        .loop-node__icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto var(--space-md);
+            background: var(--gold-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .loop-node__title {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: var(--space-sm);
+        }
+
+        .loop-node__desc {
+            color: var(--slate);
+            font-size: 0.95rem;
+        }
+
+        /* Arrow indicators */
+        .loop-arrows {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-xl);
+            margin-top: var(--space-lg);
+        }
+
+        .loop-arrow {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            color: var(--gold);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .loop-arrow svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* ============================================
+           TIER SYSTEM
+           ============================================ */
+        .tiers {
+            padding: var(--space-3xl) 0;
+            background: linear-gradient(180deg, var(--ivory) 0%, var(--pearl) 100%);
+        }
+
+        .tier-cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-md);
+        }
+
+        .tier-card {
+            background: var(--pure);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s var(--ease-smooth);
+            border: 2px solid transparent;
+        }
+
+        .tier-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        .tier-card--bronze::before { background: linear-gradient(90deg, var(--tier-bronze), var(--tier-bronze-light)); }
+        .tier-card--silver::before { background: linear-gradient(90deg, #808080, var(--tier-silver)); }
+        .tier-card--gold::before { background: var(--gold-gradient); }
+        .tier-card--platinum::before { background: linear-gradient(90deg, #B4B4B4, var(--tier-platinum), #D4D4D4); }
+
+        .tier-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .tier-card--bronze:hover { border-color: var(--tier-bronze); }
+        .tier-card--silver:hover { border-color: var(--tier-silver); }
+        .tier-card--gold:hover { border-color: var(--gold); }
+        .tier-card--platinum:hover { border-color: var(--tier-platinum); }
+
+        .tier-card__badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: var(--radius-pill);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: var(--space-md);
+        }
+
+        .tier-card--bronze .tier-card__badge { background: rgba(205, 127, 50, 0.15); color: var(--tier-bronze); }
+        .tier-card--silver .tier-card__badge { background: rgba(128, 128, 128, 0.15); color: #666; }
+        .tier-card--gold .tier-card__badge { background: rgba(201, 162, 39, 0.15); color: var(--gold-dark); }
+        .tier-card--platinum .tier-card__badge { background: rgba(180, 180, 180, 0.2); color: #555; }
+
+        .tier-card__title {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: var(--space-xs);
+        }
+
+        .tier-card__requirement {
+            font-size: 0.85rem;
+            color: var(--slate);
+            margin-bottom: var(--space-md);
+            padding-bottom: var(--space-md);
+            border-bottom: 1px solid var(--pearl);
+        }
+
+        .tier-card__benefits {
+            list-style: none;
+            margin-bottom: var(--space-lg);
+        }
+
+        .tier-card__benefits li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 8px 0;
+            font-size: 0.9rem;
+            color: var(--graphite);
+        }
+
+        .tier-card__benefits li svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .tier-card--bronze .tier-card__benefits li svg { color: var(--tier-bronze); }
+        .tier-card--silver .tier-card__benefits li svg { color: #808080; }
+        .tier-card--gold .tier-card__benefits li svg { color: var(--gold); }
+        .tier-card--platinum .tier-card__benefits li svg { color: #666; }
+
+        .tier-card__metrics {
+            background: var(--ivory);
+            border-radius: var(--radius-md);
+            padding: var(--space-md);
+        }
+
+        .tier-card__metrics-title {
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--slate);
+            margin-bottom: var(--space-sm);
+        }
+
+        .tier-card__metric {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            padding: 4px 0;
+        }
+
+        .tier-card__metric-label { color: var(--slate); }
+        .tier-card__metric-value { font-weight: 600; color: var(--charcoal); }
+
+        /* ============================================
+           METRICS DASHBOARD
+           ============================================ */
+        .metrics {
+            padding: var(--space-3xl) 0;
+            background: var(--obsidian);
+            color: var(--pure);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-md);
+            margin-bottom: var(--space-2xl);
+        }
+
+        .metric-card {
+            background: var(--charcoal);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            border: 1px solid var(--graphite);
+            transition: all 0.3s var(--ease-smooth);
+        }
+
+        .metric-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-4px);
+        }
+
+        .metric-card__icon {
+            width: 48px;
+            height: 48px;
+            background: var(--gold-gradient);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--space-md);
+            font-size: 1.4rem;
+        }
+
+        .metric-card__label {
+            font-size: 0.8rem;
+            color: var(--silver);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: var(--space-xs);
+        }
+
+        .metric-card__value {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 500;
+            margin-bottom: var(--space-xs);
+        }
+
+        .metric-card__trend {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+        }
+
+        .metric-card__trend--up { color: #4CAF50; }
+        .metric-card__trend--down { color: #F44336; }
+
+        /* Score Breakdown */
+        .score-section {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: var(--space-2xl);
+            align-items: center;
+        }
+
+        .score-gauge {
+            text-align: center;
+        }
+
+        .score-circle {
+            width: 250px;
+            height: 250px;
+            margin: 0 auto var(--space-lg);
+            position: relative;
+        }
+
+        .score-circle svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .score-circle__bg {
+            fill: none;
+            stroke: var(--graphite);
+            stroke-width: 12;
+        }
+
+        .score-circle__progress {
+            fill: none;
+            stroke: url(#goldGradient);
+            stroke-width: 12;
+            stroke-linecap: round;
+            stroke-dasharray: 628;
+            stroke-dashoffset: 125;
+            transition: stroke-dashoffset 1s ease;
+        }
+
+        .score-circle__value {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .score-circle__number {
+            font-family: var(--font-display);
+            font-size: 4rem;
+            font-weight: 500;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .score-circle__label {
+            font-size: 0.9rem;
+            color: var(--silver);
+        }
+
+        .score-breakdown {
+            background: var(--charcoal);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+        }
+
+        .score-breakdown__title {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            margin-bottom: var(--space-lg);
+        }
+
+        .score-breakdown__item {
+            margin-bottom: var(--space-md);
+        }
+
+        .score-breakdown__header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--space-xs);
+        }
+
+        .score-breakdown__label { font-size: 0.9rem; color: var(--silver); }
+        .score-breakdown__value { font-weight: 600; color: var(--gold-light); }
+
+        .score-breakdown__bar {
+            height: 8px;
+            background: var(--graphite);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .score-breakdown__fill {
+            height: 100%;
+            background: var(--gold-gradient);
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+
+        /* ============================================
+           USER TYPE SECTIONS
+           ============================================ */
+        .user-types {
+            padding: var(--space-3xl) 0;
+            background: var(--pure);
+        }
+
+        .user-type-tabs {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-2xl);
+        }
+
+        .user-type-tab {
+            padding: 14px 32px;
+            background: transparent;
+            border: 2px solid var(--pearl);
+            border-radius: var(--radius-pill);
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--slate);
+            cursor: pointer;
+            transition: all 0.3s var(--ease-smooth);
+        }
+
+        .user-type-tab:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .user-type-tab.active {
+            background: var(--gold-gradient);
+            border-color: transparent;
+            color: var(--obsidian);
+        }
+
+        .user-type-content {
+            display: none;
+        }
+
+        .user-type-content.active {
+            display: block;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-lg);
+        }
+
+        .benefit-card {
+            background: var(--ivory);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            transition: all 0.4s var(--ease-smooth);
+        }
+
+        .benefit-card:hover {
+            background: var(--pure);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            transform: translateY(-8px);
+        }
+
+        .benefit-card__icon {
+            width: 64px;
+            height: 64px;
+            background: var(--gold-gradient);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: var(--space-md);
+        }
+
+        .benefit-card__title {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: var(--space-sm);
+        }
+
+        .benefit-card__desc {
+            color: var(--slate);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* ============================================
+           MILESTONES
+           ============================================ */
+        .milestones {
+            padding: var(--space-3xl) 0;
+            background: linear-gradient(180deg, var(--pearl) 0%, var(--ivory) 100%);
+        }
+
+        .milestone-track {
+            position: relative;
+            padding: var(--space-xl) 0;
+        }
+
+        .milestone-track::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--pearl);
+            transform: translateY(-50%);
+        }
+
+        .milestone-items {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            z-index: 1;
+        }
+
+        .milestone-item {
+            text-align: center;
+            width: 160px;
+        }
+
+        .milestone-item__dot {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--pure);
+            border: 4px solid var(--pearl);
+            margin: 0 auto var(--space-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .milestone-item.completed .milestone-item__dot {
+            background: var(--gold-gradient);
+            border-color: var(--gold);
+        }
+
+        .milestone-item.completed .milestone-item__dot svg {
+            color: var(--pure);
+        }
+
+        .milestone-item__title {
+            font-family: var(--font-heading);
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: var(--space-xs);
+        }
+
+        .milestone-item__desc {
+            font-size: 0.8rem;
+            color: var(--slate);
+        }
+
+        /* ============================================
+           CYCLICAL METRICS
+           ============================================ */
+        .cyclical {
+            padding: var(--space-3xl) 0;
+            background: var(--pure);
+        }
+
+        .cycle-diagram {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: var(--space-2xl);
+            margin-top: var(--space-2xl);
+        }
+
+        .cycle-ring {
+            width: 400px;
+            height: 400px;
+            position: relative;
+        }
+
+        .cycle-ring__center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 180px;
+        }
+
+        .cycle-ring__title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--charcoal);
+            margin-bottom: var(--space-xs);
+        }
+
+        .cycle-ring__subtitle {
+            font-size: 0.85rem;
+            color: var(--slate);
+        }
+
+        .cycle-item {
+            position: absolute;
+            width: 120px;
+            text-align: center;
+        }
+
+        .cycle-item--1 { top: 0; left: 50%; transform: translateX(-50%); }
+        .cycle-item--2 { top: 25%; right: 0; }
+        .cycle-item--3 { bottom: 25%; right: 0; }
+        .cycle-item--4 { bottom: 0; left: 50%; transform: translateX(-50%); }
+        .cycle-item--5 { bottom: 25%; left: 0; }
+        .cycle-item--6 { top: 25%; left: 0; }
+
+        .cycle-item__icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gold-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--space-xs);
+            font-size: 1.2rem;
+        }
+
+        .cycle-item__label {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--charcoal);
+        }
+
+        .cycle-metrics {
+            max-width: 400px;
+        }
+
+        .cycle-metric {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            padding: var(--space-md);
+            background: var(--ivory);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--space-sm);
+            transition: all 0.3s;
+        }
+
+        .cycle-metric:hover {
+            background: var(--pearl);
+            transform: translateX(8px);
+        }
+
+        .cycle-metric__period {
+            width: 60px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--gold);
+        }
+
+        .cycle-metric__name {
+            flex: 1;
+            font-weight: 500;
+        }
+
+        .cycle-metric__target {
+            font-size: 0.85rem;
+            color: var(--slate);
+        }
+
+        /* ============================================
+           LUX MARKETS DASHBOARD
+           ============================================ */
+        .lux-dashboard {
+            padding: var(--space-3xl) 0;
+            background: linear-gradient(135deg, var(--obsidian) 0%, #0D1420 100%);
+            color: var(--pure);
+        }
+
+        .dashboard-preview {
+            background: var(--charcoal);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            border: 1px solid var(--graphite);
+        }
+
+        .dashboard-preview__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: var(--space-md);
+            border-bottom: 1px solid var(--graphite);
+            margin-bottom: var(--space-lg);
+        }
+
+        .dashboard-preview__title {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+        }
+
+        .dashboard-preview__badge {
+            padding: 6px 14px;
+            background: rgba(201, 162, 39, 0.2);
+            border-radius: var(--radius-pill);
+            font-size: 0.75rem;
+            color: var(--gold-light);
+        }
+
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-md);
+            margin-bottom: var(--space-lg);
+        }
+
+        .dashboard-stat {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: var(--radius-md);
+            padding: var(--space-md);
+            text-align: center;
+        }
+
+        .dashboard-stat__value {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            color: var(--gold-light);
+            margin-bottom: var(--space-xs);
+        }
+
+        .dashboard-stat__label {
+            font-size: 0.8rem;
+            color: var(--silver);
+        }
+
+        .dashboard-chart {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: var(--radius-md);
+            padding: var(--space-lg);
+            height: 200px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            gap: var(--space-sm);
+        }
+
+        .chart-bar {
+            width: 40px;
+            background: var(--gold-gradient);
+            border-radius: 4px 4px 0 0;
+            transition: height 0.5s ease;
+        }
+
+        /* ============================================
+           INCENTIVES SECTION
+           ============================================ */
+        .incentives {
+            padding: var(--space-3xl) 0;
+            background: var(--ivory);
+        }
+
+        .incentive-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-lg);
+        }
+
+        .incentive-card {
+            background: var(--pure);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            display: flex;
+            gap: var(--space-lg);
+            transition: all 0.4s var(--ease-smooth);
+            border: 1px solid var(--pearl);
+        }
+
+        .incentive-card:hover {
+            border-color: var(--gold);
+            box-shadow: 0 20px 60px rgba(201, 162, 39, 0.1);
+            transform: translateY(-4px);
+        }
+
+        .incentive-card__icon {
+            width: 72px;
+            height: 72px;
+            background: var(--gold-gradient);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .incentive-card__content h3 {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: var(--space-sm);
+        }
+
+        .incentive-card__content p {
+            color: var(--slate);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* ============================================
+           FOOTER
+           ============================================ */
+        .footer {
+            background: var(--obsidian);
+            color: var(--silver);
+            padding: var(--space-2xl) 0 var(--space-lg);
+        }
+
+        .footer__content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer__logo img {
+            height: 40px;
+            opacity: 0.8;
+        }
+
+        .footer__copy {
+            font-size: 0.85rem;
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 1200px) {
+            .tier-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .feedback-loop {
+                grid-template-columns: 1fr;
+            }
+            .feedback-loop::before {
+                display: none;
+            }
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+            .score-section {
+                grid-template-columns: 1fr;
+            }
+            .cycle-diagram {
+                flex-direction: column;
+            }
+            .dashboard-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .incentive-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .tier-cards {
+                grid-template-columns: 1fr;
+            }
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            .user-type-tabs {
+                flex-direction: column;
+            }
+            .milestone-items {
+                flex-direction: column;
+                align-items: center;
+                gap: var(--space-lg);
+            }
+            .milestone-track::before {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <a href="index.html" class="nav__logo">
+            <img src="assets/images/logos/lux-markets-logo.png" alt="Lux Markets">
+        </a>
+        <ul class="nav__menu">
+            <li><a href="#overview" class="nav__link">Overview</a></li>
+            <li><a href="#tiers" class="nav__link">Tier System</a></li>
+            <li><a href="#metrics" class="nav__link">Metrics</a></li>
+            <li><a href="#incentives" class="nav__link">Incentives</a></li>
+            <li class="nav__item--allpages">
+                <a href="#" class="nav__link nav__link--allpages" onclick="event.preventDefault(); this.parentElement.classList.toggle('expanded');">
+                    All Pages
+                    <svg class="nav__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </a>
+                <div class="dropdown--allpages">
+                    <div class="dropdown__section"><span class="dropdown__section-title">Main</span><a href="index.html" class="dropdown__item--simple">Home</a><a href="pages/about.html" class="dropdown__item--simple">About</a><a href="pages/contact.html" class="dropdown__item--simple">Contact</a></div>
+                    <div class="dropdown__section"><span class="dropdown__section-title">Solutions</span><a href="pages/for-properties.html" class="dropdown__item--simple">For Properties</a><a href="pages/for-brands.html" class="dropdown__item--simple">For Brands</a><a href="pages/pricing.html" class="dropdown__item--simple">Pricing</a></div>
+                    <div class="dropdown__section"><span class="dropdown__section-title">Markets</span><a href="pages/our-markets.html" class="dropdown__item--simple">Our Markets</a><a href="pages/market-rules.html" class="dropdown__item--simple">Market Rules</a></div>
+                    <div class="dropdown__section"><span class="dropdown__section-title">Resources</span><a href="pages/resources.html" class="dropdown__item--simple">Resources</a><a href="pages/education.html" class="dropdown__item--simple">Education</a><a href="market-research.html" class="dropdown__item--simple">Market Research</a></div>
+                    <div class="dropdown__section"><span class="dropdown__section-title">Legal</span><a href="pages/terms-of-service.html" class="dropdown__item--simple">Terms of Service</a></div>
+                    <div class="dropdown__section"><span class="dropdown__section-title">Explore</span><a href="index-journey.html" class="dropdown__item--simple">Journey</a><a href="index-neo.html" class="dropdown__item--simple">Neo</a><a href="index-refresh.html" class="dropdown__item--simple">Refresh</a><a href="digital-profile.html" class="dropdown__item--simple">Digital Profile</a><a href="pitch-deck.html" class="dropdown__item--simple">Pitch Deck</a><a href="challenges.html" class="dropdown__item--simple">Challenges</a></div>
+                    <div class="dropdown__section"><span class="dropdown__section-title">Archive</span><a href="Landfill_index-estate.html" class="dropdown__item--simple">Estate Design</a><a href="Landfill_index-gallery.html" class="dropdown__item--simple">Gallery Design</a><a href="Landfill_index-maison.html" class="dropdown__item--simple">Maison Design</a></div>
+                    <div class="dropdown__section"><span class="dropdown__section-title">Dev</span><a href="pages/dev/insights.html" class="dropdown__item--simple">Insights</a></div>
+                </div>
+            </li>
+        </ul>
+        <a href="#contact" class="nav__cta">Get Started</a>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero__content">
+                <span class="hero__badge">Partner Success Program</span>
+                <h1 class="hero__title">Your <span>Digital Profile</span></h1>
+                <p class="hero__subtitle">A tiered partnership system that rewards excellence, fosters collaboration, and creates positive feedback loops between Property Managers, Vendors, and Event Coordinators.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview -->
+    <section id="overview" class="overview">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-header__eyebrow">The Ecosystem</p>
+                <h2 class="section-header__title">Positive Feedback Loops</h2>
+                <p class="section-header__desc">Our digital profile system creates symbiotic relationships where everyone wins. Better performance leads to better opportunities, which leads to better results.</p>
+            </div>
+
+            <div class="feedback-loop">
+                <div class="loop-node">
+                    <div class="loop-node__icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+                    <h3 class="loop-node__title">Property Managers</h3>
+                    <p class="loop-node__desc">Provide premium venues, receive quality vendors, build resident satisfaction, gain exclusive partnerships.</p>
+                </div>
+                <div class="loop-node">
+                    <div class="loop-node__icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+                    <h3 class="loop-node__title">Vendors</h3>
+                    <p class="loop-node__desc">Access exclusive properties, build reputation, increase exposure, grow revenue through verified placements.</p>
+                </div>
+                <div class="loop-node">
+                    <div class="loop-node__icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                    <h3 class="loop-node__title">Lux Markets</h3>
+                    <p class="loop-node__desc">Curates partnerships, manages events, tracks success, and ensures quality experiences for all parties.</p>
+                </div>
+            </div>
+
+            <div class="loop-arrows">
+                <div class="loop-arrow">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                    <span>Venues attract quality vendors</span>
+                </div>
+                <div class="loop-arrow">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                    <span>Vendors drive resident engagement</span>
+                </div>
+                <div class="loop-arrow">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                    <span>Engagement builds property value</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tier System -->
+    <section id="tiers" class="tiers">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-header__eyebrow">Partnership Tiers</p>
+                <h2 class="section-header__title">Climb the Ranks</h2>
+                <p class="section-header__desc">Progress through our tier system by meeting cyclical metrics and milestones. Each tier unlocks exclusive benefits and opportunities.</p>
+            </div>
+
+            <div class="tier-cards">
+                <!-- Bronze Tier -->
+                <div class="tier-card tier-card--bronze">
+                    <span class="tier-card__badge">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+                        Bronze
+                    </span>
+                    <h3 class="tier-card__title">Foundation</h3>
+                    <p class="tier-card__requirement">Entry level · 0-3 months</p>
+                    <ul class="tier-card__benefits">
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                            Basic profile listing
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                            Standard event scheduling
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                            Core analytics dashboard
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                            Community access
+                        </li>
+                    </ul>
+                    <div class="tier-card__metrics">
+                        <p class="tier-card__metrics-title">Requirements to Advance</p>
+                        <div class="tier-card__metric">
+                            <span class="tier-card__metric-label">Satisfaction</span>
+                            <span class="tier-card__metric-value">70%+</span>
+                        </div>
+                        <div class="tier-card__metric">
+                            <span class="tier-card__metric-label">Events</span>
+                            <span class="tier-card__metric-value">5+</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Silver Tier -->
+                <div class="tier-card tier-card--silver">
+                    <span class="tier-card__badge">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+                        Silver
+                    </span>
+                    <h3 class="tier-card__title">Established</h3>
+                    <p class="tier-card__requirement">Proven track record · 3-6 months</p>
+                    <ul class="tier-card__benefits">
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                            Featured profile placement
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                            Priority scheduling
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                            Advanced analytics + reports
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                            Co-promotion opportunities
+                        </li>
+                    </ul>
+                    <div class="tier-card__metrics">
+                        <p class="tier-card__metrics-title">Requirements to Advance</p>
+                        <div class="tier-card__metric">
+                            <span class="tier-card__metric-label">Satisfaction</span>
+                            <span class="tier-card__metric-value">80%+</span>
+                        </div>
+                        <div class="tier-card__metric">
+                            <span class="tier-card__metric-label">Revenue</span>
+                            <span class="tier-card__metric-value">$5K+</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gold Tier -->
+                <div class="tier-card tier-card--gold">
+                    <span class="tier-card__badge">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+                        Gold
+                    </span>
+                    <h3 class="tier-card__title">Premier</h3>
+                    <p class="tier-card__requirement">Top performer · 6-12 months</p>
+                    <ul class="tier-card__benefits">
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                            Premium profile badge
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                            Exclusive event invites
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                            Revenue share bonus (5%)
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                            Direct Lux Markets support
+                        </li>
+                    </ul>
+                    <div class="tier-card__metrics">
+                        <p class="tier-card__metrics-title">Requirements to Advance</p>
+                        <div class="tier-card__metric">
+                            <span class="tier-card__metric-label">Satisfaction</span>
+                            <span class="tier-card__metric-value">90%+</span>
+                        </div>
+                        <div class="tier-card__metric">
+                            <span class="tier-card__metric-label">Revenue</span>
+                            <span class="tier-card__metric-value">$15K+</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Platinum Tier -->
+                <div class="tier-card tier-card--platinum">
+                    <span class="tier-card__badge">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+                        Platinum
+                    </span>
+                    <h3 class="tier-card__title">Elite</h3>
+                    <p class="tier-card__requirement">Exceptional partner · 12+ months</p>
+                    <ul class="tier-card__benefits">
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                            VIP partner status
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                            First access to new markets
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                            Revenue share bonus (10%)
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                            Strategic partnership input
+                        </li>
+                    </ul>
+                    <div class="tier-card__metrics">
+                        <p class="tier-card__metrics-title">Maintain Status</p>
+                        <div class="tier-card__metric">
+                            <span class="tier-card__metric-label">Satisfaction</span>
+                            <span class="tier-card__metric-value">95%+</span>
+                        </div>
+                        <div class="tier-card__metric">
+                            <span class="tier-card__metric-label">Revenue</span>
+                            <span class="tier-card__metric-value">$50K+</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Metrics Dashboard -->
+    <section id="metrics" class="metrics">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-header__eyebrow" style="color: var(--gold-light);">Performance Tracking</p>
+                <h2 class="section-header__title" style="color: var(--pure);">Your Success Metrics</h2>
+                <p class="section-header__desc" style="color: var(--silver);">Track your progress with real-time metrics that matter. Our composite scoring system rewards quality, consistency, and growth.</p>
+            </div>
+
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-card__icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></div>
+                    <p class="metric-card__label">Client Satisfaction</p>
+                    <p class="metric-card__value">87%</p>
+                    <p class="metric-card__trend metric-card__trend--up">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+                        +4% this month
+                    </p>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card__icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+                    <p class="metric-card__label">Partnership Longevity</p>
+                    <p class="metric-card__value">8 mo</p>
+                    <p class="metric-card__trend metric-card__trend--up">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+                        Active & Growing
+                    </p>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card__icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+                    <p class="metric-card__label">Direct Revenue</p>
+                    <p class="metric-card__value">$12.4K</p>
+                    <p class="metric-card__trend metric-card__trend--up">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+                        +22% vs last quarter
+                    </p>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card__icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+                    <p class="metric-card__label">Events Completed</p>
+                    <p class="metric-card__value">34</p>
+                    <p class="metric-card__trend metric-card__trend--up">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+                        6 this month
+                    </p>
+                </div>
+            </div>
+
+            <!-- SVG Gradient Definition -->
+            <svg width="0" height="0">
+                <defs>
+                    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#E5C87A"/>
+                        <stop offset="50%" style="stop-color:#C9A227"/>
+                        <stop offset="100%" style="stop-color:#A68B1F"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+
+            <div class="score-section">
+                <div class="score-gauge">
+                    <div class="score-circle">
+                        <svg viewBox="0 0 200 200">
+                            <circle class="score-circle__bg" cx="100" cy="100" r="90"/>
+                            <circle class="score-circle__progress" cx="100" cy="100" r="90"/>
+                        </svg>
+                        <div class="score-circle__value">
+                            <span class="score-circle__number">82</span>
+                            <span class="score-circle__label">Partner Score</span>
+                        </div>
+                    </div>
+                    <p style="color: var(--silver); font-size: 0.95rem;">Gold Tier · 8 points to Platinum</p>
+                </div>
+
+                <div class="score-breakdown">
+                    <h3 class="score-breakdown__title">Score Composition</h3>
+
+                    <div class="score-breakdown__item">
+                        <div class="score-breakdown__header">
+                            <span class="score-breakdown__label">Client Satisfaction (40%)</span>
+                            <span class="score-breakdown__value">87/100</span>
+                        </div>
+                        <div class="score-breakdown__bar">
+                            <div class="score-breakdown__fill" style="width: 87%"></div>
+                        </div>
+                    </div>
+
+                    <div class="score-breakdown__item">
+                        <div class="score-breakdown__header">
+                            <span class="score-breakdown__label">Revenue Generation (25%)</span>
+                            <span class="score-breakdown__value">78/100</span>
+                        </div>
+                        <div class="score-breakdown__bar">
+                            <div class="score-breakdown__fill" style="width: 78%"></div>
+                        </div>
+                    </div>
+
+                    <div class="score-breakdown__item">
+                        <div class="score-breakdown__header">
+                            <span class="score-breakdown__label">Partnership Longevity (20%)</span>
+                            <span class="score-breakdown__value">85/100</span>
+                        </div>
+                        <div class="score-breakdown__bar">
+                            <div class="score-breakdown__fill" style="width: 85%"></div>
+                        </div>
+                    </div>
+
+                    <div class="score-breakdown__item">
+                        <div class="score-breakdown__header">
+                            <span class="score-breakdown__label">Event Quality (15%)</span>
+                            <span class="score-breakdown__value">76/100</span>
+                        </div>
+                        <div class="score-breakdown__bar">
+                            <div class="score-breakdown__fill" style="width: 76%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- User Type Benefits -->
+    <section class="user-types">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-header__eyebrow">Tailored Benefits</p>
+                <h2 class="section-header__title">Benefits by Partner Type</h2>
+                <p class="section-header__desc">Each partner type enjoys unique benefits designed to drive their specific success metrics.</p>
+            </div>
+
+            <div class="user-type-tabs">
+                <button class="user-type-tab active" data-tab="property">Property Managers</button>
+                <button class="user-type-tab" data-tab="vendor">Vendors</button>
+                <button class="user-type-tab" data-tab="event">Event Managers</button>
+            </div>
+
+            <!-- Property Managers -->
+            <div class="user-type-content active" id="property">
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-card__icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></div>
+                        <h3 class="benefit-card__title">Resident Satisfaction</h3>
+                        <p class="benefit-card__desc">Curated vendor experiences boost resident engagement and community satisfaction scores, directly impacting retention rates.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-card__icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></svg></div>
+                        <h3 class="benefit-card__title">Revenue Streams</h3>
+                        <p class="benefit-card__desc">Earn commission on vendor events hosted at your properties. Higher tiers unlock better revenue sharing percentages.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-card__icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+                        <h3 class="benefit-card__title">Exclusive Partnerships</h3>
+                        <p class="benefit-card__desc">Gold and Platinum tiers gain access to premium vendors and exclusive co-branded event opportunities.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vendors -->
+            <div class="user-type-content" id="vendor">
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-card__icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+                        <h3 class="benefit-card__title">Targeted Exposure</h3>
+                        <p class="benefit-card__desc">Reach affluent demographics at premium properties. Our matching algorithm connects you with ideal customer bases.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-card__icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+                        <h3 class="benefit-card__title">Easy Scheduling</h3>
+                        <p class="benefit-card__desc">Book venues through our platform with integrated payments and logistics. Higher tiers get priority booking windows.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-card__icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                        <h3 class="benefit-card__title">Reputation Building</h3>
+                        <p class="benefit-card__desc">Build verified reviews and ratings that travel with you. Premium badges increase trust and booking rates.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Managers -->
+            <div class="user-type-content" id="event">
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-card__icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h20M5 20V8l7-6 7 6v12M9 20v-5h6v5"/><path d="M12 2v5M9 8l3-3 3 3"/></svg></div>
+                        <h3 class="benefit-card__title">Market Expansion</h3>
+                        <p class="benefit-card__desc">Tools and support to grow your local market presence. Regional dashboards show opportunity density and competition.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-card__icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></div>
+                        <h3 class="benefit-card__title">Performance Dashboard</h3>
+                        <p class="benefit-card__desc">Real-time visibility into all partnerships, events, and revenue in your market. Track success metrics at a glance.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-card__icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+                        <h3 class="benefit-card__title">Territory Ownership</h3>
+                        <p class="benefit-card__desc">Higher tiers unlock larger territories and greater commission percentages on all partnerships in your region.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vendor Tags System -->
+    <section style="padding: var(--space-3xl) 0; background: linear-gradient(135deg, var(--charcoal) 0%, var(--obsidian) 100%); color: var(--pure);">
+        <div class="container">
+            <div class="section-header" style="text-align: center; margin-bottom: var(--space-2xl);">
+                <p class="section-header__eyebrow" style="color: var(--gold-light);">Smart Matching</p>
+                <h2 class="section-header__title" style="color: var(--pure);">Vendor Tag System</h2>
+                <p class="section-header__desc" style="color: var(--silver);">Vendors add descriptive tags to their profiles enabling intelligent groupings for themed events. When a property wants a "Spa Day" or "Wine Night", we instantly curate the perfect vendor combination.</p>
+            </div>
+
+            <!-- How It Works -->
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-lg); margin-bottom: var(--space-2xl);">
+                <div style="background: rgba(255,255,255,0.03); border-radius: var(--radius-lg); padding: var(--space-xl); text-align: center; border: 1px solid var(--graphite);">
+                    <div style="width: 64px; height: 64px; background: var(--gold-gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-md);"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0A0A0B" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg></div>
+                    <h3 style="font-family: var(--font-heading); font-size: 1.2rem; margin-bottom: var(--space-sm);">1. Vendors Add Tags</h3>
+                    <p style="color: var(--silver); font-size: 0.9rem;">Each vendor selects relevant tags describing their vibe, specialty, and experience type.</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.03); border-radius: var(--radius-lg); padding: var(--space-xl); text-align: center; border: 1px solid var(--graphite);">
+                    <div style="width: 64px; height: 64px; background: var(--gold-gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-md);"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0A0A0B" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div>
+                    <h3 style="font-family: var(--font-heading); font-size: 1.2rem; margin-bottom: var(--space-sm);">2. Smart Search</h3>
+                    <p style="color: var(--silver); font-size: 0.9rem;">Properties search by theme or we suggest curated vendor bundles for specific event types.</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.03); border-radius: var(--radius-lg); padding: var(--space-xl); text-align: center; border: 1px solid var(--graphite);">
+                    <div style="width: 64px; height: 64px; background: var(--gold-gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-md);"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0A0A0B" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+                    <h3 style="font-family: var(--font-heading); font-size: 1.2rem; margin-bottom: var(--space-sm);">3. Co-Promotion</h3>
+                    <p style="color: var(--silver); font-size: 0.9rem;">Matched vendors cross-promote together, creating cohesive themed experiences residents love.</p>
+                </div>
+            </div>
+
+            <!-- Tag Categories -->
+            <div style="background: rgba(255,255,255,0.02); border-radius: var(--radius-lg); padding: var(--space-xl); border: 1px solid var(--graphite);">
+                <h3 style="font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: var(--space-lg); text-align: center;">Available Tag Categories</h3>
+
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-lg);">
+                    <!-- Vibe/Mood Tags -->
+                    <div>
+                        <h4 style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold-light); margin-bottom: var(--space-md); display: flex; align-items: center; gap: 8px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-2.54Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-2.54Z"/></svg> Vibe & Mood</h4>
+                        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                            <span style="background: rgba(201,162,39,0.2); color: var(--gold-light); padding: 6px 12px; border-radius: var(--radius-pill); font-size: 0.8rem;">Relaxing</span>
+                            <span style="background: rgba(201,162,39,0.2); color: var(--gold-light); padding: 6px 12px; border-radius: var(--radius-pill); font-size: 0.8rem;">Energizing</span>
+                            <span style="background: rgba(201,162,39,0.2); color: var(--gold-light); padding: 6px 12px; border-radius: var(--radius-pill); font-size: 0.8rem;">Romantic</span>
+                            <span style="background: rgba(201,162,39,0.2); color: var(--gold-light); padding: 6px 12px; border-radius: var(--radius-pill); font-size: 0.8rem;">Celebratory</span>
+                            <span style="background: rgba(201,162,39,0.2); color: var(--gold-light); padding: 6px 12px; border-radius: var(--radius-pill); font-size: 0.8rem;">Mindful</span>
+                            <span style="background: rgba(201,162,39,0.2); color: var(--gold-light); padding: 6px 12px; border-radius: var(--radius-pill); font-size: 0.8rem;">Luxurious</span>
+                        </div>
+                    </div>
+
+                    <!-- Service Type Tags -->
+                    <div>
+                        <h4 style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold-light); margin-bottom: var(--space-md); display: flex; align-items: center; gap: 8px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> Service Type</h4>
+                        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                            <span style="background: rgba(201,162,39,0.2); color: var(--gold-light); padding: 6px 12px; border-radius: var(--radius-pill); font-size: 0.8rem;">Spa & Wellness</span>
+                            <span style="background: rgba(201,162,39,0.2); color: var(--gold-light); padding: 6px 12px; border-radius: var(--radius-pill); font-size: 0.8rem;">Food & Beverage</span>
+                            <span style="background: rgba(201,162,39,0.2); color: var(--gold-light); padding: 6px 12px; border-radius: var(--radius-pill); font-size: 0.8rem;">Artisan Goods</span>
+                            <span style="background: rgba(201,162,39,0.2); color: var(--gold-light); padding: 6px 12px; border-radius: var(--radius-pill); font-size: 0.8rem;">Beauty</span>
+                            <span style="background: rgba(201,162,39,0.2); color: var(--gold-light); padding: 6px 12px; border-radius: var(--radius-pill); font-size: 0.8rem;">Fitness</span>
+                            <span style="background: rgba(201,162,39,0.2); color: var(--gold-light); padding: 6px 12px; border-radius: var(--radius-pill); font-size: 0.8rem;">Entertainment</span>
+                        </div>
+                    </div>
+
+                    <!-- Experience Tags -->
+                    <div>
+                        <h4 style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold-light); margin-bottom: var(--space-md); display: flex; align-items: center; gap: 8px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Experience</h4>
+                        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                            <span style="background: rgba(201,162,39,0.2); color: var(--gold-light); padding: 6px 12px; border-radius: var(--radius-pill); font-size: 0.8rem;">Interactive</span>
+                            <span style="background: rgba(201,162,39,0.2); color: var(--gold-light); padding: 6px 12px; border-radius: var(--radius-pill); font-size: 0.8rem;">Demo/Workshop</span>
+                            <span style="background: rgba(201,162,39,0.2); color: var(--gold-light); padding: 6px 12px; border-radius: var(--radius-pill); font-size: 0.8rem;">Tasting</span>
+                            <span style="background: rgba(201,162,39,0.2); color: var(--gold-light); padding: 6px 12px; border-radius: var(--radius-pill); font-size: 0.8rem;">Service-Based</span>
+                            <span style="background: rgba(201,162,39,0.2); color: var(--gold-light); padding: 6px 12px; border-radius: var(--radius-pill); font-size: 0.8rem;">Pop-Up Shop</span>
+                        </div>
+                    </div>
+
+                    <!-- Pairing Tags -->
+                    <div>
+                        <h4 style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold-light); margin-bottom: var(--space-md); display: flex; align-items: center; gap: 8px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Perfect Pairings</h4>
+                        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                            <span style="background: rgba(201,162,39,0.2); color: var(--gold-light); padding: 6px 12px; border-radius: var(--radius-pill); font-size: 0.8rem;">Wine-Friendly</span>
+                            <span style="background: rgba(201,162,39,0.2); color: var(--gold-light); padding: 6px 12px; border-radius: var(--radius-pill); font-size: 0.8rem;">Spa-Match</span>
+                            <span style="background: rgba(201,162,39,0.2); color: var(--gold-light); padding: 6px 12px; border-radius: var(--radius-pill); font-size: 0.8rem;">Holiday-Ready</span>
+                            <span style="background: rgba(201,162,39,0.2); color: var(--gold-light); padding: 6px 12px; border-radius: var(--radius-pill); font-size: 0.8rem;">Pet-Inclusive</span>
+                            <span style="background: rgba(201,162,39,0.2); color: var(--gold-light); padding: 6px 12px; border-radius: var(--radius-pill); font-size: 0.8rem;">Date Night</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example Event Bundles -->
+            <div style="margin-top: var(--space-2xl);">
+                <h3 style="font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: var(--space-lg); text-align: center;">Example Event Bundles</h3>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-lg);">
+                    <!-- Spa Day Bundle -->
+                    <div style="background: var(--gold-gradient); border-radius: var(--radius-lg); padding: var(--space-xl); color: var(--obsidian);">
+                        <div style="display: flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-md);">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 6v6l4 2"/></svg>
+                            <h4 style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 600;">Spa Day Event</h4>
+                        </div>
+                        <p style="font-size: 0.85rem; margin-bottom: var(--space-md); opacity: 0.9;">Curated relaxation experience for residents</p>
+                        <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                            <span style="background: rgba(0,0,0,0.15); padding: 4px 10px; border-radius: var(--radius-pill); font-size: 0.75rem;">Massage Therapist</span>
+                            <span style="background: rgba(0,0,0,0.15); padding: 4px 10px; border-radius: var(--radius-pill); font-size: 0.75rem;">Aromatherapy</span>
+                            <span style="background: rgba(0,0,0,0.15); padding: 4px 10px; border-radius: var(--radius-pill); font-size: 0.75rem;">Nail Artist</span>
+                            <span style="background: rgba(0,0,0,0.15); padding: 4px 10px; border-radius: var(--radius-pill); font-size: 0.75rem;">Herbal Tea Bar</span>
+                            <span style="background: rgba(0,0,0,0.15); padding: 4px 10px; border-radius: var(--radius-pill); font-size: 0.75rem;">Sound Bath</span>
+                        </div>
+                    </div>
+
+                    <!-- Wine Night Bundle -->
+                    <div style="background: var(--gold-gradient); border-radius: var(--radius-lg); padding: var(--space-xl); color: var(--obsidian);">
+                        <div style="display: flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-md);">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 22h8"/><path d="M12 11v11"/><path d="M12 11a5 5 0 0 0 5-5V3H7v3a5 5 0 0 0 5 5Z"/></svg>
+                            <h4 style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 600;">Wine Night</h4>
+                        </div>
+                        <p style="font-size: 0.85rem; margin-bottom: var(--space-md); opacity: 0.9;">Sophisticated evening of tastings and treats</p>
+                        <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                            <span style="background: rgba(0,0,0,0.15); padding: 4px 10px; border-radius: var(--radius-pill); font-size: 0.75rem;">Sommelier</span>
+                            <span style="background: rgba(0,0,0,0.15); padding: 4px 10px; border-radius: var(--radius-pill); font-size: 0.75rem;">Artisan Cheese</span>
+                            <span style="background: rgba(0,0,0,0.15); padding: 4px 10px; border-radius: var(--radius-pill); font-size: 0.75rem;">Charcuterie</span>
+                            <span style="background: rgba(0,0,0,0.15); padding: 4px 10px; border-radius: var(--radius-pill); font-size: 0.75rem;">Live Jazz</span>
+                            <span style="background: rgba(0,0,0,0.15); padding: 4px 10px; border-radius: var(--radius-pill); font-size: 0.75rem;">Chocolate</span>
+                        </div>
+                    </div>
+
+                    <!-- Wellness Weekend Bundle -->
+                    <div style="background: var(--gold-gradient); border-radius: var(--radius-lg); padding: var(--space-xl); color: var(--obsidian);">
+                        <div style="display: flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-md);">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-2.54Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-2.54Z"/></svg>
+                            <h4 style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 600;">Wellness Weekend</h4>
+                        </div>
+                        <p style="font-size: 0.85rem; margin-bottom: var(--space-md); opacity: 0.9;">Health-focused experience for active residents</p>
+                        <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                            <span style="background: rgba(0,0,0,0.15); padding: 4px 10px; border-radius: var(--radius-pill); font-size: 0.75rem;">Yoga Instructor</span>
+                            <span style="background: rgba(0,0,0,0.15); padding: 4px 10px; border-radius: var(--radius-pill); font-size: 0.75rem;">Smoothie Bar</span>
+                            <span style="background: rgba(0,0,0,0.15); padding: 4px 10px; border-radius: var(--radius-pill); font-size: 0.75rem;">Nutritionist</span>
+                            <span style="background: rgba(0,0,0,0.15); padding: 4px 10px; border-radius: var(--radius-pill); font-size: 0.75rem;">Meditation</span>
+                            <span style="background: rgba(0,0,0,0.15); padding: 4px 10px; border-radius: var(--radius-pill); font-size: 0.75rem;">Fitness Gear</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Milestones -->
+    <section class="milestones">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-header__eyebrow">Achievement Tracking</p>
+                <h2 class="section-header__title">Your Milestones</h2>
+                <p class="section-header__desc">Complete milestones to accelerate your tier progression and unlock bonus rewards.</p>
+            </div>
+
+            <div class="milestone-track">
+                <div class="milestone-items">
+                    <div class="milestone-item completed">
+                        <div class="milestone-item__dot">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                        </div>
+                        <h4 class="milestone-item__title">First Event</h4>
+                        <p class="milestone-item__desc">Complete your first successful event</p>
+                    </div>
+                    <div class="milestone-item completed">
+                        <div class="milestone-item__dot">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                        </div>
+                        <h4 class="milestone-item__title">5-Star Review</h4>
+                        <p class="milestone-item__desc">Receive your first perfect rating</p>
+                    </div>
+                    <div class="milestone-item completed">
+                        <div class="milestone-item__dot">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                        </div>
+                        <h4 class="milestone-item__title">$1K Revenue</h4>
+                        <p class="milestone-item__desc">Generate $1,000 in platform revenue</p>
+                    </div>
+                    <div class="milestone-item">
+                        <div class="milestone-item__dot"></div>
+                        <h4 class="milestone-item__title">Repeat Partner</h4>
+                        <p class="milestone-item__desc">Book with the same partner 3+ times</p>
+                    </div>
+                    <div class="milestone-item">
+                        <div class="milestone-item__dot"></div>
+                        <h4 class="milestone-item__title">Referral Star</h4>
+                        <p class="milestone-item__desc">Refer 3 new partners to the platform</p>
+                    </div>
+                    <div class="milestone-item">
+                        <div class="milestone-item__dot"></div>
+                        <h4 class="milestone-item__title">Power User</h4>
+                        <p class="milestone-item__desc">Maintain Gold tier for 6 months</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cyclical Metrics -->
+    <section class="cyclical">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-header__eyebrow">Ongoing Requirements</p>
+                <h2 class="section-header__title">Cyclical Metrics</h2>
+                <p class="section-header__desc">Maintain your tier status by meeting these recurring performance benchmarks.</p>
+            </div>
+
+            <div class="cycle-diagram">
+                <div class="cycle-ring">
+                    <svg viewBox="0 0 400 400" style="position: absolute; top: 0; left: 0;">
+                        <circle cx="200" cy="200" r="180" fill="none" stroke="var(--pearl)" stroke-width="2" stroke-dasharray="8 8"/>
+                    </svg>
+                    <div class="cycle-ring__center">
+                        <h3 class="cycle-ring__title">Continuous Excellence</h3>
+                        <p class="cycle-ring__subtitle">Track. Improve. Advance.</p>
+                    </div>
+                    <div class="cycle-item cycle-item--1">
+                        <div class="cycle-item__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></div>
+                        <p class="cycle-item__label">Satisfaction Score</p>
+                    </div>
+                    <div class="cycle-item cycle-item--2">
+                        <div class="cycle-item__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+                        <p class="cycle-item__label">Event Frequency</p>
+                    </div>
+                    <div class="cycle-item cycle-item--3">
+                        <div class="cycle-item__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+                        <p class="cycle-item__label">Response Rate</p>
+                    </div>
+                    <div class="cycle-item cycle-item--4">
+                        <div class="cycle-item__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+                        <p class="cycle-item__label">Revenue Target</p>
+                    </div>
+                    <div class="cycle-item cycle-item--5">
+                        <div class="cycle-item__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                        <p class="cycle-item__label">Review Average</p>
+                    </div>
+                    <div class="cycle-item cycle-item--6">
+                        <div class="cycle-item__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+                        <p class="cycle-item__label">Partner Retention</p>
+                    </div>
+                </div>
+
+                <div class="cycle-metrics">
+                    <div class="cycle-metric">
+                        <span class="cycle-metric__period">Weekly</span>
+                        <span class="cycle-metric__name">Response Rate</span>
+                        <span class="cycle-metric__target">&lt; 24hr avg</span>
+                    </div>
+                    <div class="cycle-metric">
+                        <span class="cycle-metric__period">Monthly</span>
+                        <span class="cycle-metric__name">Event Minimum</span>
+                        <span class="cycle-metric__target">2+ events</span>
+                    </div>
+                    <div class="cycle-metric">
+                        <span class="cycle-metric__period">Monthly</span>
+                        <span class="cycle-metric__name">Satisfaction Score</span>
+                        <span class="cycle-metric__target">80%+ avg</span>
+                    </div>
+                    <div class="cycle-metric">
+                        <span class="cycle-metric__period">Quarterly</span>
+                        <span class="cycle-metric__name">Revenue Target</span>
+                        <span class="cycle-metric__target">Tier-based</span>
+                    </div>
+                    <div class="cycle-metric">
+                        <span class="cycle-metric__period">Quarterly</span>
+                        <span class="cycle-metric__name">Review Average</span>
+                        <span class="cycle-metric__target">4.0+ stars</span>
+                    </div>
+                    <div class="cycle-metric">
+                        <span class="cycle-metric__period">Annual</span>
+                        <span class="cycle-metric__name">Partner Retention</span>
+                        <span class="cycle-metric__target">70%+ repeat</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lux Markets Dashboard View -->
+    <section class="lux-dashboard">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-header__eyebrow" style="color: var(--gold-light);">Admin Perspective</p>
+                <h2 class="section-header__title" style="color: var(--pure);">Lux Markets Dashboard</h2>
+                <p class="section-header__desc" style="color: var(--silver);">As the Event Manager for Denver, you'll have visibility into market performance, partner health, and growth opportunities.</p>
+            </div>
+
+            <div class="dashboard-preview">
+                <div class="dashboard-preview__header">
+                    <h3 class="dashboard-preview__title">Denver Market Overview</h3>
+                    <span class="dashboard-preview__badge">Q1 2025</span>
+                </div>
+
+                <div class="dashboard-stats">
+                    <div class="dashboard-stat">
+                        <p class="dashboard-stat__value">47</p>
+                        <p class="dashboard-stat__label">Active Partners</p>
+                    </div>
+                    <div class="dashboard-stat">
+                        <p class="dashboard-stat__value">$84K</p>
+                        <p class="dashboard-stat__label">GMV This Quarter</p>
+                    </div>
+                    <div class="dashboard-stat">
+                        <p class="dashboard-stat__value">89%</p>
+                        <p class="dashboard-stat__label">Avg Satisfaction</p>
+                    </div>
+                    <div class="dashboard-stat">
+                        <p class="dashboard-stat__value">156</p>
+                        <p class="dashboard-stat__label">Events Completed</p>
+                    </div>
+                </div>
+
+                <div class="dashboard-chart">
+                    <div class="chart-bar" style="height: 40%"></div>
+                    <div class="chart-bar" style="height: 55%"></div>
+                    <div class="chart-bar" style="height: 45%"></div>
+                    <div class="chart-bar" style="height: 70%"></div>
+                    <div class="chart-bar" style="height: 60%"></div>
+                    <div class="chart-bar" style="height: 85%"></div>
+                    <div class="chart-bar" style="height: 75%"></div>
+                    <div class="chart-bar" style="height: 90%"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Incentives -->
+    <section id="incentives" class="incentives">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-header__eyebrow">Drive Engagement</p>
+                <h2 class="section-header__title">Incentive Programs</h2>
+                <p class="section-header__desc">Beyond tier benefits, we offer special incentives to drive the behaviors that help everyone succeed.</p>
+            </div>
+
+            <div class="incentive-grid">
+                <div class="incentive-card">
+                    <div class="incentive-card__icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg></div>
+                    <div class="incentive-card__content">
+                        <h3>Referral Rewards</h3>
+                        <p>Earn $100 for every new partner you refer who completes their first successful event. No limit on referrals.</p>
+                    </div>
+                </div>
+                <div class="incentive-card">
+                    <div class="incentive-card__icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+                    <div class="incentive-card__content">
+                        <h3>Streak Bonuses</h3>
+                        <p>Maintain perfect satisfaction scores for 3 consecutive months and unlock a 2% bonus on all commissions.</p>
+                    </div>
+                </div>
+                <div class="incentive-card">
+                    <div class="incentive-card__icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h20M5 20V8l7-6 7 6v12M9 20v-5h6v5"/><path d="M12 2v5M9 8l3-3 3 3"/></svg></div>
+                    <div class="incentive-card__content">
+                        <h3>Co-Promotion Fund</h3>
+                        <p>Gold+ partners can apply for marketing co-investment. We'll match up to $500/quarter for joint promotions.</p>
+                    </div>
+                </div>
+                <div class="incentive-card">
+                    <div class="incentive-card__icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                    <div class="incentive-card__content">
+                        <h3>Early Access</h3>
+                        <p>Platinum partners get first access to new markets, features, and exclusive partnership opportunities.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ONBOARDING GUIDES BY USER TYPE -->
+    <section class="onboarding-guides" style="padding: var(--space-3xl) 0; background: var(--pure);">
+        <div class="container">
+            <div class="section-header" style="text-align: center; margin-bottom: var(--space-2xl);">
+                <p class="section-header__eyebrow">Step-by-Step</p>
+                <h2 class="section-header__title">Onboarding Guides</h2>
+                <p class="section-header__desc">Clear pathways for each partner type to join the Lux Markets ecosystem and start generating value.</p>
+            </div>
+
+            <!-- Property Manager Onboarding -->
+            <div class="onboarding-track" style="margin-bottom: var(--space-2xl);">
+                <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-lg);">
+                    <div style="width: 56px; height: 56px; background: var(--gold-gradient); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0A0A0B" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+                    <div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 600;">Property Manager Onboarding</h3>
+                        <p style="color: var(--slate); font-size: 0.9rem;">From first contact to first event in 14 days</p>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-sm);">
+                    <div style="background: var(--ivory); border-radius: var(--radius-md); padding: var(--space-md); position: relative;">
+                        <div style="position: absolute; top: -12px; left: var(--space-md); background: var(--gold); color: var(--obsidian); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700;">1</div>
+                        <h4 style="font-size: 0.9rem; font-weight: 600; margin-bottom: var(--space-xs); margin-top: var(--space-xs);">Discovery Call</h4>
+                        <p style="font-size: 0.8rem; color: var(--slate);">30-min call to understand property, resident demographics, and goals</p>
+                    </div>
+                    <div style="background: var(--ivory); border-radius: var(--radius-md); padding: var(--space-md); position: relative;">
+                        <div style="position: absolute; top: -12px; left: var(--space-md); background: var(--gold); color: var(--obsidian); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700;">2</div>
+                        <h4 style="font-size: 0.9rem; font-weight: 600; margin-bottom: var(--space-xs); margin-top: var(--space-xs);">Property Walkthrough</h4>
+                        <p style="font-size: 0.8rem; color: var(--slate);">On-site visit to assess amenity spaces and logistics</p>
+                    </div>
+                    <div style="background: var(--ivory); border-radius: var(--radius-md); padding: var(--space-md); position: relative;">
+                        <div style="position: absolute; top: -12px; left: var(--space-md); background: var(--gold); color: var(--obsidian); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700;">3</div>
+                        <h4 style="font-size: 0.9rem; font-weight: 600; margin-bottom: var(--space-xs); margin-top: var(--space-xs);">Agreement Signing</h4>
+                        <p style="font-size: 0.8rem; color: var(--slate);">Partnership terms, revenue share, and scheduling preferences</p>
+                    </div>
+                    <div style="background: var(--ivory); border-radius: var(--radius-md); padding: var(--space-md); position: relative;">
+                        <div style="position: absolute; top: -12px; left: var(--space-md); background: var(--gold); color: var(--obsidian); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700;">4</div>
+                        <h4 style="font-size: 0.9rem; font-weight: 600; margin-bottom: var(--space-xs); margin-top: var(--space-xs);">Profile Creation</h4>
+                        <p style="font-size: 0.8rem; color: var(--slate);">Digital profile with photos, capacity, and availability calendar</p>
+                    </div>
+                    <div style="background: var(--ivory); border-radius: var(--radius-md); padding: var(--space-md); position: relative;">
+                        <div style="position: absolute; top: -12px; left: var(--space-md); background: var(--gold); color: var(--obsidian); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700;">5</div>
+                        <h4 style="font-size: 0.9rem; font-weight: 600; margin-bottom: var(--space-xs); margin-top: var(--space-xs);">First Event Launch</h4>
+                        <p style="font-size: 0.8rem; color: var(--slate);">Schedule and execute pilot event with curated vendor</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vendor Onboarding -->
+            <div class="onboarding-track" style="margin-bottom: var(--space-2xl);">
+                <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-lg);">
+                    <div style="width: 56px; height: 56px; background: var(--gold-gradient); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0A0A0B" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+                    <div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 600;">Vendor Onboarding</h3>
+                        <p style="color: var(--slate); font-size: 0.9rem;">From application to first booking in 10 days</p>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-sm);">
+                    <div style="background: var(--ivory); border-radius: var(--radius-md); padding: var(--space-md); position: relative;">
+                        <div style="position: absolute; top: -12px; left: var(--space-md); background: var(--gold); color: var(--obsidian); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700;">1</div>
+                        <h4 style="font-size: 0.9rem; font-weight: 600; margin-bottom: var(--space-xs); margin-top: var(--space-xs);">Application Review</h4>
+                        <p style="font-size: 0.8rem; color: var(--slate);">Assess brand quality, reviews, and pop-up capability</p>
+                    </div>
+                    <div style="background: var(--ivory); border-radius: var(--radius-md); padding: var(--space-md); position: relative;">
+                        <div style="position: absolute; top: -12px; left: var(--space-md); background: var(--gold); color: var(--obsidian); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700;">2</div>
+                        <h4 style="font-size: 0.9rem; font-weight: 600; margin-bottom: var(--space-xs); margin-top: var(--space-xs);">Intro Call</h4>
+                        <p style="font-size: 0.8rem; color: var(--slate);">Explain platform, fee structure, and growth opportunities</p>
+                    </div>
+                    <div style="background: var(--ivory); border-radius: var(--radius-md); padding: var(--space-md); position: relative;">
+                        <div style="position: absolute; top: -12px; left: var(--space-md); background: var(--gold); color: var(--obsidian); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700;">3</div>
+                        <h4 style="font-size: 0.9rem; font-weight: 600; margin-bottom: var(--space-xs); margin-top: var(--space-xs);">Stripe Setup</h4>
+                        <p style="font-size: 0.8rem; color: var(--slate);">Connect payment processing for direct deposits</p>
+                    </div>
+                    <div style="background: var(--ivory); border-radius: var(--radius-md); padding: var(--space-md); position: relative;">
+                        <div style="position: absolute; top: -12px; left: var(--space-md); background: var(--gold); color: var(--obsidian); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700;">4</div>
+                        <h4 style="font-size: 0.9rem; font-weight: 600; margin-bottom: var(--space-xs); margin-top: var(--space-xs);">Profile & Portfolio</h4>
+                        <p style="font-size: 0.8rem; color: var(--slate);">Upload photos, pricing, and availability to marketplace</p>
+                    </div>
+                    <div style="background: var(--ivory); border-radius: var(--radius-md); padding: var(--space-md); position: relative;">
+                        <div style="position: absolute; top: -12px; left: var(--space-md); background: var(--gold); color: var(--obsidian); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700;">5</div>
+                        <h4 style="font-size: 0.9rem; font-weight: 600; margin-bottom: var(--space-xs); margin-top: var(--space-xs);">First Match</h4>
+                        <p style="font-size: 0.8rem; color: var(--slate);">Algorithm matches to properties, first booking confirmed</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Manager Onboarding -->
+            <div class="onboarding-track">
+                <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-lg);">
+                    <div style="width: 56px; height: 56px; background: var(--gold-gradient); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0A0A0B" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                    <div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 600;">Event Manager Onboarding (You)</h3>
+                        <p style="color: var(--slate); font-size: 0.9rem;">From market entry to operational independence in 30 days</p>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-sm);">
+                    <div style="background: var(--ivory); border-radius: var(--radius-md); padding: var(--space-md); position: relative;">
+                        <div style="position: absolute; top: -12px; left: var(--space-md); background: var(--gold); color: var(--obsidian); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700;">1</div>
+                        <h4 style="font-size: 0.9rem; font-weight: 600; margin-bottom: var(--space-xs); margin-top: var(--space-xs);">System Training</h4>
+                        <p style="font-size: 0.8rem; color: var(--slate);">HubSpot CRM, Calendly, Stripe admin, and reporting tools</p>
+                    </div>
+                    <div style="background: var(--ivory); border-radius: var(--radius-md); padding: var(--space-md); position: relative;">
+                        <div style="position: absolute; top: -12px; left: var(--space-md); background: var(--gold); color: var(--obsidian); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700;">2</div>
+                        <h4 style="font-size: 0.9rem; font-weight: 600; margin-bottom: var(--space-xs); margin-top: var(--space-xs);">Market Mapping</h4>
+                        <p style="font-size: 0.8rem; color: var(--slate);">Build target list of 50 properties + 100 vendors in Denver</p>
+                    </div>
+                    <div style="background: var(--ivory); border-radius: var(--radius-md); padding: var(--space-md); position: relative;">
+                        <div style="position: absolute; top: -12px; left: var(--space-md); background: var(--gold); color: var(--obsidian); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700;">3</div>
+                        <h4 style="font-size: 0.9rem; font-weight: 600; margin-bottom: var(--space-xs); margin-top: var(--space-xs);">Outreach Launch</h4>
+                        <p style="font-size: 0.8rem; color: var(--slate);">Begin cold outreach sequences with provided templates</p>
+                    </div>
+                    <div style="background: var(--ivory); border-radius: var(--radius-md); padding: var(--space-md); position: relative;">
+                        <div style="position: absolute; top: -12px; left: var(--space-md); background: var(--gold); color: var(--obsidian); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700;">4</div>
+                        <h4 style="font-size: 0.9rem; font-weight: 600; margin-bottom: var(--space-xs); margin-top: var(--space-xs);">First 5 Partners</h4>
+                        <p style="font-size: 0.8rem; color: var(--slate);">Close 3 properties + 2 vendors to seed the marketplace</p>
+                    </div>
+                    <div style="background: var(--ivory); border-radius: var(--radius-md); padding: var(--space-md); position: relative;">
+                        <div style="position: absolute; top: -12px; left: var(--space-md); background: var(--gold); color: var(--obsidian); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700;">5</div>
+                        <h4 style="font-size: 0.9rem; font-weight: 600; margin-bottom: var(--space-xs); margin-top: var(--space-xs);">Pilot Events</h4>
+                        <p style="font-size: 0.8rem; color: var(--slate);">Execute 3 events, gather feedback, refine process</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SPECIFIC ACTIONS FOR EVENT MANAGER -->
+    <section class="action-playbook" style="padding: var(--space-3xl) 0; background: linear-gradient(135deg, var(--charcoal) 0%, var(--obsidian) 100%); color: var(--pure);">
+        <div class="container">
+            <div class="section-header" style="text-align: center; margin-bottom: var(--space-2xl);">
+                <p class="section-header__eyebrow" style="color: var(--gold-light);">Your Action Playbook</p>
+                <h2 class="section-header__title" style="color: var(--pure);">Specific Actions for Denver Event Manager</h2>
+                <p class="section-header__desc" style="color: var(--silver);">Concrete, measurable tasks to drive partner engagement and tier progression in your market.</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-lg);">
+                <!-- Weekly Actions -->
+                <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--graphite); border-radius: var(--radius-lg); padding: var(--space-xl);">
+                    <div style="display: flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-lg);">
+                        <div style="background: var(--gold-gradient); width: 40px; height: 40px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0A0A0B" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.2rem;">Weekly Actions</h3>
+                    </div>
+                    <ul style="list-style: none;">
+                        <li style="display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--graphite);">
+                            <span style="color: var(--gold);">□</span>
+                            <div>
+                                <strong style="display: block; margin-bottom: 4px;">Send 20 Cold Outreach Emails</strong>
+                                <span style="font-size: 0.85rem; color: var(--silver);">10 to properties, 10 to vendors from target list</span>
+                            </div>
+                        </li>
+                        <li style="display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--graphite);">
+                            <span style="color: var(--gold);">□</span>
+                            <div>
+                                <strong style="display: block; margin-bottom: 4px;">Follow Up on 15 Existing Leads</strong>
+                                <span style="font-size: 0.85rem; color: var(--silver);">Move stalled conversations forward</span>
+                            </div>
+                        </li>
+                        <li style="display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--graphite);">
+                            <span style="color: var(--gold);">□</span>
+                            <div>
+                                <strong style="display: block; margin-bottom: 4px;">Schedule 3 Discovery Calls</strong>
+                                <span style="font-size: 0.85rem; color: var(--silver);">Convert interest to conversations</span>
+                            </div>
+                        </li>
+                        <li style="display: flex; align-items: flex-start; gap: 12px; padding: 12px 0;">
+                            <span style="color: var(--gold);">□</span>
+                            <div>
+                                <strong style="display: block; margin-bottom: 4px;">Update CRM Pipeline</strong>
+                                <span style="font-size: 0.85rem; color: var(--silver);">Log all activities, move stages, add notes</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Event Day Actions -->
+                <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--graphite); border-radius: var(--radius-lg); padding: var(--space-xl);">
+                    <div style="display: flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-lg);">
+                        <div style="background: var(--gold-gradient); width: 40px; height: 40px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0A0A0B" stroke-width="2"><path d="M2 20h20M5 20V8l7-6 7 6v12M9 20v-5h6v5"/><path d="M12 2v5M9 8l3-3 3 3"/></svg></div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.2rem;">Event Day Actions</h3>
+                    </div>
+                    <ul style="list-style: none;">
+                        <li style="display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--graphite);">
+                            <span style="color: var(--gold);">□</span>
+                            <div>
+                                <strong style="display: block; margin-bottom: 4px;">Arrive 1 Hour Early</strong>
+                                <span style="font-size: 0.85rem; color: var(--silver);">Verify setup, meet property staff, check vendor readiness</span>
+                            </div>
+                        </li>
+                        <li style="display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--graphite);">
+                            <span style="color: var(--gold);">□</span>
+                            <div>
+                                <strong style="display: block; margin-bottom: 4px;">Document Everything</strong>
+                                <span style="font-size: 0.85rem; color: var(--silver);">Photos, videos, resident reactions for marketing</span>
+                            </div>
+                        </li>
+                        <li style="display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--graphite);">
+                            <span style="color: var(--gold);">□</span>
+                            <div>
+                                <strong style="display: block; margin-bottom: 4px;">Collect Feedback Forms</strong>
+                                <span style="font-size: 0.85rem; color: var(--silver);">5-question survey from residents who participated</span>
+                            </div>
+                        </li>
+                        <li style="display: flex; align-items: flex-start; gap: 12px; padding: 12px 0;">
+                            <span style="color: var(--gold);">□</span>
+                            <div>
+                                <strong style="display: block; margin-bottom: 4px;">Debrief with Both Partners</strong>
+                                <span style="font-size: 0.85rem; color: var(--silver);">10-min call with property + vendor within 24hrs</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Monthly Reviews -->
+                <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--graphite); border-radius: var(--radius-lg); padding: var(--space-xl);">
+                    <div style="display: flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-lg);">
+                        <div style="background: var(--gold-gradient); width: 40px; height: 40px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0A0A0B" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.2rem;">Monthly Reviews</h3>
+                    </div>
+                    <ul style="list-style: none;">
+                        <li style="display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--graphite);">
+                            <span style="color: var(--gold);">□</span>
+                            <div>
+                                <strong style="display: block; margin-bottom: 4px;">Partner Tier Assessments</strong>
+                                <span style="font-size: 0.85rem; color: var(--silver);">Review metrics, identify advancement candidates</span>
+                            </div>
+                        </li>
+                        <li style="display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--graphite);">
+                            <span style="color: var(--gold);">□</span>
+                            <div>
+                                <strong style="display: block; margin-bottom: 4px;">At-Risk Partner Outreach</strong>
+                                <span style="font-size: 0.85rem; color: var(--silver);">Call any partner with declining scores</span>
+                            </div>
+                        </li>
+                        <li style="display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--graphite);">
+                            <span style="color: var(--gold);">□</span>
+                            <div>
+                                <strong style="display: block; margin-bottom: 4px;">Revenue Report to Lux Markets</strong>
+                                <span style="font-size: 0.85rem; color: var(--silver);">GMV, events, new partners, satisfaction trends</span>
+                            </div>
+                        </li>
+                        <li style="display: flex; align-items: flex-start; gap: 12px; padding: 12px 0;">
+                            <span style="color: var(--gold);">□</span>
+                            <div>
+                                <strong style="display: block; margin-bottom: 4px;">Pipeline Health Check</strong>
+                                <span style="font-size: 0.85rem; color: var(--silver);">Ensure 3x coverage for next quarter's goals</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- KPI Targets -->
+            <div style="margin-top: var(--space-2xl); background: rgba(201, 162, 39, 0.1); border: 1px solid var(--gold); border-radius: var(--radius-lg); padding: var(--space-xl);">
+                <h3 style="font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: var(--space-lg); text-align: center;">Your 90-Day KPI Targets</h3>
+                <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-md); text-align: center;">
+                    <div>
+                        <div style="font-family: var(--font-display); font-size: 2.5rem; color: var(--gold-light);">10</div>
+                        <div style="font-size: 0.85rem; color: var(--silver);">Properties Signed</div>
+                    </div>
+                    <div>
+                        <div style="font-family: var(--font-display); font-size: 2.5rem; color: var(--gold-light);">25</div>
+                        <div style="font-size: 0.85rem; color: var(--silver);">Vendors Onboarded</div>
+                    </div>
+                    <div>
+                        <div style="font-family: var(--font-display); font-size: 2.5rem; color: var(--gold-light);">15</div>
+                        <div style="font-size: 0.85rem; color: var(--silver);">Events Executed</div>
+                    </div>
+                    <div>
+                        <div style="font-family: var(--font-display); font-size: 2.5rem; color: var(--gold-light);">$18K</div>
+                        <div style="font-size: 0.85rem; color: var(--silver);">GMV Generated</div>
+                    </div>
+                    <div>
+                        <div style="font-family: var(--font-display); font-size: 2.5rem; color: var(--gold-light);">85%</div>
+                        <div style="font-size: 0.85rem; color: var(--silver);">Avg Satisfaction</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <a href="index.html" class="footer__logo">
+                    <img src="assets/images/logos/lux-markets-logo.png" alt="Lux Markets">
+                </a>
+                <p class="footer__copy">&copy; 2025 Lux Markets. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Tab switching
+        const tabs = document.querySelectorAll('.user-type-tab');
+        const contents = document.querySelectorAll('.user-type-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                contents.forEach(c => c.classList.remove('active'));
+
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.tab).classList.add('active');
+            });
+        });
+
+        // Animate score circle on scroll
+        const scoreCircle = document.querySelector('.score-circle__progress');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    scoreCircle.style.strokeDashoffset = '125'; // 80% progress
+                }
+            });
+        }, { threshold: 0.5 });
+
+        if (scoreCircle) {
+            observer.observe(scoreCircle);
+        }
+    </script>
+</body>
+</html>

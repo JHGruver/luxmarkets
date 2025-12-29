@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact Lux Markets - Reach out to discuss partnership opportunities for properties and brands in Austin, Texas.">
+    <title>Contact Us | Lux Markets - Get in Touch</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../src/css/styles.css">
+    <style>
+        /* Contact Page Specific Styles */
+        .contact-paths {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-6);
+            margin-bottom: var(--space-16);
+        }
+
+        .contact-path {
+            padding: var(--space-8);
+            background-color: var(--white);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-md);
+            text-align: center;
+            transition: var(--transition-slow);
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .contact-path:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .contact-path.active {
+            border-color: var(--gold);
+        }
+
+        .contact-path__icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto var(--space-4);
+            color: var(--gold);
+        }
+
+        .contact-path__icon svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .contact-path__title {
+            font-size: var(--text-xl);
+            margin-bottom: var(--space-2);
+        }
+
+        .contact-path__desc {
+            color: var(--gray-600);
+            font-size: var(--text-sm);
+            line-height: 1.6;
+        }
+
+        .contact-form-section {
+            display: none;
+        }
+
+        .contact-form-section.active {
+            display: block;
+        }
+
+        .contact-info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-6);
+            margin-bottom: var(--space-12);
+        }
+
+        .contact-info-card {
+            padding: var(--space-6);
+            background-color: var(--cream);
+            border-radius: var(--radius-lg);
+            text-align: center;
+        }
+
+        .contact-info-card__icon {
+            width: 40px;
+            height: 40px;
+            margin: 0 auto var(--space-3);
+            color: var(--gold);
+        }
+
+        .contact-info-card__icon svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .contact-info-card h4 {
+            font-size: var(--text-base);
+            margin-bottom: var(--space-1);
+        }
+
+        .contact-info-card p,
+        .contact-info-card a {
+            color: var(--gray-600);
+            font-size: var(--text-sm);
+        }
+
+        .contact-info-card a:hover {
+            color: var(--gold);
+        }
+
+        @media (max-width: 992px) {
+            .contact-paths {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Announcement Bar -->
+    <div class="announcement-bar">
+        Now accepting applications for Q1 2025 markets. <a href="for-brands.html">Apply now</a> to secure your spot.
+    </div>
+
+    <!-- Navigation -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="../index.html" class="nav__logo">
+                    <span class="logo-text">LUX MARKETS</span>
+                    <span class="logo-subtext">AUSTIN, TX</span>
+                </a>
+                <ul class="nav__menu">
+                    <li class="nav__item nav__item--dropdown">
+                        <a href="#" class="nav__link">Solutions</a>
+                        <div class="dropdown">
+                            <a href="for-properties.html" class="dropdown__item">
+                                <span class="dropdown__title">For Properties</span>
+                                <span class="dropdown__desc">Premium resident experiences</span>
+                            </a>
+                            <a href="for-brands.html" class="dropdown__item">
+                                <span class="dropdown__title">For Brands</span>
+                                <span class="dropdown__desc">Access affluent consumers</span>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav__item">
+                        <a href="our-markets.html" class="nav__link">Our Markets</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="about.html" class="nav__link">About</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="resources.html" class="nav__link">Resources</a>
+                    </li>
+                    <li class="nav__item nav__item--dropdown nav__item--allpages">
+                        <a href="#" class="nav__link nav__link--allpages">
+                            All Pages
+                            <svg class="nav__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                        </a>
+                        <div class="dropdown dropdown--allpages">
+                            <div class="dropdown__section"><span class="dropdown__section-title">Main</span><a href="../index.html" class="dropdown__item dropdown__item--simple">Home</a><a href="about.html" class="dropdown__item dropdown__item--simple">About</a><a href="contact.html" class="dropdown__item dropdown__item--simple">Contact</a></div>
+                            <div class="dropdown__section"><span class="dropdown__section-title">Solutions</span><a href="for-properties.html" class="dropdown__item dropdown__item--simple">For Properties</a><a href="for-brands.html" class="dropdown__item dropdown__item--simple">For Brands</a><a href="pricing.html" class="dropdown__item dropdown__item--simple">Pricing</a></div>
+                            <div class="dropdown__section"><span class="dropdown__section-title">Markets</span><a href="our-markets.html" class="dropdown__item dropdown__item--simple">Our Markets</a><a href="market-rules.html" class="dropdown__item dropdown__item--simple">Market Rules</a></div>
+                            <div class="dropdown__section"><span class="dropdown__section-title">Resources</span><a href="resources.html" class="dropdown__item dropdown__item--simple">Resources</a><a href="education.html" class="dropdown__item dropdown__item--simple">Education</a><a href="../market-research.html" class="dropdown__item dropdown__item--simple">Market Research</a></div>
+                            <div class="dropdown__section"><span class="dropdown__section-title">Legal</span><a href="terms-of-service.html" class="dropdown__item dropdown__item--simple">Terms of Service</a></div>
+                            <div class="dropdown__section"><span class="dropdown__section-title">Explore</span><a href="../index-journey.html" class="dropdown__item dropdown__item--simple">Journey</a><a href="../index-neo.html" class="dropdown__item dropdown__item--simple">Neo</a><a href="../index-refresh.html" class="dropdown__item dropdown__item--simple">Refresh</a><a href="../digital-profile.html" class="dropdown__item dropdown__item--simple">Digital Profile</a><a href="../pitch-deck.html" class="dropdown__item dropdown__item--simple">Pitch Deck</a><a href="../challenges.html" class="dropdown__item dropdown__item--simple">Challenges</a></div>
+                            <div class="dropdown__section"><span class="dropdown__section-title">Archive</span><a href="../Landfill_index-estate.html" class="dropdown__item dropdown__item--simple">Estate Design</a><a href="../Landfill_index-gallery.html" class="dropdown__item dropdown__item--simple">Gallery Design</a><a href="../Landfill_index-maison.html" class="dropdown__item dropdown__item--simple">Maison Design</a></div>
+                            <div class="dropdown__section"><span class="dropdown__section-title">Dev</span><a href="dev/insights.html" class="dropdown__item dropdown__item--simple">Insights</a></div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="nav__actions">
+                    <a href="contact.html" class="nav__link nav__link--contact">Contact</a>
+                    <a href="https://app.luxmarkets.org/login" class="btn btn--primary btn--sm">Vendor Login</a>
+                </div>
+                <button class="nav__toggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="page-hero__background"></div>
+        <div class="container">
+            <div class="page-hero__content">
+                <span class="page-hero__eyebrow">Contact Us</span>
+                <h1 class="page-hero__title">Let's Start a Conversation</h1>
+                <p class="page-hero__subtitle">Whether you're a property manager looking to host markets or a brand ready to connect with new customers, we'd love to hear from you.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Paths -->
+    <section class="content-section">
+        <div class="container">
+            <div class="section-header section-header--center">
+                <span class="section-eyebrow">How Can We Help?</span>
+                <h2 class="section-title">Select Your Path</h2>
+            </div>
+
+            <div class="contact-paths">
+                <div class="contact-path" data-form="property" onclick="showForm('property')">
+                    <div class="contact-path__icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" />
+                        </svg>
+                    </div>
+                    <h3 class="contact-path__title">I'm a Property</h3>
+                    <p class="contact-path__desc">Interested in hosting Lux Markets events at your luxury residential community</p>
+                </div>
+
+                <div class="contact-path" data-form="brand" onclick="showForm('brand')">
+                    <div class="contact-path__icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 21v-7.5a.75.75 0 01.75-.75h3a.75.75 0 01.75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349m-16.5 11.65V9.35m0 0a3.001 3.001 0 003.75-.615A2.993 2.993 0 009.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 002.25 1.016c.896 0 1.7-.393 2.25-1.016a3.001 3.001 0 003.75.614m-16.5 0a3.004 3.004 0 01-.621-4.72L4.318 3.44A1.5 1.5 0 015.378 3h13.243a1.5 1.5 0 011.06.44l1.19 1.189a3 3 0 01-.621 4.72m-13.5 8.65h3.75a.75.75 0 00.75-.75V13.5a.75.75 0 00-.75-.75H6.75a.75.75 0 00-.75.75v3.75c0 .415.336.75.75.75z" />
+                        </svg>
+                    </div>
+                    <h3 class="contact-path__title">I'm a Brand</h3>
+                    <p class="contact-path__desc">Looking to participate in markets and connect with affluent consumers</p>
+                </div>
+
+                <div class="contact-path" data-form="general" onclick="showForm('general')">
+                    <div class="contact-path__icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
+                        </svg>
+                    </div>
+                    <h3 class="contact-path__title">General Inquiry</h3>
+                    <p class="contact-path__desc">Questions about Lux Markets, partnerships, press, or other inquiries</p>
+                </div>
+            </div>
+
+            <!-- Property Form -->
+            <div class="contact-form-section" id="property-form">
+                <div class="cta-content">
+                    <div class="cta-text">
+                        <span class="section-eyebrow">For Properties</span>
+                        <h2 class="section-title">Host a Market at Your Property</h2>
+                        <p class="section-subtitle">We'd love to learn about your community and explore how Lux Markets can enhance your resident experience.</p>
+                        <ul class="cta-checklist">
+                            <li>No cost to your property</li>
+                            <li>Full-service event management</li>
+                            <li>Premium, curated vendor selection</li>
+                            <li>Professional marketing materials</li>
+                            <li>Complimentary beverages included</li>
+                        </ul>
+                    </div>
+                    <div class="cta-form-wrapper">
+                        <form class="cta-form" id="propertyContactForm">
+                            <h3 class="form-title">Schedule a Consultation</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="property-name">Your Name *</label>
+                                    <input type="text" id="property-name" name="name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="property-title">Title</label>
+                                    <input type="text" id="property-title" name="title" placeholder="Community Manager">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="property-email">Email *</label>
+                                <input type="email" id="property-email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="property-phone">Phone</label>
+                                <input type="tel" id="property-phone" name="phone">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="property-community">Property Name *</label>
+                                    <input type="text" id="property-community" name="community" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="property-units">Number of Units</label>
+                                    <select id="property-units" name="units">
+                                        <option value="">Select...</option>
+                                        <option value="under-100">Under 100</option>
+                                        <option value="100-250">100-250</option>
+                                        <option value="250-500">250-500</option>
+                                        <option value="500+">500+</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="property-message">Tell us about your community</label>
+                                <textarea id="property-message" name="message" rows="4" placeholder="What amenity spaces do you have? What type of events have you hosted before?"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn--gold btn--lg btn--full">Request Consultation</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brand Form -->
+            <div class="contact-form-section" id="brand-form">
+                <div class="cta-content">
+                    <div class="cta-text">
+                        <span class="section-eyebrow">For Brands</span>
+                        <h2 class="section-title">Apply to Become a Vendor</h2>
+                        <p class="section-subtitle">Ready to connect with affluent consumers in Austin's most prestigious communities? Start your vendor application here.</p>
+                        <ul class="cta-checklist">
+                            <li>Access qualified, high-income demographics</li>
+                            <li>Direct brand-to-consumer interaction</li>
+                            <li>Professional, curated event environment</li>
+                            <li>Marketing support and materials</li>
+                            <li>Flexible event scheduling</li>
+                        </ul>
+                        <p style="margin-top: var(--space-6); color: var(--gray-600); font-size: var(--text-sm);">Looking for complete vendor information? <a href="for-brands.html" style="color: var(--gold);">View pricing and full details</a></p>
+                    </div>
+                    <div class="cta-form-wrapper">
+                        <form class="cta-form" id="brandContactForm">
+                            <h3 class="form-title">Vendor Application</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="brand-name">Your Name *</label>
+                                    <input type="text" id="brand-name" name="name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="brand-company">Brand Name *</label>
+                                    <input type="text" id="brand-company" name="company" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="brand-email">Email *</label>
+                                <input type="email" id="brand-email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="brand-website">Website</label>
+                                <input type="url" id="brand-website" name="website" placeholder="https://yourbrand.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="brand-category">Product Category *</label>
+                                <select id="brand-category" name="category" required>
+                                    <option value="">Select...</option>
+                                    <option value="food-beverage">Food & Beverage</option>
+                                    <option value="wellness-beauty">Wellness & Beauty</option>
+                                    <option value="home-lifestyle">Home & Lifestyle</option>
+                                    <option value="fashion-accessories">Fashion & Accessories</option>
+                                    <option value="pet-products">Pet Products</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="brand-message">Tell us about your brand *</label>
+                                <textarea id="brand-message" name="message" rows="4" placeholder="What products do you offer? What makes your brand unique?" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn--primary btn--lg btn--full">Submit Application</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- General Form -->
+            <div class="contact-form-section" id="general-form">
+                <div class="cta-content">
+                    <div class="cta-text">
+                        <span class="section-eyebrow">General Inquiry</span>
+                        <h2 class="section-title">Get in Touch</h2>
+                        <p class="section-subtitle">Have a question or want to learn more about Lux Markets? We're here to help.</p>
+
+                        <div class="contact-info-grid" style="margin-top: var(--space-8);">
+                            <div class="contact-info-card">
+                                <div class="contact-info-card__icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                                    </svg>
+                                </div>
+                                <h4>Email</h4>
+                                <a href="mailto:hello@luxmarkets.org">hello@luxmarkets.org</a>
+                            </div>
+                            <div class="contact-info-card">
+                                <div class="contact-info-card__icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                </div>
+                                <h4>Location</h4>
+                                <p>Austin, Texas</p>
+                            </div>
+                            <div class="contact-info-card">
+                                <div class="contact-info-card__icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                                    </svg>
+                                </div>
+                                <h4>Follow Us</h4>
+                                <a href="https://instagram.com/luxmarkets_" target="_blank" rel="noopener">@luxmarkets_</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cta-form-wrapper">
+                        <form class="cta-form" id="generalContactForm">
+                            <h3 class="form-title">Send a Message</h3>
+                            <div class="form-group">
+                                <label for="general-name">Your Name *</label>
+                                <input type="text" id="general-name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="general-email">Email *</label>
+                                <input type="email" id="general-email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="general-subject">Subject *</label>
+                                <select id="general-subject" name="subject" required>
+                                    <option value="">Select...</option>
+                                    <option value="partnership">Partnership Opportunity</option>
+                                    <option value="press">Press & Media</option>
+                                    <option value="feedback">Feedback</option>
+                                    <option value="support">Support</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="general-message">Message *</label>
+                                <textarea id="general-message" name="message" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn--primary btn--lg btn--full">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Preview -->
+    <section class="content-section content-section--cream">
+        <div class="container">
+            <div class="section-header section-header--center">
+                <span class="section-eyebrow">Quick Answers</span>
+                <h2 class="section-title">Frequently Asked Questions</h2>
+            </div>
+
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h4 class="faq-question">How much does it cost for properties to host?</h4>
+                    <p class="faq-answer">There is no cost to properties. Lux Markets handles all event expenses including setup, vendors, marketing materials, and beverages.</p>
+                </div>
+                <div class="faq-item">
+                    <h4 class="faq-question">What's the typical response time?</h4>
+                    <p class="faq-answer">We aim to respond to all inquiries within 24-48 business hours. Property and vendor applications may take slightly longer for review.</p>
+                </div>
+                <div class="faq-item">
+                    <h4 class="faq-question">Where do markets take place?</h4>
+                    <p class="faq-answer">Currently, all Lux Markets events are held in the Austin, Texas metro area. We're exploring expansion to other markets.</p>
+                </div>
+                <div class="faq-item">
+                    <h4 class="faq-question">How do I check on my application status?</h4>
+                    <p class="faq-answer">Existing applicants can email us at hello@luxmarkets.org with their name and brand for a status update.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__main">
+                <div class="footer__brand">
+                    <a href="../index.html" class="footer__logo">
+                        <span class="logo-text">LUX MARKETS</span>
+                        <span class="logo-subtext">AUSTIN, TX</span>
+                    </a>
+                    <p class="footer__tagline">Curated pop-up markets connecting emerging CPG brands with affluent consumers in Austin's most prestigious residential communities.</p>
+                    <div class="footer__social">
+                        <a href="https://instagram.com/luxmarkets_" target="_blank" rel="noopener" aria-label="Instagram">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                            </svg>
+                        </a>
+                        <a href="mailto:hello@luxmarkets.org" aria-label="Email">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer__links">
+                    <div class="footer__column">
+                        <h4 class="footer__heading">Solutions</h4>
+                        <ul>
+                            <li><a href="for-properties.html">For Properties</a></li>
+                            <li><a href="for-brands.html">For Brands</a></li>
+                            <li><a href="our-markets.html">Our Markets</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer__column">
+                        <h4 class="footer__heading">Company</h4>
+                        <ul>
+                            <li><a href="about.html">About Us</a></li>
+                            <li><a href="resources.html">Resources</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer__column">
+                        <h4 class="footer__heading">Resources</h4>
+                        <ul>
+                            <li><a href="resources.html">Blog</a></li>
+                            <li><a href="market-rules.html">Market Rules</a></li>
+                            <li><a href="#">Vendor FAQ</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer__column">
+                        <h4 class="footer__heading">Legal</h4>
+                        <ul>
+                            <li><a href="terms-of-service.html">Terms of Service</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="market-rules.html">Market Guidelines</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p class="footer__copyright">&copy; 2024 Lux Markets LLC. All rights reserved.</p>
+                <div class="footer__location">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                    <span>Austin, Texas</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../src/js/main.js"></script>
+    <script>
+        // Contact form path switching
+        function showForm(formType) {
+            // Remove active from all paths
+            document.querySelectorAll('.contact-path').forEach(path => {
+                path.classList.remove('active');
+            });
+
+            // Add active to clicked path
+            document.querySelector(`[data-form="${formType}"]`).classList.add('active');
+
+            // Hide all form sections
+            document.querySelectorAll('.contact-form-section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Show selected form section
+            document.getElementById(`${formType}-form`).classList.add('active');
+
+            // Scroll to form
+            document.getElementById(`${formType}-form`).scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    </script>
+</body>
+</html>

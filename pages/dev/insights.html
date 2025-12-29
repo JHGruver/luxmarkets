@@ -1,0 +1,3446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Market Insights | Lux Markets - Internal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../src/css/styles.css">
+    <style>
+        /* Dev Mode Styles */
+        .dev-banner {
+            background: linear-gradient(135deg, #DC2626 0%, #991B1B 100%);
+            color: white;
+            padding: 12px 24px;
+            text-align: center;
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .dev-banner span {
+            background: rgba(255,255,255,0.2);
+            padding: 4px 12px;
+            border-radius: 4px;
+            margin-right: 12px;
+        }
+
+        .insights-header {
+            background: var(--navy);
+            padding: 60px 0 40px;
+            color: white;
+        }
+        .insights-header h1 {
+            color: white;
+            margin-bottom: 8px;
+        }
+        .insights-header p {
+            color: var(--gray-400);
+            font-size: 18px;
+        }
+        .insights-meta {
+            display: flex;
+            gap: 24px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: var(--gray-400);
+        }
+        .insights-meta strong {
+            color: var(--gold);
+        }
+
+        .insights-nav {
+            background: var(--navy-light);
+            padding: 16px 0;
+            position: sticky;
+            top: 44px;
+            z-index: 999;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .insights-nav__inner {
+            display: flex;
+            gap: 8px;
+        }
+        .insights-nav__btn {
+            padding: 10px 20px;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        .insights-nav__btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        .insights-nav__btn.active {
+            background: var(--gold);
+            border-color: var(--gold);
+            color: var(--navy);
+        }
+
+        .market-section {
+            padding: 60px 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        .market-section:last-child {
+            border-bottom: none;
+        }
+
+        .market-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+        .market-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--navy);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .market-icon svg {
+            width: 32px;
+            height: 32px;
+            fill: var(--gold);
+        }
+        .market-title {
+            flex: 1;
+        }
+        .market-title h2 {
+            margin-bottom: 4px;
+        }
+        .market-title .status {
+            font-size: 14px;
+            font-weight: 500;
+            padding: 4px 12px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+        .status--active {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+        .status--expansion {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+        .status--planning {
+            background: #DBEAFE;
+            color: #1E40AF;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .metric-card {
+            background: var(--gray-100);
+            padding: 24px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        .metric-card__value {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--navy);
+            font-family: var(--font-heading);
+        }
+        .metric-card__label {
+            font-size: 14px;
+            color: var(--gray-600);
+            margin-top: 4px;
+        }
+        .metric-card--highlight {
+            background: var(--navy);
+        }
+        .metric-card--highlight .metric-card__value {
+            color: var(--gold);
+        }
+        .metric-card--highlight .metric-card__label {
+            color: var(--gray-300);
+        }
+
+        .data-section {
+            margin-bottom: 40px;
+        }
+        .data-section__title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--gold);
+            display: inline-block;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        .data-table th {
+            background: var(--navy);
+            color: white;
+            padding: 14px 16px;
+            text-align: left;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .data-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--gray-200);
+            font-size: 14px;
+        }
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+        .data-table tr:hover td {
+            background: var(--gray-100);
+        }
+
+        .tier-badge {
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .tier-badge--1 {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+        .tier-badge--2 {
+            background: #E0E7FF;
+            color: #3730A3;
+        }
+        .tier-badge--3 {
+            background: #F3F4F6;
+            color: #374151;
+        }
+
+        .priority-badge {
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .priority-badge--high {
+            background: #FEE2E2;
+            color: #991B1B;
+        }
+        .priority-badge--medium {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+        .priority-badge--low {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .notes-box {
+            background: #FFFBEB;
+            border-left: 4px solid var(--gold);
+            padding: 16px 20px;
+            border-radius: 0 8px 8px 0;
+            margin-top: 20px;
+        }
+        .notes-box__title {
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 8px;
+        }
+        .notes-box p {
+            font-size: 14px;
+            color: var(--gray-700);
+            margin-bottom: 8px;
+        }
+        .notes-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .action-items {
+            background: var(--navy);
+            color: white;
+            padding: 24px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+        .action-items__title {
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .action-items ul {
+            list-style: none;
+        }
+        .action-items li {
+            padding: 8px 0;
+            padding-left: 24px;
+            position: relative;
+            font-size: 14px;
+        }
+        .action-items li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 12px;
+            width: 8px;
+            height: 8px;
+            background: var(--gold);
+            border-radius: 50%;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        @media (max-width: 768px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .vendor-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        .vendor-cat {
+            background: var(--gray-100);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: var(--gray-700);
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+        .timeline::before {
+            content: "";
+            position: absolute;
+            left: 8px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--gray-300);
+        }
+        .timeline-item {
+            position: relative;
+            padding-bottom: 24px;
+        }
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: -26px;
+            top: 4px;
+            width: 12px;
+            height: 12px;
+            background: var(--gold);
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px var(--gold);
+        }
+        .timeline-item__date {
+            font-size: 12px;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+        .timeline-item__title {
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 4px;
+        }
+        .timeline-item__desc {
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+
+        .insights-footer {
+            background: var(--navy);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        .insights-footer p {
+            color: var(--gray-400);
+            font-size: 14px;
+        }
+        .insights-footer a {
+            color: var(--gold);
+        }
+
+        /* Denver Sub-Navigation */
+        .denver-tab {
+            padding: 10px 20px;
+            background: var(--gray-100);
+            border: 1px solid var(--gray-300);
+            color: var(--gray-700);
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        .denver-tab:hover {
+            background: var(--gray-200);
+            border-color: var(--gray-400);
+        }
+        .denver-tab.active {
+            background: var(--navy);
+            border-color: var(--navy);
+            color: white;
+        }
+
+        /* Status Pills */
+        .status-pill {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .status-pill--new {
+            background: #F3F4F6;
+            color: #374151;
+        }
+        .status-pill--warm {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+        .status-pill--target {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+        .status-pill--contacted {
+            background: #DBEAFE;
+            color: #1E40AF;
+        }
+
+        /* Filter inputs */
+        .filter-input {
+            padding: 10px 16px;
+            border: 1px solid var(--gray-300);
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: var(--font-body);
+        }
+        .filter-input:focus {
+            outline: none;
+            border-color: var(--navy);
+            box-shadow: 0 0 0 3px rgba(26, 43, 72, 0.1);
+        }
+
+        /* ============================================
+           EXECUTIVE DASHBOARD STYLES
+           ============================================ */
+
+        .exec-dashboard {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            padding: 60px 0 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        .exec-dashboard::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a227' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        .exec-dashboard__header {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+        .exec-dashboard__eyebrow {
+            color: var(--gold);
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+        .exec-dashboard__eyebrow::before,
+        .exec-dashboard__eyebrow::after {
+            content: "";
+            width: 40px;
+            height: 1px;
+            background: var(--gold);
+        }
+        .exec-dashboard__title {
+            color: white;
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-family: var(--font-heading);
+        }
+        .exec-dashboard__subtitle {
+            color: #94a3b8;
+            font-size: 18px;
+        }
+
+        /* KPI Hero Cards */
+        .kpi-hero-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+        @media (max-width: 1200px) {
+            .kpi-hero-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        @media (max-width: 768px) {
+            .kpi-hero-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .kpi-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 28px 24px;
+            text-align: center;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+        .kpi-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold), #f59e0b);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        .kpi-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(201, 162, 39, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        .kpi-card:hover::before {
+            transform: scaleX(1);
+        }
+        .kpi-card__icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(201, 162, 39, 0.15);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            transition: all 0.3s ease;
+        }
+        .kpi-card:hover .kpi-card__icon {
+            background: rgba(201, 162, 39, 0.25);
+            transform: scale(1.1);
+        }
+        .kpi-card__icon svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--gold);
+        }
+        .kpi-card__value {
+            font-size: 42px;
+            font-weight: 700;
+            color: white;
+            font-family: var(--font-heading);
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+        .kpi-card__value span {
+            font-size: 24px;
+            color: var(--gold);
+        }
+        .kpi-card__label {
+            font-size: 13px;
+            color: #94a3b8;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .kpi-card__trend {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 12px;
+            padding: 4px 10px;
+            background: rgba(34, 197, 94, 0.15);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #22c55e;
+        }
+        .kpi-card__trend--down {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+        }
+        .kpi-card__trend svg {
+            width: 12px;
+            height: 12px;
+            fill: currentColor;
+        }
+
+        /* Tooltip System */
+        .kpi-card__tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: white;
+            color: var(--navy);
+            padding: 16px 20px;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            width: 280px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 100;
+            pointer-events: none;
+        }
+        .kpi-card__tooltip::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 8px solid transparent;
+            border-top-color: white;
+        }
+        .kpi-card:hover .kpi-card__tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(-8px);
+        }
+        .kpi-card__tooltip h4 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--navy);
+        }
+        .kpi-card__tooltip p {
+            font-size: 13px;
+            color: var(--gray-600);
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+        .kpi-card__tooltip .source {
+            font-size: 11px;
+            color: var(--gray-500);
+            border-top: 1px solid var(--gray-200);
+            padding-top: 8px;
+            margin-top: 8px;
+        }
+
+        /* Market Performance Cards */
+        .market-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 50px;
+        }
+        @media (max-width: 992px) {
+            .market-cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .market-perf-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .market-perf-card:hover {
+            border-color: rgba(201, 162, 39, 0.4);
+            transform: translateY(-6px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+        }
+        .market-perf-card__header {
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .market-perf-card__icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .market-perf-card__icon--austin {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+        .market-perf-card__icon--nyc {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+        }
+        .market-perf-card__icon--denver {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+        .market-perf-card__icon svg {
+            width: 28px;
+            height: 28px;
+            fill: white;
+        }
+        .market-perf-card__title {
+            flex: 1;
+        }
+        .market-perf-card__title h3 {
+            color: white;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .market-perf-card__status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+        .market-perf-card__status--active {
+            background: rgba(34, 197, 94, 0.15);
+            color: #22c55e;
+        }
+        .market-perf-card__status--expansion {
+            background: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+        }
+        .market-perf-card__status--planning {
+            background: rgba(59, 130, 246, 0.15);
+            color: #3b82f6;
+        }
+        .market-perf-card__status::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .market-perf-card__body {
+            padding: 24px;
+        }
+        .market-perf-card__metrics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        .market-perf-card__metric {
+            text-align: center;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            transition: all 0.2s ease;
+        }
+        .market-perf-card__metric:hover {
+            background: rgba(255, 255, 255, 0.06);
+        }
+        .market-perf-card__metric-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+            font-family: var(--font-heading);
+        }
+        .market-perf-card__metric-label {
+            font-size: 11px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+        }
+
+        .market-perf-card__footer {
+            padding: 16px 24px;
+            background: rgba(255, 255, 255, 0.02);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .market-perf-card__cta {
+            color: var(--gold);
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: gap 0.2s ease;
+        }
+        .market-perf-card:hover .market-perf-card__cta {
+            gap: 10px;
+        }
+        .market-perf-card__cta svg {
+            width: 16px;
+            height: 16px;
+            fill: var(--gold);
+        }
+
+        /* Revenue Chart Section */
+        .chart-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+            margin-bottom: 50px;
+        }
+        @media (max-width: 992px) {
+            .chart-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 28px;
+        }
+        .chart-card__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+        .chart-card__title {
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .chart-card__legend {
+            display: flex;
+            gap: 16px;
+        }
+        .chart-card__legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: #94a3b8;
+        }
+        .chart-card__legend-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        /* Simple Bar Chart */
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            gap: 12px;
+            height: 200px;
+            padding: 0 20px;
+        }
+        .bar-chart__item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        .bar-chart__bar-container {
+            width: 100%;
+            height: 160px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            gap: 2px;
+        }
+        .bar-chart__bar {
+            width: 100%;
+            border-radius: 4px 4px 0 0;
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+        .bar-chart__bar:hover {
+            filter: brightness(1.2);
+        }
+        .bar-chart__bar--austin { background: linear-gradient(180deg, #f59e0b, #d97706); }
+        .bar-chart__bar--nyc { background: linear-gradient(180deg, #3b82f6, #1d4ed8); }
+        .bar-chart__bar--denver { background: linear-gradient(180deg, #10b981, #059669); }
+        .bar-chart__label {
+            font-size: 11px;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        /* Donut Chart Placeholder */
+        .donut-chart {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+        .donut-chart__svg {
+            transform: rotate(-90deg);
+        }
+        .donut-chart__center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        .donut-chart__center-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: white;
+            font-family: var(--font-heading);
+        }
+        .donut-chart__center-label {
+            font-size: 12px;
+            color: #94a3b8;
+        }
+        .donut-chart__legend {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .donut-chart__legend-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .donut-chart__legend-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+        }
+        .donut-chart__legend-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .donut-chart__legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 3px;
+        }
+        .donut-chart__legend-name {
+            font-size: 13px;
+            color: white;
+        }
+        .donut-chart__legend-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+        @media (max-width: 992px) {
+            .quick-actions {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        .quick-action {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .quick-action:hover {
+            background: rgba(201, 162, 39, 0.1);
+            border-color: rgba(201, 162, 39, 0.3);
+            transform: translateX(4px);
+        }
+        .quick-action__icon {
+            width: 44px;
+            height: 44px;
+            background: rgba(201, 162, 39, 0.15);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .quick-action__icon svg {
+            width: 22px;
+            height: 22px;
+            fill: var(--gold);
+        }
+        .quick-action__text h4 {
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        .quick-action__text p {
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        /* Animated Counter */
+        .animate-counter {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Dev Mode Banner -->
+    <div class="dev-banner">
+        <span>DEV MODE</span>
+        Internal Use Only - CEO & Development Team Access
+    </div>
+
+    <!-- Navigation -->
+    <header class="header">
+        <nav class="nav">
+            <div class="nav__logo">
+                <a href="../../index.html">Lux Markets</a>
+            </div>
+            <ul class="nav__menu">
+                <li><a href="../our-markets.html">Our Markets</a></li>
+                <li><a href="../education.html">Education</a></li>
+                <li><a href="../pricing.html">Pricing</a></li>
+                <li><a href="../contact.html">Contact</a></li>
+                <li class="nav__item nav__item--dropdown nav__item--allpages">
+                    <a href="#" class="nav__link nav__link--allpages">
+                        All Pages
+                        <svg class="nav__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </a>
+                    <div class="dropdown dropdown--allpages">
+                        <div class="dropdown__section"><span class="dropdown__section-title">Main</span><a href="../../index.html" class="dropdown__item dropdown__item--simple">Home</a><a href="../about.html" class="dropdown__item dropdown__item--simple">About</a><a href="../contact.html" class="dropdown__item dropdown__item--simple">Contact</a></div>
+                        <div class="dropdown__section"><span class="dropdown__section-title">Solutions</span><a href="../for-properties.html" class="dropdown__item dropdown__item--simple">For Properties</a><a href="../for-brands.html" class="dropdown__item dropdown__item--simple">For Brands</a><a href="../pricing.html" class="dropdown__item dropdown__item--simple">Pricing</a></div>
+                        <div class="dropdown__section"><span class="dropdown__section-title">Markets</span><a href="../our-markets.html" class="dropdown__item dropdown__item--simple">Our Markets</a><a href="../market-rules.html" class="dropdown__item dropdown__item--simple">Market Rules</a></div>
+                        <div class="dropdown__section"><span class="dropdown__section-title">Resources</span><a href="../resources.html" class="dropdown__item dropdown__item--simple">Resources</a><a href="../education.html" class="dropdown__item dropdown__item--simple">Education</a><a href="../../market-research.html" class="dropdown__item dropdown__item--simple">Market Research</a></div>
+                        <div class="dropdown__section"><span class="dropdown__section-title">Legal</span><a href="../terms-of-service.html" class="dropdown__item dropdown__item--simple">Terms of Service</a></div>
+                        <div class="dropdown__section"><span class="dropdown__section-title">Explore</span><a href="../../index-journey.html" class="dropdown__item dropdown__item--simple">Journey</a><a href="../../index-neo.html" class="dropdown__item dropdown__item--simple">Neo</a><a href="../../index-refresh.html" class="dropdown__item dropdown__item--simple">Refresh</a><a href="../../digital-profile.html" class="dropdown__item dropdown__item--simple">Digital Profile</a><a href="../../pitch-deck.html" class="dropdown__item dropdown__item--simple">Pitch Deck</a><a href="../../challenges.html" class="dropdown__item dropdown__item--simple">Challenges</a></div>
+                        <div class="dropdown__section"><span class="dropdown__section-title">Archive</span><a href="../../Landfill_index-estate.html" class="dropdown__item dropdown__item--simple">Estate Design</a><a href="../../Landfill_index-gallery.html" class="dropdown__item dropdown__item--simple">Gallery Design</a><a href="../../Landfill_index-maison.html" class="dropdown__item dropdown__item--simple">Maison Design</a></div>
+                        <div class="dropdown__section"><span class="dropdown__section-title">Dev</span><a href="insights.html" class="dropdown__item dropdown__item--simple">Insights</a></div>
+                    </div>
+                </li>
+            </ul>
+            <div class="nav__actions">
+                <a href="https://instagram.com/luxmarkets_" class="nav__social" target="_blank" rel="noopener">Instagram</a>
+                <a href="https://app.luxmarkets.org/login" class="btn btn--primary">Login</a>
+            </div>
+            <button class="nav__toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Header -->
+    <div class="insights-header">
+        <div class="container">
+            <h1>Market Insights Dashboard</h1>
+            <p>Strategic overview of Lux Markets expansion across three key markets</p>
+            <div class="insights-meta">
+                <div><strong>Last Updated:</strong> December 15, 2024</div>
+                <div><strong>Prepared for:</strong> Sam Lillie (CEO), Jacob Gruver (Dev)</div>
+                <div><strong>Status:</strong> Confidential</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="insights-nav">
+        <div class="container">
+            <div class="insights-nav__inner">
+                <button class="insights-nav__btn active" data-filter="exec-dashboard">Executive Summary</button>
+                <button class="insights-nav__btn" data-filter="all">All Markets</button>
+                <button class="insights-nav__btn" data-filter="austin">Austin, TX</button>
+                <button class="insights-nav__btn" data-filter="denver">Denver, CO</button>
+                <button class="insights-nav__btn" data-filter="nyc">New York, NY</button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- ============================================
+             EXECUTIVE DASHBOARD - ALL MARKETS
+             ============================================ -->
+        <section id="exec-dashboard" class="exec-dashboard market-section">
+            <div class="container">
+                <!-- Header -->
+                <div class="exec-dashboard__header">
+                    <p class="exec-dashboard__eyebrow">Q4 2024 Performance</p>
+                    <h2 class="exec-dashboard__title">Executive Summary</h2>
+                    <p class="exec-dashboard__subtitle">Real-time insights across all Lux Markets operations</p>
+                </div>
+
+                <!-- Hero KPI Cards -->
+                <div class="kpi-hero-grid">
+                    <!-- Total Revenue -->
+                    <div class="kpi-card">
+                        <div class="kpi-card__tooltip">
+                            <h4>Total Revenue (GMV)</h4>
+                            <p>Gross Merchandise Value across all markets. Includes vendor sales, sponsorships, and property fees.</p>
+                            <p><strong>Austin:</strong> $2.4M (100%)</p>
+                            <p><strong>Denver:</strong> Launching Q1 2025</p>
+                            <p><strong>NYC:</strong> Projected Q3 2025</p>
+                            <div class="source">Source: Internal sales data, Dec 2024</div>
+                        </div>
+                        <div class="kpi-card__icon">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.91s4.18 1.39 4.18 3.91c-.01 1.83-1.38 2.83-3.12 3.16z"/></svg>
+                        </div>
+                        <div class="kpi-card__value">$2.4<span>M</span></div>
+                        <div class="kpi-card__label">Total GMV (2024)</div>
+                        <div class="kpi-card__trend">
+                            <svg viewBox="0 0 24 24"><path d="M7 14l5-5 5 5z"/></svg>
+                            +34% YoY
+                        </div>
+                    </div>
+
+                    <!-- Partner Properties -->
+                    <div class="kpi-card">
+                        <div class="kpi-card__tooltip">
+                            <h4>Partner Properties</h4>
+                            <p>Active luxury residential communities hosting Lux Markets events.</p>
+                            <p><strong>Austin:</strong> 25 properties</p>
+                            <p><strong>Denver:</strong> 45+ identified, 5 warm leads</p>
+                            <p><strong>NYC:</strong> 450+ in pipeline</p>
+                            <div class="source">Source: Partnership database, Dec 2024</div>
+                        </div>
+                        <div class="kpi-card__icon">
+                            <svg viewBox="0 0 24 24"><path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"/></svg>
+                        </div>
+                        <div class="kpi-card__value">25<span>+</span></div>
+                        <div class="kpi-card__label">Partner Properties</div>
+                        <div class="kpi-card__trend">
+                            <svg viewBox="0 0 24 24"><path d="M7 14l5-5 5 5z"/></svg>
+                            +8 this year
+                        </div>
+                    </div>
+
+                    <!-- Active Vendors -->
+                    <div class="kpi-card">
+                        <div class="kpi-card__tooltip">
+                            <h4>Active Vendors</h4>
+                            <p>Vetted, approved vendors who have participated in at least one market.</p>
+                            <p><strong>Avg. Revenue/Event:</strong> $1,850</p>
+                            <p><strong>Repeat Rate:</strong> 78%</p>
+                            <p><strong>Categories:</strong> Food (32%), Wellness (24%), Home (18%), Other (26%)</p>
+                            <div class="source">Source: Vendor portal data, Dec 2024</div>
+                        </div>
+                        <div class="kpi-card__icon">
+                            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>
+                        </div>
+                        <div class="kpi-card__value">150<span>+</span></div>
+                        <div class="kpi-card__label">Active Vendors</div>
+                        <div class="kpi-card__trend">
+                            <svg viewBox="0 0 24 24"><path d="M7 14l5-5 5 5z"/></svg>
+                            +42 this year
+                        </div>
+                    </div>
+
+                    <!-- Markets Hosted -->
+                    <div class="kpi-card">
+                        <div class="kpi-card__tooltip">
+                            <h4>Markets Hosted (2024)</h4>
+                            <p>Total pop-up market events executed across all locations this calendar year.</p>
+                            <p><strong>Avg. Attendance:</strong> 85 residents/event</p>
+                            <p><strong>Peak Month:</strong> October (Holiday prep)</p>
+                            <p><strong>Best Day:</strong> Saturday 11am-3pm</p>
+                            <div class="source">Source: Event management system, Dec 2024</div>
+                        </div>
+                        <div class="kpi-card__icon">
+                            <svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2zm-7 5h5v5h-5z"/></svg>
+                        </div>
+                        <div class="kpi-card__value">48</div>
+                        <div class="kpi-card__label">Markets Hosted</div>
+                        <div class="kpi-card__trend">
+                            <svg viewBox="0 0 24 24"><path d="M7 14l5-5 5 5z"/></svg>
+                            +18 vs 2023
+                        </div>
+                    </div>
+
+                    <!-- Property Retention -->
+                    <div class="kpi-card">
+                        <div class="kpi-card__tooltip">
+                            <h4>Property Retention Rate</h4>
+                            <p>Percentage of property partners who renewed or continued partnership year-over-year.</p>
+                            <p><strong>Industry Avg:</strong> 75%</p>
+                            <p><strong>Churned (2024):</strong> 2 properties</p>
+                            <p><strong>Reason:</strong> Management changes, not satisfaction</p>
+                            <div class="source">Source: Partnership renewals, Dec 2024</div>
+                        </div>
+                        <div class="kpi-card__icon">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                        </div>
+                        <div class="kpi-card__value">92<span>%</span></div>
+                        <div class="kpi-card__label">Property Retention</div>
+                        <div class="kpi-card__trend">
+                            <svg viewBox="0 0 24 24"><path d="M7 14l5-5 5 5z"/></svg>
+                            +5% vs target
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Market Performance Cards -->
+                <div class="market-cards-grid">
+                    <!-- Austin Card -->
+                    <div class="market-perf-card" onclick="filterSections('austin')">
+                        <div class="market-perf-card__header">
+                            <div class="market-perf-card__icon market-perf-card__icon--austin">
+                                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            </div>
+                            <div class="market-perf-card__title">
+                                <h3>Austin, Texas</h3>
+                                <span class="market-perf-card__status market-perf-card__status--active">Headquarters</span>
+                            </div>
+                        </div>
+                        <div class="market-perf-card__body">
+                            <div class="market-perf-card__metrics">
+                                <div class="market-perf-card__metric">
+                                    <div class="market-perf-card__metric-value">25+</div>
+                                    <div class="market-perf-card__metric-label">Properties</div>
+                                </div>
+                                <div class="market-perf-card__metric">
+                                    <div class="market-perf-card__metric-value">150+</div>
+                                    <div class="market-perf-card__metric-label">Vendors</div>
+                                </div>
+                                <div class="market-perf-card__metric">
+                                    <div class="market-perf-card__metric-value">$2.4M</div>
+                                    <div class="market-perf-card__metric-label">GMV 2024</div>
+                                </div>
+                                <div class="market-perf-card__metric">
+                                    <div class="market-perf-card__metric-value">48</div>
+                                    <div class="market-perf-card__metric-label">Events 2024</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="market-perf-card__footer">
+                            <span class="market-perf-card__cta">
+                                View Austin Details
+                                <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Denver Card -->
+                    <div class="market-perf-card" onclick="filterSections('denver')">
+                        <div class="market-perf-card__header">
+                            <div class="market-perf-card__icon market-perf-card__icon--denver">
+                                <svg viewBox="0 0 24 24"><path d="M14 6l-3.75 5 2.85 3.8-1.6 1.2C9.81 13.75 7 10 7 10l-6 8h22L14 6z"/></svg>
+                            </div>
+                            <div class="market-perf-card__title">
+                                <h3>Denver, Colorado</h3>
+                                <span class="market-perf-card__status market-perf-card__status--expansion">Active Expansion</span>
+                            </div>
+                        </div>
+                        <div class="market-perf-card__body">
+                            <div class="market-perf-card__metrics">
+                                <div class="market-perf-card__metric">
+                                    <div class="market-perf-card__metric-value">45+</div>
+                                    <div class="market-perf-card__metric-label">Target Properties</div>
+                                </div>
+                                <div class="market-perf-card__metric">
+                                    <div class="market-perf-card__metric-value">38+</div>
+                                    <div class="market-perf-card__metric-label">Vendors ID'd</div>
+                                </div>
+                                <div class="market-perf-card__metric">
+                                    <div class="market-perf-card__metric-value">Q1 2025</div>
+                                    <div class="market-perf-card__metric-label">Launch Target</div>
+                                </div>
+                                <div class="market-perf-card__metric">
+                                    <div class="market-perf-card__metric-value">5</div>
+                                    <div class="market-perf-card__metric-label">Warm Leads</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="market-perf-card__footer">
+                            <span class="market-perf-card__cta">
+                                View Denver Details
+                                <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- NYC Card -->
+                    <div class="market-perf-card" onclick="filterSections('nyc')">
+                        <div class="market-perf-card__header">
+                            <div class="market-perf-card__icon market-perf-card__icon--nyc">
+                                <svg viewBox="0 0 24 24"><path d="M15 11V5l-3-3-3 3v2H3v14h18V11h-6zm-8 8H5v-2h2v2zm0-4H5v-2h2v2zm0-4H5V9h2v2zm6 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V9h2v2zm0-4h-2V5h2v2zm6 12h-2v-2h2v2zm0-4h-2v-2h2v2z"/></svg>
+                            </div>
+                            <div class="market-perf-card__title">
+                                <h3>New York City</h3>
+                                <span class="market-perf-card__status market-perf-card__status--planning">Planning Phase</span>
+                            </div>
+                        </div>
+                        <div class="market-perf-card__body">
+                            <div class="market-perf-card__metrics">
+                                <div class="market-perf-card__metric">
+                                    <div class="market-perf-card__metric-value">450+</div>
+                                    <div class="market-perf-card__metric-label">Buildings ID'd</div>
+                                </div>
+                                <div class="market-perf-card__metric">
+                                    <div class="market-perf-card__metric-value">8.3M</div>
+                                    <div class="market-perf-card__metric-label">Population</div>
+                                </div>
+                                <div class="market-perf-card__metric">
+                                    <div class="market-perf-card__metric-value">Q3 2025</div>
+                                    <div class="market-perf-card__metric-label">Launch Target</div>
+                                </div>
+                                <div class="market-perf-card__metric">
+                                    <div class="market-perf-card__metric-value">1</div>
+                                    <div class="market-perf-card__metric-label">Warm Partner</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="market-perf-card__footer">
+                            <span class="market-perf-card__cta">
+                                View NYC Details
+                                <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="chart-section">
+                    <!-- Revenue by Quarter -->
+                    <div class="chart-card">
+                        <div class="chart-card__header">
+                            <h3 class="chart-card__title">GMV by Quarter (2024)</h3>
+                            <div class="chart-card__legend">
+                                <div class="chart-card__legend-item">
+                                    <span class="chart-card__legend-dot" style="background: #f59e0b;"></span>
+                                    Austin
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bar-chart">
+                            <div class="bar-chart__item">
+                                <div class="bar-chart__bar-container">
+                                    <div class="bar-chart__bar bar-chart__bar--austin" style="height: 45%;" title="$420K"></div>
+                                </div>
+                                <span class="bar-chart__label">Q1</span>
+                            </div>
+                            <div class="bar-chart__item">
+                                <div class="bar-chart__bar-container">
+                                    <div class="bar-chart__bar bar-chart__bar--austin" style="height: 55%;" title="$520K"></div>
+                                </div>
+                                <span class="bar-chart__label">Q2</span>
+                            </div>
+                            <div class="bar-chart__item">
+                                <div class="bar-chart__bar-container">
+                                    <div class="bar-chart__bar bar-chart__bar--austin" style="height: 70%;" title="$680K"></div>
+                                </div>
+                                <span class="bar-chart__label">Q3</span>
+                            </div>
+                            <div class="bar-chart__item">
+                                <div class="bar-chart__bar-container">
+                                    <div class="bar-chart__bar bar-chart__bar--austin" style="height: 100%;" title="$780K"></div>
+                                </div>
+                                <span class="bar-chart__label">Q4</span>
+                            </div>
+                        </div>
+                        <div style="text-align: center; margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.08);">
+                            <span style="color: #94a3b8; font-size: 13px;">Q4 includes holiday markets (peak season)</span>
+                        </div>
+                    </div>
+
+                    <!-- Revenue by Category -->
+                    <div class="chart-card">
+                        <div class="chart-card__header">
+                            <h3 class="chart-card__title">Revenue by Category</h3>
+                        </div>
+                        <div class="donut-chart">
+                            <svg class="donut-chart__svg" width="180" height="180" viewBox="0 0 180 180">
+                                <circle cx="90" cy="90" r="70" fill="none" stroke="#f59e0b" stroke-width="20" stroke-dasharray="140 300" stroke-linecap="round"/>
+                                <circle cx="90" cy="90" r="70" fill="none" stroke="#3b82f6" stroke-width="20" stroke-dasharray="106 300" stroke-dashoffset="-140" stroke-linecap="round"/>
+                                <circle cx="90" cy="90" r="70" fill="none" stroke="#10b981" stroke-width="20" stroke-dasharray="79 300" stroke-dashoffset="-246" stroke-linecap="round"/>
+                                <circle cx="90" cy="90" r="70" fill="none" stroke="#8b5cf6" stroke-width="20" stroke-dasharray="75 300" stroke-dashoffset="-325" stroke-linecap="round"/>
+                            </svg>
+                            <div class="donut-chart__center">
+                                <div class="donut-chart__center-value">$2.4M</div>
+                                <div class="donut-chart__center-label">Total GMV</div>
+                            </div>
+                        </div>
+                        <div class="donut-chart__legend">
+                            <div class="donut-chart__legend-item">
+                                <div class="donut-chart__legend-left">
+                                    <span class="donut-chart__legend-dot" style="background: #f59e0b;"></span>
+                                    <span class="donut-chart__legend-name">Food & Beverage</span>
+                                </div>
+                                <span class="donut-chart__legend-value">32%</span>
+                            </div>
+                            <div class="donut-chart__legend-item">
+                                <div class="donut-chart__legend-left">
+                                    <span class="donut-chart__legend-dot" style="background: #3b82f6;"></span>
+                                    <span class="donut-chart__legend-name">Wellness & Beauty</span>
+                                </div>
+                                <span class="donut-chart__legend-value">24%</span>
+                            </div>
+                            <div class="donut-chart__legend-item">
+                                <div class="donut-chart__legend-left">
+                                    <span class="donut-chart__legend-dot" style="background: #10b981;"></span>
+                                    <span class="donut-chart__legend-name">Home Goods</span>
+                                </div>
+                                <span class="donut-chart__legend-value">18%</span>
+                            </div>
+                            <div class="donut-chart__legend-item">
+                                <div class="donut-chart__legend-left">
+                                    <span class="donut-chart__legend-dot" style="background: #8b5cf6;"></span>
+                                    <span class="donut-chart__legend-name">Other</span>
+                                </div>
+                                <span class="donut-chart__legend-value">26%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <div class="quick-action" onclick="filterSections('austin')">
+                        <div class="quick-action__icon">
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        </div>
+                        <div class="quick-action__text">
+                            <h4>Austin Operations</h4>
+                            <p>View active market data</p>
+                        </div>
+                    </div>
+                    <div class="quick-action" onclick="filterSections('denver')">
+                        <div class="quick-action__icon">
+                            <svg viewBox="0 0 24 24"><path d="M14 6l-3.75 5 2.85 3.8-1.6 1.2C9.81 13.75 7 10 7 10l-6 8h22L14 6z"/></svg>
+                        </div>
+                        <div class="quick-action__text">
+                            <h4>Denver Expansion</h4>
+                            <p>Property & vendor pipeline</p>
+                        </div>
+                    </div>
+                    <div class="quick-action" onclick="filterSections('nyc')">
+                        <div class="quick-action__icon">
+                            <svg viewBox="0 0 24 24"><path d="M15 11V5l-3-3-3 3v2H3v14h18V11h-6zm-8 8H5v-2h2v2zm0-4H5v-2h2v2zm0-4H5V9h2v2zm6 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V9h2v2zm0-4h-2V5h2v2zm6 12h-2v-2h2v2zm0-4h-2v-2h2v2z"/></svg>
+                        </div>
+                        <div class="quick-action__text">
+                            <h4>NYC Research</h4>
+                            <p>Market analysis & timeline</p>
+                        </div>
+                    </div>
+                    <div class="quick-action" onclick="filterSections('summary')">
+                        <div class="quick-action__icon">
+                            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+                        </div>
+                        <div class="quick-action__text">
+                            <h4>Executive Summary</h4>
+                            <p>Strategic overview & KPIs</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional KPIs Row -->
+                <div style="margin-top: 50px;">
+                    <h3 style="color: var(--gold); font-size: 16px; font-weight: 600; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px;">Operational Metrics</h3>
+                    <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px;">
+                        <div class="kpi-card" style="padding: 20px;">
+                            <div class="kpi-card__value" style="font-size: 28px;">$1,850</div>
+                            <div class="kpi-card__label" style="font-size: 11px;">Avg. Vendor Rev/Event</div>
+                        </div>
+                        <div class="kpi-card" style="padding: 20px;">
+                            <div class="kpi-card__value" style="font-size: 28px;">85</div>
+                            <div class="kpi-card__label" style="font-size: 11px;">Avg. Attendance</div>
+                        </div>
+                        <div class="kpi-card" style="padding: 20px;">
+                            <div class="kpi-card__value" style="font-size: 28px;">4.7<span style="font-size: 16px;">/5</span></div>
+                            <div class="kpi-card__label" style="font-size: 11px;">Resident Rating</div>
+                        </div>
+                        <div class="kpi-card" style="padding: 20px;">
+                            <div class="kpi-card__value" style="font-size: 28px;">78%</div>
+                            <div class="kpi-card__label" style="font-size: 11px;">Vendor Repeat Rate</div>
+                        </div>
+                        <div class="kpi-card" style="padding: 20px;">
+                            <div class="kpi-card__value" style="font-size: 28px;">8-12</div>
+                            <div class="kpi-card__label" style="font-size: 11px;">Vendors/Market</div>
+                        </div>
+                        <div class="kpi-card" style="padding: 20px;">
+                            <div class="kpi-card__value" style="font-size: 28px;">3.2</div>
+                            <div class="kpi-card__label" style="font-size: 11px;">Events/Property/Yr</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2025 Projections -->
+                <div style="margin-top: 50px; background: rgba(201, 162, 39, 0.1); border: 1px solid rgba(201, 162, 39, 0.3); border-radius: 20px; padding: 32px;">
+                    <h3 style="color: var(--gold); font-size: 18px; font-weight: 600; margin-bottom: 24px; display: flex; align-items: center; gap: 10px;">
+                        <svg style="width: 24px; height: 24px; fill: var(--gold);" viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM9 10H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm-8 4H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2z"/></svg>
+                        2025 Projections
+                    </h3>
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 36px; font-weight: 700; color: white; font-family: var(--font-heading);">$10M+</div>
+                            <div style="font-size: 13px; color: #94a3b8; margin-top: 4px;">Projected GMV</div>
+                            <div style="font-size: 11px; color: #22c55e; margin-top: 8px;">+317% growth</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 36px; font-weight: 700; color: white; font-family: var(--font-heading);">75+</div>
+                            <div style="font-size: 13px; color: #94a3b8; margin-top: 4px;">Partner Properties</div>
+                            <div style="font-size: 11px; color: #22c55e; margin-top: 8px;">3 markets</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 36px; font-weight: 700; color: white; font-family: var(--font-heading);">300+</div>
+                            <div style="font-size: 13px; color: #94a3b8; margin-top: 4px;">Active Vendors</div>
+                            <div style="font-size: 11px; color: #22c55e; margin-top: 8px;">+100% growth</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 36px; font-weight: 700; color: white; font-family: var(--font-heading);">150+</div>
+                            <div style="font-size: 13px; color: #94a3b8; margin-top: 4px;">Markets Planned</div>
+                            <div style="font-size: 11px; color: #22c55e; margin-top: 8px;">+213% growth</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AUSTIN SECTION -->
+        <section id="austin" class="market-section">
+            <div class="container">
+                <div class="market-header">
+                    <div class="market-icon">
+                        <!-- Star/Texas icon -->
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                    </div>
+                    <div class="market-title">
+                        <h2>Austin, Texas</h2>
+                        <span class="status status--active">Active Market - Headquarters</span>
+                    </div>
+                </div>
+
+                <div class="metrics-grid">
+                    <div class="metric-card metric-card--highlight">
+                        <div class="metric-card__value">25+</div>
+                        <div class="metric-card__label">Partner Properties</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-card__value">150+</div>
+                        <div class="metric-card__label">Active Vendors</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-card__value">48</div>
+                        <div class="metric-card__label">Markets Hosted (2024)</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-card__value">$2.4M</div>
+                        <div class="metric-card__label">Est. GMV (2024)</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-card__value">92%</div>
+                        <div class="metric-card__label">Property Retention</div>
+                    </div>
+                </div>
+
+                <div class="two-column">
+                    <div class="data-section">
+                        <h3 class="data-section__title">Key Property Partners</h3>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Property</th>
+                                    <th>Management</th>
+                                    <th>Tier</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>AMLI on 2nd</td>
+                                    <td>AMLI Residential</td>
+                                    <td><span class="tier-badge tier-badge--1">Tier 1</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Gables Park Tower</td>
+                                    <td>Greystar</td>
+                                    <td><span class="tier-badge tier-badge--1">Tier 1</span></td>
+                                </tr>
+                                <tr>
+                                    <td>The Quincy</td>
+                                    <td>CWS</td>
+                                    <td><span class="tier-badge tier-badge--1">Tier 1</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Onion Creek Luxury</td>
+                                    <td>Kairoi</td>
+                                    <td><span class="tier-badge tier-badge--2">Tier 2</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Domain Properties (5)</td>
+                                    <td>Various</td>
+                                    <td><span class="tier-badge tier-badge--2">Tier 2</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="data-section">
+                        <h3 class="data-section__title">Top Vendor Categories</h3>
+                        <div class="vendor-categories">
+                            <span class="vendor-cat">Artisan Food (32%)</span>
+                            <span class="vendor-cat">Wellness/Beauty (24%)</span>
+                            <span class="vendor-cat">Home Goods (18%)</span>
+                            <span class="vendor-cat">Beverages (14%)</span>
+                            <span class="vendor-cat">Pet Products (8%)</span>
+                            <span class="vendor-cat">Other (4%)</span>
+                        </div>
+
+                        <div class="notes-box" style="margin-top: 24px;">
+                            <div class="notes-box__title">Market Intelligence</div>
+                            <p><strong>Avg. Vendor Revenue/Event:</strong> $1,850</p>
+                            <p><strong>Peak Season:</strong> Oct-Dec (Holiday markets)</p>
+                            <p><strong>Best Performing Day:</strong> Saturday 11am-3pm</p>
+                            <p><strong>Resident Satisfaction:</strong> 4.7/5.0 avg rating</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-items">
+                    <div class="action-items__title">Q1 2025 Priorities - Austin</div>
+                    <ul>
+                        <li>Onboard 5 new Tier 1 properties in Downtown/Domain corridor</li>
+                        <li>Launch vendor loyalty program for top 20 performers</li>
+                        <li>Implement new booking dashboard features</li>
+                        <li>Test premium "VIP Preview" format at 3 properties</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEW YORK SECTION -->
+        <section id="nyc" class="market-section" style="background: var(--gray-100);">
+            <div class="container">
+                <div class="market-header">
+                    <div class="market-icon">
+                        <!-- Building/Skyline icon -->
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M15 11V5l-3-3-3 3v2H3v14h18V11h-6zm-8 8H5v-2h2v2zm0-4H5v-2h2v2zm0-4H5V9h2v2zm6 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V9h2v2zm0-4h-2V5h2v2zm6 12h-2v-2h2v2zm0-4h-2v-2h2v2z"/>
+                        </svg>
+                    </div>
+                    <div class="market-title">
+                        <h2>New York, New York</h2>
+                        <span class="status status--planning">Planning Phase</span>
+                    </div>
+                </div>
+
+                <div class="metrics-grid">
+                    <div class="metric-card metric-card--highlight">
+                        <div class="metric-card__value">$85K+</div>
+                        <div class="metric-card__label">Avg. Rent (Target Properties)</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-card__value">450+</div>
+                        <div class="metric-card__label">Luxury Buildings Identified</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-card__value">8.3M</div>
+                        <div class="metric-card__label">Population</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-card__value">$98K</div>
+                        <div class="metric-card__label">Median HH Income (Target Areas)</div>
+                    </div>
+                </div>
+
+                <div class="data-section">
+                    <h3 class="data-section__title">Target Neighborhoods (Priority Order)</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Neighborhood</th>
+                                <th>Borough</th>
+                                <th>Key Properties</th>
+                                <th>Priority</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Hudson Yards</td>
+                                <td>Manhattan</td>
+                                <td>35 Hudson Yards, 15 Hudson Yards, The Shed</td>
+                                <td><span class="priority-badge priority-badge--high">High</span></td>
+                            </tr>
+                            <tr>
+                                <td>Tribeca</td>
+                                <td>Manhattan</td>
+                                <td>56 Leonard, 443 Greenwich, One John Street</td>
+                                <td><span class="priority-badge priority-badge--high">High</span></td>
+                            </tr>
+                            <tr>
+                                <td>Williamsburg</td>
+                                <td>Brooklyn</td>
+                                <td>The William Vale, 325 Kent, Domino Sugar</td>
+                                <td><span class="priority-badge priority-badge--high">High</span></td>
+                            </tr>
+                            <tr>
+                                <td>DUMBO</td>
+                                <td>Brooklyn</td>
+                                <td>Olympia Dumbo, Front & York, 1 John Street</td>
+                                <td><span class="priority-badge priority-badge--medium">Medium</span></td>
+                            </tr>
+                            <tr>
+                                <td>Long Island City</td>
+                                <td>Queens</td>
+                                <td>Skyline Tower, The Forge, Watermark</td>
+                                <td><span class="priority-badge priority-badge--medium">Medium</span></td>
+                            </tr>
+                            <tr>
+                                <td>Financial District</td>
+                                <td>Manhattan</td>
+                                <td>One Manhattan Square, 50 West, 130 William</td>
+                                <td><span class="priority-badge priority-badge--low">Low</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="two-column">
+                    <div class="data-section">
+                        <h3 class="data-section__title">Management Companies to Target</h3>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Company</th>
+                                    <th>NYC Units</th>
+                                    <th>Austin Relationship</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Related Companies</td>
+                                    <td>15,000+</td>
+                                    <td>None - Cold outreach</td>
+                                </tr>
+                                <tr>
+                                    <td>Greystar</td>
+                                    <td>8,000+</td>
+                                    <td><strong style="color: var(--success);">Existing Partner</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>AvalonBay</td>
+                                    <td>6,500+</td>
+                                    <td>None - Cold outreach</td>
+                                </tr>
+                                <tr>
+                                    <td>Brookfield</td>
+                                    <td>5,000+</td>
+                                    <td>None - Cold outreach</td>
+                                </tr>
+                                <tr>
+                                    <td>Two Trees</td>
+                                    <td>3,500+</td>
+                                    <td>None - Cold outreach</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="data-section">
+                        <h3 class="data-section__title">NYC Launch Timeline</h3>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-item__date">Q1 2025</div>
+                                <div class="timeline-item__title">Market Research & Outreach</div>
+                                <div class="timeline-item__desc">Property identification, management company outreach, vendor scouting</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-item__date">Q2 2025</div>
+                                <div class="timeline-item__title">Pilot Partnership</div>
+                                <div class="timeline-item__desc">Secure 2-3 pilot properties, recruit 30+ NYC vendors</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-item__date">Q3 2025</div>
+                                <div class="timeline-item__title">Soft Launch</div>
+                                <div class="timeline-item__desc">First markets at pilot properties, iterate on format</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-item__date">Q4 2025</div>
+                                <div class="timeline-item__title">Full Launch</div>
+                                <div class="timeline-item__desc">Expand to 10+ properties, holiday market series</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="notes-box">
+                    <div class="notes-box__title">NYC Market Considerations</div>
+                    <p><strong>Challenges:</strong> Higher operating costs, union considerations for some buildings, competitive event space market</p>
+                    <p><strong>Opportunities:</strong> Massive affluent population, strong artisan/maker culture, year-round indoor demand due to weather</p>
+                    <p><strong>Vendor Strategy:</strong> Partner with Brooklyn Flea, Smorgasburg, and local maker collectives for vendor recruitment</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- DENVER SECTION - COMPREHENSIVE -->
+        <section id="denver" class="market-section">
+            <div class="container">
+                <div class="market-header">
+                    <div class="market-icon">
+                        <!-- Mountain icon -->
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M14 6l-3.75 5 2.85 3.8-1.6 1.2C9.81 13.75 7 10 7 10l-6 8h22L14 6z"/>
+                        </svg>
+                    </div>
+                    <div class="market-title">
+                        <h2>Denver, Colorado</h2>
+                        <span class="status status--expansion">Active Expansion</span>
+                    </div>
+                </div>
+
+                <!-- Denver Sub-Navigation -->
+                <div class="denver-subnav" style="display: flex; gap: 8px; margin-bottom: 30px; flex-wrap: wrap;">
+                    <button class="denver-tab active" data-tab="overview">Overview</button>
+                    <button class="denver-tab" data-tab="properties">All Properties (45+)</button>
+                    <button class="denver-tab" data-tab="vendors">Vendors (60+)</button>
+                    <button class="denver-tab" data-tab="contacts">Contacts & Outreach</button>
+                    <button class="denver-tab" data-tab="calendar">Calendar & Tasks</button>
+                </div>
+
+                <!-- OVERVIEW TAB -->
+                <div class="denver-content" id="denver-overview">
+                    <div class="metrics-grid">
+                        <div class="metric-card metric-card--highlight">
+                            <div class="metric-card__value">45+</div>
+                            <div class="metric-card__label">Target Properties</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-card__value">60+</div>
+                            <div class="metric-card__label">Vendors Identified</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-card__value">5</div>
+                            <div class="metric-card__label">Target Neighborhoods</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-card__value">2</div>
+                            <div class="metric-card__label">Warm Intro Partners</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-card__value">Q1 2025</div>
+                            <div class="metric-card__label">Launch Target</div>
+                        </div>
+                    </div>
+
+                    <div class="two-column">
+                        <div class="data-section">
+                            <h3 class="data-section__title">Neighborhood Overview</h3>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Neighborhood</th>
+                                        <th>Properties</th>
+                                        <th>Avg Income</th>
+                                        <th>Priority</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Cherry Creek</td>
+                                        <td>12</td>
+                                        <td>$150K+</td>
+                                        <td><span class="priority-badge priority-badge--high">Primary</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>LoDo/Downtown</td>
+                                        <td>18</td>
+                                        <td>$95K</td>
+                                        <td><span class="priority-badge priority-badge--high">Primary</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>RiNo Arts District</td>
+                                        <td>8</td>
+                                        <td>$85K</td>
+                                        <td><span class="priority-badge priority-badge--medium">Secondary</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Golden Triangle</td>
+                                        <td>5</td>
+                                        <td>$90K</td>
+                                        <td><span class="priority-badge priority-badge--medium">Secondary</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Highlands/LoHi</td>
+                                        <td>4</td>
+                                        <td>$110K</td>
+                                        <td><span class="priority-badge priority-badge--low">Tertiary</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="data-section">
+                            <h3 class="data-section__title">Launch Timeline</h3>
+                            <div class="timeline">
+                                <div class="timeline-item">
+                                    <div class="timeline-item__date">Week 1-4</div>
+                                    <div class="timeline-item__title">Warm Outreach</div>
+                                    <div class="timeline-item__desc">AMLI/Greystar intros, property research</div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-item__date">Week 5-8</div>
+                                    <div class="timeline-item__title">Direct Outreach</div>
+                                    <div class="timeline-item__desc">Cherry Creek & Downtown properties</div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-item__date">Week 9-12</div>
+                                    <div class="timeline-item__title">First Markets</div>
+                                    <div class="timeline-item__desc">Launch at 2-3 pilot properties</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="action-items">
+                        <div class="action-items__title">Your Priority Actions This Week</div>
+                        <ul>
+                            <li>Contact Austin AMLI regional manager for Denver intro</li>
+                            <li>Request Greystar Mountain Division contact from Sam</li>
+                            <li>Scout Cherry Creek properties (drive-by assessment)</li>
+                            <li>Attend Denver BAZAAR (3rd Sunday) for vendor scouting</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- PROPERTIES TAB -->
+                <div class="denver-content" id="denver-properties" style="display: none;">
+                    <div style="display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; align-items: center;">
+                        <input type="text" id="propertySearch" placeholder="Search properties..." style="padding: 10px 16px; border: 1px solid var(--gray-300); border-radius: 6px; font-size: 14px; width: 250px;">
+                        <select id="neighborhoodFilter" style="padding: 10px 16px; border: 1px solid var(--gray-300); border-radius: 6px; font-size: 14px;">
+                            <option value="all">All Neighborhoods</option>
+                            <option value="cherry-creek">Cherry Creek</option>
+                            <option value="downtown">Downtown/LoDo</option>
+                            <option value="rino">RiNo</option>
+                            <option value="golden-triangle">Golden Triangle</option>
+                            <option value="highlands">Highlands/LoHi</option>
+                            <option value="cap-hill">Capitol Hill</option>
+                            <option value="dtc">DTC/Tech Center</option>
+                        </select>
+                        <select id="tierFilter" style="padding: 10px 16px; border: 1px solid var(--gray-300); border-radius: 6px; font-size: 14px;">
+                            <option value="all">All Tiers</option>
+                            <option value="1">Tier 1 (Priority)</option>
+                            <option value="2">Tier 2</option>
+                            <option value="3">Tier 3</option>
+                        </select>
+                        <span id="propertyCount" style="font-size: 13px; color: var(--gray-600); margin-left: 12px;">45 properties shown</span>
+                    </div>
+
+                    <div class="data-section">
+                        <h3 class="data-section__title">Complete Property Database</h3>
+                        <div style="overflow-x: auto;">
+                            <table class="data-table" id="propertyTable">
+                                <thead>
+                                    <tr>
+                                        <th>Property</th>
+                                        <th>Neighborhood</th>
+                                        <th>Units</th>
+                                        <th>Management</th>
+                                        <th>Event Space</th>
+                                        <th>Tier</th>
+                                        <th>Warm Intro?</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- TIER 1 - CHERRY CREEK -->
+                                    <tr data-neighborhood="cherry-creek" data-tier="1">
+                                        <td><strong>The Confluence</strong></td>
+                                        <td>Cherry Creek</td>
+                                        <td>350+</td>
+                                        <td>Private</td>
+                                        <td>Rooftop pool, concierge lobby, outdoor terrace</td>
+                                        <td><span class="tier-badge tier-badge--1">Tier 1</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+                                    <tr data-neighborhood="cherry-creek" data-tier="1">
+                                        <td><strong>The Seasons of Cherry Creek</strong></td>
+                                        <td>Cherry Creek</td>
+                                        <td>200+</td>
+                                        <td>Private</td>
+                                        <td>Seasons Spa, designer lobbies, penthouses</td>
+                                        <td><span class="tier-badge tier-badge--1">Tier 1</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+                                    <tr data-neighborhood="cherry-creek" data-tier="1">
+                                        <td><strong>Laurel Cherry Creek</strong></td>
+                                        <td>Cherry Creek North</td>
+                                        <td>150+</td>
+                                        <td>Private</td>
+                                        <td>Concierge, private lounges, wellness amenities</td>
+                                        <td><span class="tier-badge tier-badge--1">Tier 1</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+                                    <tr data-neighborhood="cherry-creek" data-tier="2">
+                                        <td><strong>NorthCreek</strong></td>
+                                        <td>Cherry Creek</td>
+                                        <td>180+</td>
+                                        <td>Private</td>
+                                        <td>Premium finishes, community events space</td>
+                                        <td><span class="tier-badge tier-badge--2">Tier 2</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+                                    <tr data-neighborhood="cherry-creek" data-tier="2">
+                                        <td><strong>250 Columbine</strong></td>
+                                        <td>Cherry Creek</td>
+                                        <td>120+</td>
+                                        <td>Private</td>
+                                        <td>Boutique luxury, intimate setting</td>
+                                        <td><span class="tier-badge tier-badge--2">Tier 2</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+                                    <tr data-neighborhood="cherry-creek" data-tier="2">
+                                        <td><strong>Cherry Creek Condos</strong></td>
+                                        <td>Cherry Creek</td>
+                                        <td>Various</td>
+                                        <td>HOA</td>
+                                        <td>Multiple buildings, community spaces</td>
+                                        <td><span class="tier-badge tier-badge--2">Tier 2</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+
+                                    <!-- TIER 1 - DOWNTOWN -->
+                                    <tr data-neighborhood="downtown" data-tier="1">
+                                        <td><strong>Spire</strong></td>
+                                        <td>Downtown</td>
+                                        <td>500+</td>
+                                        <td>Private</td>
+                                        <td>Rooftop pool/spa, theater, lounges, yoga garden, grilling</td>
+                                        <td><span class="tier-badge tier-badge--1">Tier 1</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+                                    <tr data-neighborhood="downtown" data-tier="1">
+                                        <td><strong>The Quincy</strong></td>
+                                        <td>Downtown</td>
+                                        <td>200+</td>
+                                        <td>Private</td>
+                                        <td>Rooftop pool with cabanas, concierge, event spaces</td>
+                                        <td><span class="tier-badge tier-badge--1">Tier 1</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+                                    <tr data-neighborhood="downtown" data-tier="1">
+                                        <td><strong>The Coloradan</strong></td>
+                                        <td>Union Station</td>
+                                        <td>334</td>
+                                        <td>Lincoln Property</td>
+                                        <td>Rooftop deck, resident lounge, floor-to-ceiling windows</td>
+                                        <td><span class="tier-badge tier-badge--1">Tier 1</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+                                    <tr data-neighborhood="downtown" data-tier="1">
+                                        <td><strong>Jasper Towers</strong></td>
+                                        <td>Downtown</td>
+                                        <td>300+</td>
+                                        <td>Private</td>
+                                        <td>Skyline views, smart features, premium amenities</td>
+                                        <td><span class="tier-badge tier-badge--1">Tier 1</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+                                    <tr data-neighborhood="downtown" data-tier="1">
+                                        <td><strong>AMLI Downtown Denver</strong></td>
+                                        <td>Downtown</td>
+                                        <td>250+</td>
+                                        <td>AMLI Residential</td>
+                                        <td>Full amenity package, event spaces</td>
+                                        <td><span class="tier-badge tier-badge--1">Tier 1</span></td>
+                                        <td><strong style="color: var(--success);">Yes - Austin</strong></td>
+                                        <td><span class="status-pill status-pill--warm">Warm Lead</span></td>
+                                    </tr>
+                                    <tr data-neighborhood="downtown" data-tier="2">
+                                        <td><strong>1600 Glenarm Place</strong></td>
+                                        <td>Downtown</td>
+                                        <td>250+</td>
+                                        <td>Private</td>
+                                        <td>High-rise with extensive common areas</td>
+                                        <td><span class="tier-badge tier-badge--2">Tier 2</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+                                    <tr data-neighborhood="downtown" data-tier="2">
+                                        <td><strong>Brooks Towers</strong></td>
+                                        <td>Downtown/16th St</td>
+                                        <td>300+</td>
+                                        <td>Private</td>
+                                        <td>Heart-of-city location, walkable</td>
+                                        <td><span class="tier-badge tier-badge--2">Tier 2</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+                                    <tr data-neighborhood="downtown" data-tier="2">
+                                        <td><strong>One Lincoln Park</strong></td>
+                                        <td>Edge of Downtown</td>
+                                        <td>200+</td>
+                                        <td>Private</td>
+                                        <td>Infinity pool, sun deck, fire pit, BBQ</td>
+                                        <td><span class="tier-badge tier-badge--2">Tier 2</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+                                    <tr data-neighborhood="downtown" data-tier="2">
+                                        <td><strong>Museum Residences</strong></td>
+                                        <td>Golden Triangle</td>
+                                        <td>150+</td>
+                                        <td>HOA</td>
+                                        <td>Cultural district location, common areas</td>
+                                        <td><span class="tier-badge tier-badge--2">Tier 2</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+
+                                    <!-- LODO -->
+                                    <tr data-neighborhood="downtown" data-tier="1">
+                                        <td><strong>McGregor Square Residences</strong></td>
+                                        <td>LoDo/Ball Arena</td>
+                                        <td>200+</td>
+                                        <td>Private</td>
+                                        <td>Rooftop pools, modern towers, near Coors Field</td>
+                                        <td><span class="tier-badge tier-badge--1">Tier 1</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+                                    <tr data-neighborhood="downtown" data-tier="2">
+                                        <td><strong>Waterside Lofts</strong></td>
+                                        <td>LoDo</td>
+                                        <td>150+</td>
+                                        <td>Private</td>
+                                        <td>24/7 front desk, fitness, business center</td>
+                                        <td><span class="tier-badge tier-badge--2">Tier 2</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+
+                                    <!-- GOLDEN TRIANGLE -->
+                                    <tr data-neighborhood="golden-triangle" data-tier="1">
+                                        <td><strong>Acoma</strong></td>
+                                        <td>Golden Triangle</td>
+                                        <td>17 stories</td>
+                                        <td>Private</td>
+                                        <td>First true high-rise in Denver, mountain vistas</td>
+                                        <td><span class="tier-badge tier-badge--1">Tier 1</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+
+                                    <!-- RINO -->
+                                    <tr data-neighborhood="rino" data-tier="1">
+                                        <td><strong>One River North</strong></td>
+                                        <td>RiNo</td>
+                                        <td>187</td>
+                                        <td>Private</td>
+                                        <td>NEW (April 2024), private terraces, Fitwel certified</td>
+                                        <td><span class="tier-badge tier-badge--1">Tier 1</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+                                    <tr data-neighborhood="rino" data-tier="2">
+                                        <td><strong>The Source Hotel</strong></td>
+                                        <td>RiNo</td>
+                                        <td>100+</td>
+                                        <td>Private</td>
+                                        <td>Mixed-use, market hall, rooftop</td>
+                                        <td><span class="tier-badge tier-badge--2">Tier 2</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+                                    <tr data-neighborhood="rino" data-tier="2">
+                                        <td><strong>RiNo Developments 2024</strong></td>
+                                        <td>RiNo</td>
+                                        <td>Various</td>
+                                        <td>Various</td>
+                                        <td>Emerging luxury market, new builds</td>
+                                        <td><span class="tier-badge tier-badge--2">Tier 2</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+
+                                    <!-- HIGHLANDS -->
+                                    <tr data-neighborhood="highlands" data-tier="2">
+                                        <td><strong>LoHi Luxury Apartments</strong></td>
+                                        <td>LoHi</td>
+                                        <td>180+</td>
+                                        <td>Various</td>
+                                        <td>Growing area, community spaces</td>
+                                        <td><span class="tier-badge tier-badge--2">Tier 2</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+
+                                    <!-- GREYSTAR PROPERTIES -->
+                                    <tr data-neighborhood="downtown" data-tier="1">
+                                        <td><strong>Greystar Denver Properties</strong></td>
+                                        <td>Multiple</td>
+                                        <td>1000+</td>
+                                        <td>Greystar</td>
+                                        <td>Multiple Class A properties</td>
+                                        <td><span class="tier-badge tier-badge--1">Tier 1</span></td>
+                                        <td><strong style="color: var(--success);">Yes - Austin</strong></td>
+                                        <td><span class="status-pill status-pill--warm">Warm Lead</span></td>
+                                    </tr>
+
+                                    <!-- SUBURBAN/BROOMFIELD -->
+                                    <tr data-neighborhood="dtc" data-tier="2">
+                                        <td><strong>AMLI at Interlocken</strong></td>
+                                        <td>Broomfield</td>
+                                        <td>300+</td>
+                                        <td>AMLI Residential</td>
+                                        <td>Tech corridor, professional residents</td>
+                                        <td><span class="tier-badge tier-badge--2">Tier 2</span></td>
+                                        <td><strong style="color: var(--success);">Yes - Austin</strong></td>
+                                        <td><span class="status-pill status-pill--warm">Warm Lead</span></td>
+                                    </tr>
+
+                                    <!-- ADDITIONAL CHERRY CREEK -->
+                                    <tr data-neighborhood="cherry-creek" data-tier="1">
+                                        <td><strong>The Prelude at Cherry Creek</strong></td>
+                                        <td>Cherry Creek North</td>
+                                        <td>200+</td>
+                                        <td>Private</td>
+                                        <td>Rooftop amenities, modern luxury</td>
+                                        <td><span class="tier-badge tier-badge--1">Tier 1</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+                                    <tr data-neighborhood="cherry-creek" data-tier="2">
+                                        <td><strong>Cherry Creek Place</strong></td>
+                                        <td>Cherry Creek</td>
+                                        <td>150+</td>
+                                        <td>Private</td>
+                                        <td>Walking distance to shops, community room</td>
+                                        <td><span class="tier-badge tier-badge--2">Tier 2</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+                                    <tr data-neighborhood="cherry-creek" data-tier="1">
+                                        <td><strong>Polo Club Towers</strong></td>
+                                        <td>Cherry Creek</td>
+                                        <td>180+</td>
+                                        <td>HOA</td>
+                                        <td>Landmark building, premium amenities, established community</td>
+                                        <td><span class="tier-badge tier-badge--1">Tier 1</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+
+                                    <!-- ADDITIONAL DOWNTOWN -->
+                                    <tr data-neighborhood="downtown" data-tier="1">
+                                        <td><strong>SkyHouse Denver</strong></td>
+                                        <td>Downtown</td>
+                                        <td>354</td>
+                                        <td>Novare Group</td>
+                                        <td>25-story tower, rooftop deck, fitness, pool</td>
+                                        <td><span class="tier-badge tier-badge--1">Tier 1</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+                                    <tr data-neighborhood="downtown" data-tier="1">
+                                        <td><strong>Verve Denver</strong></td>
+                                        <td>Downtown</td>
+                                        <td>300+</td>
+                                        <td>Milender White</td>
+                                        <td>Pet-friendly, sky lounge, fitness</td>
+                                        <td><span class="tier-badge tier-badge--1">Tier 1</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+                                    <tr data-neighborhood="downtown" data-tier="2">
+                                        <td><strong>The Denizen</strong></td>
+                                        <td>Union Station</td>
+                                        <td>200+</td>
+                                        <td>Private</td>
+                                        <td>Near transit, rooftop, modern design</td>
+                                        <td><span class="tier-badge tier-badge--2">Tier 2</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+                                    <tr data-neighborhood="downtown" data-tier="2">
+                                        <td><strong>Alexan Downtown</strong></td>
+                                        <td>Downtown</td>
+                                        <td>350+</td>
+                                        <td>Trammell Crow</td>
+                                        <td>Multiple buildings, diverse amenities</td>
+                                        <td><span class="tier-badge tier-badge--2">Tier 2</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+                                    <tr data-neighborhood="downtown" data-tier="2">
+                                        <td><strong>1660 Lincoln</strong></td>
+                                        <td>Downtown</td>
+                                        <td>200+</td>
+                                        <td>Private</td>
+                                        <td>High-rise, city views, premium units</td>
+                                        <td><span class="tier-badge tier-badge--2">Tier 2</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+
+                                    <!-- CAPITOL HILL -->
+                                    <tr data-neighborhood="cap-hill" data-tier="2">
+                                        <td><strong>The Avenue</strong></td>
+                                        <td>Capitol Hill</td>
+                                        <td>150+</td>
+                                        <td>Private</td>
+                                        <td>Historic area, walkable, community spaces</td>
+                                        <td><span class="tier-badge tier-badge--2">Tier 2</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+                                    <tr data-neighborhood="cap-hill" data-tier="3">
+                                        <td><strong>Capitol Hill Apartments</strong></td>
+                                        <td>Capitol Hill</td>
+                                        <td>Various</td>
+                                        <td>Various</td>
+                                        <td>Multiple boutique buildings</td>
+                                        <td><span class="tier-badge tier-badge--3">Tier 3</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+
+                                    <!-- DTC / TECH CENTER -->
+                                    <tr data-neighborhood="dtc" data-tier="2">
+                                        <td><strong>AMLI at Inverness</strong></td>
+                                        <td>Englewood/DTC</td>
+                                        <td>400+</td>
+                                        <td>AMLI Residential</td>
+                                        <td>Tech center, professional clientele</td>
+                                        <td><span class="tier-badge tier-badge--2">Tier 2</span></td>
+                                        <td><strong style="color: var(--success);">Yes - Austin</strong></td>
+                                        <td><span class="status-pill status-pill--warm">Warm Lead</span></td>
+                                    </tr>
+                                    <tr data-neighborhood="dtc" data-tier="2">
+                                        <td><strong>One Belleview Station</strong></td>
+                                        <td>DTC</td>
+                                        <td>250+</td>
+                                        <td>Lincoln Property</td>
+                                        <td>Transit-oriented, professional tenants</td>
+                                        <td><span class="tier-badge tier-badge--2">Tier 2</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+                                    <tr data-neighborhood="dtc" data-tier="2">
+                                        <td><strong>Parc Mosaic</strong></td>
+                                        <td>DTC</td>
+                                        <td>300+</td>
+                                        <td>Private</td>
+                                        <td>Modern luxury, resort-style pool</td>
+                                        <td><span class="tier-badge tier-badge--2">Tier 2</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+
+                                    <!-- ADDITIONAL RINO -->
+                                    <tr data-neighborhood="rino" data-tier="1">
+                                        <td><strong>Industry RiNo Station</strong></td>
+                                        <td>RiNo</td>
+                                        <td>200+</td>
+                                        <td>Industry Denver</td>
+                                        <td>Co-working integration, creative community</td>
+                                        <td><span class="tier-badge tier-badge--1">Tier 1</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+                                    <tr data-neighborhood="rino" data-tier="2">
+                                        <td><strong>Novel RiNo</strong></td>
+                                        <td>RiNo</td>
+                                        <td>180+</td>
+                                        <td>Crescent Communities</td>
+                                        <td>New construction, arts district location</td>
+                                        <td><span class="tier-badge tier-badge--2">Tier 2</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+                                    <tr data-neighborhood="rino" data-tier="2">
+                                        <td><strong>Zeppelin Station Apartments</strong></td>
+                                        <td>RiNo</td>
+                                        <td>150+</td>
+                                        <td>Private</td>
+                                        <td>Above food hall, unique location</td>
+                                        <td><span class="tier-badge tier-badge--2">Tier 2</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+
+                                    <!-- ADDITIONAL HIGHLANDS -->
+                                    <tr data-neighborhood="highlands" data-tier="1">
+                                        <td><strong>Riverview at 2350</strong></td>
+                                        <td>LoHi</td>
+                                        <td>200+</td>
+                                        <td>Private</td>
+                                        <td>River views, premium finishes, rooftop</td>
+                                        <td><span class="tier-badge tier-badge--1">Tier 1</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+                                    <tr data-neighborhood="highlands" data-tier="2">
+                                        <td><strong>The Lex at Lowry</strong></td>
+                                        <td>Highlands</td>
+                                        <td>150+</td>
+                                        <td>Private</td>
+                                        <td>Master-planned community, family-friendly</td>
+                                        <td><span class="tier-badge tier-badge--2">Tier 2</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+                                    <tr data-neighborhood="highlands" data-tier="2">
+                                        <td><strong>Sloans Lake Luxury</strong></td>
+                                        <td>Sloan's Lake</td>
+                                        <td>Various</td>
+                                        <td>Various</td>
+                                        <td>Lake views, emerging luxury market</td>
+                                        <td><span class="tier-badge tier-badge--2">Tier 2</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+
+                                    <!-- GOLDEN TRIANGLE ADDITIONAL -->
+                                    <tr data-neighborhood="golden-triangle" data-tier="2">
+                                        <td><strong>SoBo Lofts</strong></td>
+                                        <td>Golden Triangle</td>
+                                        <td>100+</td>
+                                        <td>Private</td>
+                                        <td>South Broadway, arts district adjacent</td>
+                                        <td><span class="tier-badge tier-badge--2">Tier 2</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+                                    <tr data-neighborhood="golden-triangle" data-tier="2">
+                                        <td><strong>The Triangle</strong></td>
+                                        <td>Golden Triangle</td>
+                                        <td>150+</td>
+                                        <td>Private</td>
+                                        <td>Walk to museums, urban lifestyle</td>
+                                        <td><span class="tier-badge tier-badge--2">Tier 2</span></td>
+                                        <td>No</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="notes-box">
+                        <div class="notes-box__title">Property Management Company Contacts</div>
+                        <p><strong>Greystar:</strong> Mountain Division HQ in Denver. #1 apartment manager nationally (946K+ units). Request intro from Austin partner.</p>
+                        <p><strong>AMLI:</strong> 4 communities in Denver market. Direct referral path from Austin AMLI properties.</p>
+                        <p><strong>Other Major Players:</strong> Advenir (40 communities), AIR Communities (95), AvalonBay, Harbor Group, Cardinal Group (Denver HQ)</p>
+                    </div>
+                </div>
+
+                <!-- VENDORS TAB -->
+                <div class="denver-content" id="denver-vendors" style="display: none;">
+                    <div style="display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; align-items: center;">
+                        <input type="text" id="vendorSearch" placeholder="Search vendors..." style="padding: 10px 16px; border: 1px solid var(--gray-300); border-radius: 6px; font-size: 14px; width: 250px;">
+                        <select id="categoryFilter" style="padding: 10px 16px; border: 1px solid var(--gray-300); border-radius: 6px; font-size: 14px;">
+                            <option value="all">All Categories</option>
+                            <option value="food">Food</option>
+                            <option value="beverage">Beverage</option>
+                            <option value="wellness">Wellness/Beauty</option>
+                            <option value="home">Home Goods</option>
+                            <option value="pet">Pet Products</option>
+                            <option value="lifestyle">Lifestyle/Accessories</option>
+                        </select>
+                        <span id="vendorCount" style="font-size: 13px; color: var(--gray-600); margin-left: 12px;">38 vendors shown</span>
+                    </div>
+
+                    <div class="data-section">
+                        <h3 class="data-section__title">Vendor Database</h3>
+                        <div style="overflow-x: auto;">
+                            <table class="data-table" id="vendorTable">
+                                <thead>
+                                    <tr>
+                                        <th>Brand</th>
+                                        <th>Category</th>
+                                        <th>Product</th>
+                                        <th>Est.</th>
+                                        <th>Location</th>
+                                        <th>Retail Presence</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- ARTISAN FOOD -->
+                                    <tr data-category="food">
+                                        <td><strong>Cultura Craft Chocolate</strong></td>
+                                        <td>Food</td>
+                                        <td>Bean-to-bar chocolate, Latin-inspired flavors</td>
+                                        <td>2016</td>
+                                        <td>Denver</td>
+                                        <td>Specialty retail</td>
+                                        <td><span class="status-pill status-pill--target">Target</span></td>
+                                    </tr>
+                                    <tr data-category="food">
+                                        <td><strong>PB Love Co.</strong></td>
+                                        <td>Food</td>
+                                        <td>Artisan nut butters, handcrafted</td>
+                                        <td>2015</td>
+                                        <td>Denver</td>
+                                        <td>Whole Foods, specialty</td>
+                                        <td><span class="status-pill status-pill--target">Target</span></td>
+                                    </tr>
+                                    <tr data-category="food">
+                                        <td><strong>Bjorn's Colorado Honey</strong></td>
+                                        <td>Food</td>
+                                        <td>Local honey, 80+ colonies</td>
+                                        <td>-</td>
+                                        <td>Boulder/Denver</td>
+                                        <td>Farmers markets, local</td>
+                                        <td><span class="status-pill status-pill--target">Target</span></td>
+                                    </tr>
+                                    <tr data-category="food">
+                                        <td><strong>The Real Dill</strong></td>
+                                        <td>Food</td>
+                                        <td>Artisan pickles</td>
+                                        <td>2012</td>
+                                        <td>Denver</td>
+                                        <td>Strong retail presence</td>
+                                        <td><span class="status-pill status-pill--target">Target</span></td>
+                                    </tr>
+                                    <tr data-category="food">
+                                        <td><strong>Hammond's Candies</strong></td>
+                                        <td>Food</td>
+                                        <td>Handmade candies, heritage brand</td>
+                                        <td>1920</td>
+                                        <td>Denver</td>
+                                        <td>100% local production</td>
+                                        <td><span class="status-pill status-pill--target">Target</span></td>
+                                    </tr>
+                                    <tr data-category="food">
+                                        <td><strong>Cocomels</strong></td>
+                                        <td>Food</td>
+                                        <td>Coconut milk caramels</td>
+                                        <td>-</td>
+                                        <td>Boulder</td>
+                                        <td>National distribution</td>
+                                        <td><span class="status-pill status-pill--target">Target</span></td>
+                                    </tr>
+                                    <tr data-category="food">
+                                        <td><strong>Made in Nature</strong></td>
+                                        <td>Food</td>
+                                        <td>Organic fruit mixes, CO-bagged</td>
+                                        <td>-</td>
+                                        <td>Colorado</td>
+                                        <td>National retail</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+                                    <tr data-category="food">
+                                        <td><strong>Meati Foods</strong></td>
+                                        <td>Food</td>
+                                        <td>Mushroom-based meat alternative</td>
+                                        <td>-</td>
+                                        <td>Boulder</td>
+                                        <td>Growing retail</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+
+                                    <!-- BEVERAGES -->
+                                    <tr data-category="beverage">
+                                        <td><strong>Stranahan's Whiskey</strong></td>
+                                        <td>Beverage</td>
+                                        <td>Colorado whiskey, most recognized CO spirit</td>
+                                        <td>2004</td>
+                                        <td>Denver</td>
+                                        <td>National distribution</td>
+                                        <td><span class="status-pill status-pill--target">Target</span></td>
+                                    </tr>
+                                    <tr data-category="beverage">
+                                        <td><strong>Weller</strong></td>
+                                        <td>Beverage</td>
+                                        <td>CBD sparkling water</td>
+                                        <td>-</td>
+                                        <td>Colorado</td>
+                                        <td>Regional</td>
+                                        <td><span class="status-pill status-pill--target">Target</span></td>
+                                    </tr>
+                                    <tr data-category="beverage">
+                                        <td><strong>Denver Beer Co.</strong></td>
+                                        <td>Beverage</td>
+                                        <td>Craft beer (Wilding Brands)</td>
+                                        <td>-</td>
+                                        <td>Denver</td>
+                                        <td>Regional</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+                                    <tr data-category="beverage">
+                                        <td><strong>Stem Ciders</strong></td>
+                                        <td>Beverage</td>
+                                        <td>Craft cider (Wilding Brands)</td>
+                                        <td>-</td>
+                                        <td>Denver</td>
+                                        <td>Regional taproom</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+                                    <tr data-category="beverage">
+                                        <td><strong>Celestial Seasonings</strong></td>
+                                        <td>Beverage</td>
+                                        <td>Tea, iconic Boulder brand</td>
+                                        <td>1969</td>
+                                        <td>Boulder</td>
+                                        <td>National</td>
+                                        <td><span class="status-pill status-pill--new">Not Contacted</span></td>
+                                    </tr>
+
+                                    <!-- WELLNESS -->
+                                    <tr data-category="wellness">
+                                        <td><strong>Colorado CBD Brands</strong></td>
+                                        <td>Wellness</td>
+                                        <td>Topicals, tinctures, edibles</td>
+                                        <td>Various</td>
+                                        <td>Colorado</td>
+                                        <td>Dispensaries, wellness</td>
+                                        <td><span class="status-pill status-pill--new">Research Needed</span></td>
+                                    </tr>
+                                    <tr data-category="wellness">
+                                        <td><strong>Local Clean Beauty</strong></td>
+                                        <td>Wellness</td>
+                                        <td>Natural skincare, organic</td>
+                                        <td>Various</td>
+                                        <td>Denver</td>
+                                        <td>Markets, boutiques</td>
+                                        <td><span class="status-pill status-pill--new">Scout at Markets</span></td>
+                                    </tr>
+                                    <tr data-category="wellness">
+                                        <td><strong>Aromatherapy Makers</strong></td>
+                                        <td>Wellness</td>
+                                        <td>Essential oils, candles</td>
+                                        <td>Various</td>
+                                        <td>Denver</td>
+                                        <td>Artisan markets</td>
+                                        <td><span class="status-pill status-pill--new">Scout at Markets</span></td>
+                                    </tr>
+                                    <tr data-category="wellness">
+                                        <td><strong>Handmade Soap Makers</strong></td>
+                                        <td>Wellness</td>
+                                        <td>Goat milk, natural soaps</td>
+                                        <td>Various</td>
+                                        <td>Colorado</td>
+                                        <td>Curate Mercantile</td>
+                                        <td><span class="status-pill status-pill--new">Scout at Markets</span></td>
+                                    </tr>
+
+                                    <!-- HOME GOODS -->
+                                    <tr data-category="home">
+                                        <td><strong>RiNo Ceramics Artists</strong></td>
+                                        <td>Home</td>
+                                        <td>Pottery, vases, dishware</td>
+                                        <td>Various</td>
+                                        <td>RiNo</td>
+                                        <td>Makers Market</td>
+                                        <td><span class="status-pill status-pill--new">Scout at Markets</span></td>
+                                    </tr>
+                                    <tr data-category="home">
+                                        <td><strong>Colorado Textile Artists</strong></td>
+                                        <td>Home</td>
+                                        <td>Blankets, pillows, linens</td>
+                                        <td>Various</td>
+                                        <td>Colorado</td>
+                                        <td>Artisan markets</td>
+                                        <td><span class="status-pill status-pill--new">Scout at Markets</span></td>
+                                    </tr>
+                                    <tr data-category="home">
+                                        <td><strong>Local Candle Makers</strong></td>
+                                        <td>Home</td>
+                                        <td>Soy candles, CO ingredients</td>
+                                        <td>Various</td>
+                                        <td>Denver</td>
+                                        <td>Multiple markets</td>
+                                        <td><span class="status-pill status-pill--new">Scout at Markets</span></td>
+                                    </tr>
+                                    <tr data-category="home">
+                                        <td><strong>Local Art Prints</strong></td>
+                                        <td>Home</td>
+                                        <td>Photography, artwork</td>
+                                        <td>Various</td>
+                                        <td>RiNo</td>
+                                        <td>Galleries, markets</td>
+                                        <td><span class="status-pill status-pill--new">Scout at Markets</span></td>
+                                    </tr>
+
+                                    <!-- PET -->
+                                    <tr data-category="pet">
+                                        <td><strong>Colorado Pet Treat Makers</strong></td>
+                                        <td>Pet</td>
+                                        <td>Natural treats, accessories</td>
+                                        <td>Various</td>
+                                        <td>Colorado</td>
+                                        <td>Pet stores, markets</td>
+                                        <td><span class="status-pill status-pill--new">Research Needed</span></td>
+                                    </tr>
+                                    <tr data-category="pet">
+                                        <td><strong>Rocky Mountain Barkery</strong></td>
+                                        <td>Pet</td>
+                                        <td>Artisan dog treats, natural ingredients</td>
+                                        <td>2018</td>
+                                        <td>Denver</td>
+                                        <td>Pet boutiques, markets</td>
+                                        <td><span class="status-pill status-pill--new">Scout at Markets</span></td>
+                                    </tr>
+
+                                    <!-- LIFESTYLE / ACCESSORIES -->
+                                    <tr data-category="lifestyle">
+                                        <td><strong>Denver Leather Goods</strong></td>
+                                        <td>Lifestyle</td>
+                                        <td>Handcrafted leather bags, wallets</td>
+                                        <td>Various</td>
+                                        <td>Denver</td>
+                                        <td>Artisan markets, boutiques</td>
+                                        <td><span class="status-pill status-pill--new">Scout at Markets</span></td>
+                                    </tr>
+                                    <tr data-category="lifestyle">
+                                        <td><strong>Colorado Jewelry Artisans</strong></td>
+                                        <td>Lifestyle</td>
+                                        <td>Handmade jewelry, local stones</td>
+                                        <td>Various</td>
+                                        <td>Colorado</td>
+                                        <td>Makers Market, galleries</td>
+                                        <td><span class="status-pill status-pill--new">Scout at Markets</span></td>
+                                    </tr>
+                                    <tr data-category="lifestyle">
+                                        <td><strong>Local Print Artists</strong></td>
+                                        <td>Lifestyle</td>
+                                        <td>Cards, stationery, art prints</td>
+                                        <td>Various</td>
+                                        <td>Denver</td>
+                                        <td>Paper Source, markets</td>
+                                        <td><span class="status-pill status-pill--new">Scout at Markets</span></td>
+                                    </tr>
+
+                                    <!-- ADDITIONAL FOOD -->
+                                    <tr data-category="food">
+                                        <td><strong>Noble Grain Alliance</strong></td>
+                                        <td>Food</td>
+                                        <td>Artisan bread, local grains</td>
+                                        <td>2019</td>
+                                        <td>Denver</td>
+                                        <td>Farmers markets</td>
+                                        <td><span class="status-pill status-pill--target">Target</span></td>
+                                    </tr>
+                                    <tr data-category="food">
+                                        <td><strong>Elevated Sweets</strong></td>
+                                        <td>Food</td>
+                                        <td>Gourmet cookies, baked goods</td>
+                                        <td>2020</td>
+                                        <td>Denver</td>
+                                        <td>Markets, delivery</td>
+                                        <td><span class="status-pill status-pill--new">Scout at Markets</span></td>
+                                    </tr>
+                                    <tr data-category="food">
+                                        <td><strong>Mile High Olive Oil</strong></td>
+                                        <td>Food</td>
+                                        <td>Premium olive oils, balsamic</td>
+                                        <td>2015</td>
+                                        <td>Denver</td>
+                                        <td>Specialty retail</td>
+                                        <td><span class="status-pill status-pill--target">Target</span></td>
+                                    </tr>
+                                    <tr data-category="food">
+                                        <td><strong>Colorado Spice Company</strong></td>
+                                        <td>Food</td>
+                                        <td>Local spice blends, seasonings</td>
+                                        <td>2017</td>
+                                        <td>Boulder</td>
+                                        <td>Specialty grocers</td>
+                                        <td><span class="status-pill status-pill--target">Target</span></td>
+                                    </tr>
+
+                                    <!-- ADDITIONAL WELLNESS -->
+                                    <tr data-category="wellness">
+                                        <td><strong>Mountain Apothecary</strong></td>
+                                        <td>Wellness</td>
+                                        <td>Herbal remedies, tinctures</td>
+                                        <td>2016</td>
+                                        <td>Boulder</td>
+                                        <td>Health food stores</td>
+                                        <td><span class="status-pill status-pill--target">Target</span></td>
+                                    </tr>
+                                    <tr data-category="wellness">
+                                        <td><strong>Denver Bath Co.</strong></td>
+                                        <td>Wellness</td>
+                                        <td>Bath bombs, salts, body care</td>
+                                        <td>2018</td>
+                                        <td>Denver</td>
+                                        <td>Markets, boutiques</td>
+                                        <td><span class="status-pill status-pill--new">Scout at Markets</span></td>
+                                    </tr>
+                                    <tr data-category="wellness">
+                                        <td><strong>Front Range Botanicals</strong></td>
+                                        <td>Wellness</td>
+                                        <td>Organic skincare, face oils</td>
+                                        <td>2019</td>
+                                        <td>Denver</td>
+                                        <td>Clean beauty retail</td>
+                                        <td><span class="status-pill status-pill--target">Target</span></td>
+                                    </tr>
+
+                                    <!-- ADDITIONAL HOME -->
+                                    <tr data-category="home">
+                                        <td><strong>Colorado Woodworks</strong></td>
+                                        <td>Home</td>
+                                        <td>Cutting boards, kitchen accessories</td>
+                                        <td>Various</td>
+                                        <td>Colorado</td>
+                                        <td>Artisan markets</td>
+                                        <td><span class="status-pill status-pill--new">Scout at Markets</span></td>
+                                    </tr>
+                                    <tr data-category="home">
+                                        <td><strong>Denver Glass Art</strong></td>
+                                        <td>Home</td>
+                                        <td>Blown glass, decorative pieces</td>
+                                        <td>Various</td>
+                                        <td>Denver</td>
+                                        <td>Galleries, markets</td>
+                                        <td><span class="status-pill status-pill--new">Scout at Markets</span></td>
+                                    </tr>
+
+                                    <!-- ADDITIONAL BEVERAGES -->
+                                    <tr data-category="beverage">
+                                        <td><strong>Sweet Bloom Coffee</strong></td>
+                                        <td>Beverage</td>
+                                        <td>Specialty roasted coffee</td>
+                                        <td>2013</td>
+                                        <td>Lakewood</td>
+                                        <td>Specialty coffee shops</td>
+                                        <td><span class="status-pill status-pill--target">Target</span></td>
+                                    </tr>
+                                    <tr data-category="beverage">
+                                        <td><strong>Huckleberry Roasters</strong></td>
+                                        <td>Beverage</td>
+                                        <td>Craft roasted coffee</td>
+                                        <td>2011</td>
+                                        <td>Denver</td>
+                                        <td>Cafes, grocery</td>
+                                        <td><span class="status-pill status-pill--target">Target</span></td>
+                                    </tr>
+                                    <tr data-category="beverage">
+                                        <td><strong>Bhakti Chai</strong></td>
+                                        <td>Beverage</td>
+                                        <td>Fresh-pressed chai concentrates</td>
+                                        <td>2006</td>
+                                        <td>Boulder</td>
+                                        <td>National distribution</td>
+                                        <td><span class="status-pill status-pill--target">Target</span></td>
+                                    </tr>
+                                    <tr data-category="beverage">
+                                        <td><strong>Laws Whiskey House</strong></td>
+                                        <td>Beverage</td>
+                                        <td>Colorado-made whiskey</td>
+                                        <td>2011</td>
+                                        <td>Denver</td>
+                                        <td>Liquor stores, bars</td>
+                                        <td><span class="status-pill status-pill--target">Target</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="two-column" style="margin-top: 30px;">
+                        <div class="notes-box">
+                            <div class="notes-box__title">Vendor Sourcing Events to Attend</div>
+                            <p><strong>Heart to Home Market:</strong> May-Oct, weekends - Food, home, skincare</p>
+                            <p><strong>Denver BAZAAR:</strong> 3rd Sundays, Larimer Square - Curated makers</p>
+                            <p><strong>Colorado Markets:</strong> Seasonal - Diverse artisans</p>
+                            <p><strong>Makers Market Colorado:</strong> Year-round (mall locations)</p>
+                            <p><strong>Firefly Markets:</strong> Fall/Holiday - Premium vendors</p>
+                        </div>
+
+                        <div class="notes-box">
+                            <div class="notes-box__title">Retail Scouting Locations</div>
+                            <p><strong>Curate Mercantile:</strong> 100+ vetted local businesses</p>
+                            <p><strong>Whole Foods (Local Section):</strong> Identify brands with retail presence</p>
+                            <p><strong>Sprouts:</strong> Natural/organic focus</p>
+                            <p><strong>Cherry Creek Boutiques:</strong> High-end local products</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONTACTS TAB -->
+                <div class="denver-content" id="denver-contacts" style="display: none;">
+                    <div class="data-section">
+                        <h3 class="data-section__title">Key Contacts & Outreach Status</h3>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Contact Type</th>
+                                    <th>Company/Name</th>
+                                    <th>Role</th>
+                                    <th>Intro Path</th>
+                                    <th>Status</th>
+                                    <th>Next Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Property Mgmt</td>
+                                    <td><strong>AMLI Residential</strong></td>
+                                    <td>Denver Regional Manager</td>
+                                    <td>Austin AMLI intro</td>
+                                    <td><span class="status-pill status-pill--warm">Warm Lead</span></td>
+                                    <td>Request intro from Austin contact</td>
+                                </tr>
+                                <tr>
+                                    <td>Property Mgmt</td>
+                                    <td><strong>Greystar</strong></td>
+                                    <td>Mountain Division</td>
+                                    <td>Austin Greystar intro</td>
+                                    <td><span class="status-pill status-pill--warm">Warm Lead</span></td>
+                                    <td>Request intro from Sam</td>
+                                </tr>
+                                <tr>
+                                    <td>Property Mgmt</td>
+                                    <td><strong>Lincoln Property</strong></td>
+                                    <td>Community Manager</td>
+                                    <td>Cold - The Coloradan</td>
+                                    <td><span class="status-pill status-pill--new">Not Started</span></td>
+                                    <td>LinkedIn research, cold email</td>
+                                </tr>
+                                <tr>
+                                    <td>Property Mgmt</td>
+                                    <td><strong>Cardinal Group</strong></td>
+                                    <td>Denver HQ</td>
+                                    <td>Cold - Growing company</td>
+                                    <td><span class="status-pill status-pill--new">Not Started</span></td>
+                                    <td>Research properties managed</td>
+                                </tr>
+                                <tr>
+                                    <td>Industry Assoc</td>
+                                    <td><strong>AAMD</strong></td>
+                                    <td>Apartment Association</td>
+                                    <td>Member directory</td>
+                                    <td><span class="status-pill status-pill--new">Not Started</span></td>
+                                    <td>Request membership/directory</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="two-column" style="margin-top: 30px;">
+                        <div class="data-section">
+                            <h3 class="data-section__title">Decision Maker Titles to Target</h3>
+                            <ul style="list-style: disc; padding-left: 20px; line-height: 2;">
+                                <li>Community Director / Manager</li>
+                                <li>Lifestyle Director</li>
+                                <li>Resident Experience Manager</li>
+                                <li>Regional Property Manager</li>
+                                <li>Director of Resident Services</li>
+                                <li>VP of Operations (for company-wide)</li>
+                            </ul>
+                        </div>
+
+                        <div class="data-section">
+                            <h3 class="data-section__title">Outreach Templates</h3>
+                            <div class="notes-box" style="margin-top: 0;">
+                                <div class="notes-box__title">Warm Intro Request (to Austin partner)</div>
+                                <p style="font-style: italic; font-size: 13px;">"Hi [Name], I hope the markets at [Property] have been going well! Lux Markets is expanding to Denver and I'm leading market development there. Would you be able to introduce me to your Denver regional contacts? A warm intro would mean a lot. Happy to share any impact data to help make the case."</p>
+                            </div>
+                            <div class="notes-box" style="margin-top: 12px;">
+                                <div class="notes-box__title">Cold Email (to property)</div>
+                                <p style="font-style: italic; font-size: 13px;">"Hi [Name], I noticed [Property] has beautiful amenity spaces perfect for the curated experiences we create at Lux Markets. We partner with luxury communities to host pop-up markets featuring handpicked local brands. Everything is turnkey - we handle vendor curation, setup, and execution. In Austin, we work with AMLI and Greystar communities. Would you be open to a brief call?"</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CALENDAR TAB -->
+                <div class="denver-content" id="denver-calendar" style="display: none;">
+                    <div class="two-column">
+                        <div class="data-section">
+                            <h3 class="data-section__title">90-Day Launch Calendar</h3>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Week</th>
+                                        <th>Phase</th>
+                                        <th>Key Tasks</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Setup</td>
+                                        <td>Admin setup, neighborhood research, property list building</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Warm Outreach</td>
+                                        <td>Request AMLI/Greystar intros, LinkedIn outreach</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>Direct Outreach</td>
+                                        <td>Cherry Creek properties, Downtown high-rises</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>Meetings + Scouting</td>
+                                        <td>First property meetings, vendor scouting at markets</td>
+                                    </tr>
+                                    <tr>
+                                        <td>5-6</td>
+                                        <td>Acceleration</td>
+                                        <td>Follow-up, expand outreach, prepare partnership docs</td>
+                                    </tr>
+                                    <tr>
+                                        <td>7-8</td>
+                                        <td>Closing</td>
+                                        <td>Close first properties, plan first market</td>
+                                    </tr>
+                                    <tr>
+                                        <td>9-10</td>
+                                        <td>Pre-Market</td>
+                                        <td>Confirm vendors, coordinate with property</td>
+                                    </tr>
+                                    <tr>
+                                        <td>11-12</td>
+                                        <td>Launch</td>
+                                        <td>Execute first market, debrief, expand</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="data-section">
+                            <h3 class="data-section__title">Upcoming Events to Attend</h3>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Event</th>
+                                        <th>Date</th>
+                                        <th>Purpose</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Denver BAZAAR</td>
+                                        <td>3rd Sunday</td>
+                                        <td>Vendor scouting</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Heart to Home</td>
+                                        <td>May-Oct weekends</td>
+                                        <td>Vendor scouting</td>
+                                    </tr>
+                                    <tr>
+                                        <td>AAMD Events</td>
+                                        <td>TBD</td>
+                                        <td>Property manager networking</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cherry Creek Arts</td>
+                                        <td>July</td>
+                                        <td>Vendor/community scouting</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="notes-box" style="margin-top: 20px;">
+                                <div class="notes-box__title">This Week's Priorities</div>
+                                <p>1. Email Austin AMLI contact for Denver intro</p>
+                                <p>2. Ask Sam for Greystar Mountain Division contact</p>
+                                <p>3. Drive Cherry Creek, photograph properties</p>
+                                <p>4. Research 10 properties on LinkedIn</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="action-items" style="margin-top: 30px;">
+                        <div class="action-items__title">Success Metrics - 90 Day Targets</div>
+                        <ul>
+                            <li><strong>Properties Signed:</strong> 3-5 partner agreements</li>
+                            <li><strong>Vendors Recruited:</strong> 30+ vetted and approved</li>
+                            <li><strong>First Market:</strong> Execute by Day 75</li>
+                            <li><strong>Pipeline:</strong> 15+ warm property leads, 75+ vendor contacts</li>
+                            <li><strong>Revenue:</strong> $5,000+ GMV at first market</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXECUTIVE SUMMARY -->
+        <section id="summary" class="market-section" style="background: var(--navy); color: white;">
+            <div class="container">
+                <div class="market-header">
+                    <div class="market-icon" style="background: var(--gold);">
+                        <!-- Chart/Analytics icon -->
+                        <svg viewBox="0 0 24 24" style="fill: var(--navy);">
+                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+                        </svg>
+                    </div>
+                    <div class="market-title">
+                        <h2 style="color: white;">Executive Summary</h2>
+                        <span class="status" style="background: var(--gold); color: var(--navy);">Strategic Overview</span>
+                    </div>
+                </div>
+
+                <div class="metrics-grid">
+                    <div class="metric-card" style="background: rgba(255,255,255,0.1);">
+                        <div class="metric-card__value" style="color: var(--gold);">3</div>
+                        <div class="metric-card__label" style="color: var(--gray-300);">Active/Planned Markets</div>
+                    </div>
+                    <div class="metric-card" style="background: rgba(255,255,255,0.1);">
+                        <div class="metric-card__value" style="color: var(--gold);">550+</div>
+                        <div class="metric-card__label" style="color: var(--gray-300);">Total Properties in Pipeline</div>
+                    </div>
+                    <div class="metric-card" style="background: rgba(255,255,255,0.1);">
+                        <div class="metric-card__value" style="color: var(--gold);">$10M+</div>
+                        <div class="metric-card__label" style="color: var(--gray-300);">Projected GMV (2025)</div>
+                    </div>
+                    <div class="metric-card" style="background: rgba(255,255,255,0.1);">
+                        <div class="metric-card__value" style="color: var(--gold);">2025</div>
+                        <div class="metric-card__label" style="color: var(--gray-300);">Target National Expansion</div>
+                    </div>
+                </div>
+
+                <div class="two-column" style="color: var(--gray-300);">
+                    <div>
+                        <h3 style="color: var(--gold); margin-bottom: 16px;">Market Comparison</h3>
+                        <table class="data-table" style="background: rgba(255,255,255,0.05);">
+                            <thead>
+                                <tr>
+                                    <th>Metric</th>
+                                    <th>Austin</th>
+                                    <th>NYC</th>
+                                    <th>Denver</th>
+                                </tr>
+                            </thead>
+                            <tbody style="color: var(--gray-300);">
+                                <tr>
+                                    <td>Status</td>
+                                    <td style="color: #34D399;">Active</td>
+                                    <td style="color: #60A5FA;">Planning</td>
+                                    <td style="color: #FBBF24;">Expanding</td>
+                                </tr>
+                                <tr>
+                                    <td>Population</td>
+                                    <td>2.3M</td>
+                                    <td>8.3M</td>
+                                    <td>2.9M</td>
+                                </tr>
+                                <tr>
+                                    <td>Target Properties</td>
+                                    <td>25+ (active)</td>
+                                    <td>450+ (identified)</td>
+                                    <td>85+ (identified)</td>
+                                </tr>
+                                <tr>
+                                    <td>Existing Partners</td>
+                                    <td>6 mgmt cos.</td>
+                                    <td>1 (Greystar)</td>
+                                    <td>2 (AMLI/Greystar)</td>
+                                </tr>
+                                <tr>
+                                    <td>Launch Timeline</td>
+                                    <td>Established</td>
+                                    <td>Q3 2025</td>
+                                    <td>Q1 2025</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div>
+                        <h3 style="color: var(--gold); margin-bottom: 16px;">Strategic Priorities 2025</h3>
+                        <div style="background: rgba(255,255,255,0.05); padding: 24px; border-radius: 12px;">
+                            <ol style="list-style: decimal; padding-left: 20px; line-height: 2;">
+                                <li><strong style="color: white;">Denver Launch:</strong> Q1 pilot markets at warm-intro properties</li>
+                                <li><strong style="color: white;">NYC Research:</strong> Complete property/vendor analysis by Q2</li>
+                                <li><strong style="color: white;">Austin Optimization:</strong> Increase events 25%, launch vendor loyalty</li>
+                                <li><strong style="color: white;">Technology:</strong> Enhanced vendor dashboard, property portal</li>
+                                <li><strong style="color: white;">Team:</strong> Hire Denver market manager, NYC scout</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 40px; padding: 24px; background: rgba(201, 162, 39, 0.2); border-radius: 12px; border: 1px solid var(--gold);">
+                    <h4 style="color: var(--gold); margin-bottom: 12px;">Key Success Metrics to Track</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; color: var(--gray-300); font-size: 14px;">
+                        <div>
+                            <strong style="color: white;">Property Metrics:</strong>
+                            <ul style="margin-top: 8px; list-style: disc; padding-left: 20px;">
+                                <li>Conversion rate (outreach to partner)</li>
+                                <li>Retention rate by market</li>
+                                <li>Events per property per year</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <strong style="color: white;">Vendor Metrics:</strong>
+                            <ul style="margin-top: 8px; list-style: disc; padding-left: 20px;">
+                                <li>Revenue per event</li>
+                                <li>Repeat booking rate</li>
+                                <li>Category performance</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <strong style="color: white;">Resident Metrics:</strong>
+                            <ul style="margin-top: 8px; list-style: disc; padding-left: 20px;">
+                                <li>Attendance per event</li>
+                                <li>NPS score</li>
+                                <li>Purchase conversion</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="insights-footer">
+        <div class="container">
+            <p><strong>Lux Markets</strong> - Internal Insights Dashboard</p>
+            <p style="margin-top: 8px;">For questions, contact <a href="mailto:sam@luxmarkets.org">sam@luxmarkets.org</a> or <a href="mailto:jacob@luxmarkets.org">jacob@luxmarkets.org</a></p>
+            <p style="margin-top: 16px; font-size: 12px; color: var(--gray-500);">This document is confidential and intended for internal use only.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Filter functionality
+        const filterButtons = document.querySelectorAll('.insights-nav__btn');
+        const sections = document.querySelectorAll('.market-section');
+
+        function filterSections(filter) {
+            // Update active button
+            filterButtons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.filter === filter) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // Define alphabetical order for markets (excluding exec-dashboard and summary)
+            const marketOrder = ['austin', 'denver', 'nyc'];
+            const mainElement = document.querySelector('main');
+
+            // Show/hide sections
+            sections.forEach(section => {
+                if (filter === 'all') {
+                    // Show all individual markets (alphabetically), hide exec-dashboard and old summary
+                    if (marketOrder.includes(section.id)) {
+                        section.style.display = 'block';
+                    } else {
+                        section.style.display = 'none';
+                    }
+                } else if (section.id === filter) {
+                    section.style.display = 'block';
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+
+            // Reorder sections alphabetically when "all" is selected
+            if (filter === 'all') {
+                marketOrder.forEach(marketId => {
+                    const section = document.getElementById(marketId);
+                    if (section) {
+                        mainElement.appendChild(section);
+                    }
+                });
+            }
+
+            // Scroll to top of content
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Add click handlers to filter buttons
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterSections(btn.dataset.filter);
+            });
+        });
+
+        // Set default filter on page load (show Dashboard first)
+        filterSections('exec-dashboard');
+
+        // ============================================
+        // DENVER SUB-TAB NAVIGATION
+        // ============================================
+        const denverTabs = document.querySelectorAll('.denver-tab');
+        const denverContents = document.querySelectorAll('.denver-content');
+
+        function switchDenverTab(tabName) {
+            // Update active tab
+            denverTabs.forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.dataset.tab === tabName) {
+                    tab.classList.add('active');
+                }
+            });
+
+            // Show/hide content
+            denverContents.forEach(content => {
+                if (content.id === 'denver-' + tabName) {
+                    content.style.display = 'block';
+                } else {
+                    content.style.display = 'none';
+                }
+            });
+        }
+
+        // Add click handlers to Denver tabs
+        denverTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                switchDenverTab(tab.dataset.tab);
+            });
+        });
+
+        // ============================================
+        // PROPERTY TABLE FILTERING
+        // ============================================
+        const propertySearch = document.getElementById('propertySearch');
+        const neighborhoodFilter = document.getElementById('neighborhoodFilter');
+        const tierFilter = document.getElementById('tierFilter');
+        const propertyTable = document.getElementById('propertyTable');
+
+        function filterPropertyTable() {
+            const searchTerm = propertySearch?.value.toLowerCase() || '';
+            const neighborhood = neighborhoodFilter?.value || 'all';
+            const tier = tierFilter?.value || 'all';
+
+            const rows = propertyTable?.querySelectorAll('tbody tr') || [];
+
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                const rowNeighborhood = row.dataset.neighborhood;
+                const rowTier = row.dataset.tier;
+
+                const matchesSearch = text.includes(searchTerm);
+                const matchesNeighborhood = neighborhood === 'all' || rowNeighborhood === neighborhood;
+                const matchesTier = tier === 'all' || rowTier === tier;
+
+                if (matchesSearch && matchesNeighborhood && matchesTier) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            updatePropertyCount();
+        }
+
+        function updatePropertyCount() {
+            const visibleRows = propertyTable?.querySelectorAll('tbody tr:not([style*="display: none"])').length || 0;
+            const countDisplay = document.getElementById('propertyCount');
+            if (countDisplay) {
+                countDisplay.textContent = visibleRows + ' properties shown';
+            }
+        }
+
+        // Add event listeners for property filtering
+        propertySearch?.addEventListener('input', filterPropertyTable);
+        neighborhoodFilter?.addEventListener('change', filterPropertyTable);
+        tierFilter?.addEventListener('change', filterPropertyTable);
+
+        // ============================================
+        // VENDOR TABLE FILTERING
+        // ============================================
+        const vendorSearch = document.getElementById('vendorSearch');
+        const categoryFilter = document.getElementById('categoryFilter');
+        const vendorTable = document.getElementById('vendorTable');
+
+        function filterVendorTable() {
+            const searchTerm = vendorSearch?.value.toLowerCase() || '';
+            const category = categoryFilter?.value || 'all';
+
+            const rows = vendorTable?.querySelectorAll('tbody tr') || [];
+
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                const rowCategory = row.dataset.category;
+
+                const matchesSearch = text.includes(searchTerm);
+                const matchesCategory = category === 'all' || rowCategory === category;
+
+                if (matchesSearch && matchesCategory) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            updateVendorCount();
+        }
+
+        function updateVendorCount() {
+            const visibleRows = vendorTable?.querySelectorAll('tbody tr:not([style*="display: none"])').length || 0;
+            const countDisplay = document.getElementById('vendorCount');
+            if (countDisplay) {
+                countDisplay.textContent = visibleRows + ' vendors shown';
+            }
+        }
+
+        // Add event listeners for vendor filtering
+        vendorSearch?.addEventListener('input', filterVendorTable);
+        categoryFilter?.addEventListener('change', filterVendorTable);
+    </script>
+</body>
+</html>

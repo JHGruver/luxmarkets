@@ -1,0 +1,2007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lux Markets | Market Research & Competitive Analysis</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Outfit:wght@200;300;400;500;600&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --obsidian: #0A0A0B;
+            --charcoal: #1A1A1C;
+            --graphite: #2D2D30;
+            --slate: #4A4A4F;
+            --silver: #9A9AA0;
+            --pearl: #E8E8EC;
+            --ivory: #F8F7F5;
+            --pure: #FFFFFF;
+
+            --gold-light: #E5C87A;
+            --gold: #C9A227;
+            --gold-dark: #A68B1F;
+            --gold-gradient: linear-gradient(135deg, #E5C87A 0%, #C9A227 50%, #A68B1F 100%);
+
+            /* Analysis colors */
+            --positive: #2E7D4A;
+            --positive-light: #E8F5EC;
+            --neutral: #1976D2;
+            --neutral-light: #E3F2FD;
+            --warning: #F57C00;
+            --warning-light: #FFF3E0;
+            --negative: #C62828;
+            --negative-light: #FFEBEE;
+
+            --font-display: 'Cormorant Garamond', Georgia, serif;
+            --font-heading: 'Syne', sans-serif;
+            --font-body: 'Outfit', -apple-system, sans-serif;
+
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 1.5rem;
+            --space-lg: 2.5rem;
+            --space-xl: 4rem;
+            --space-2xl: 6rem;
+            --space-3xl: 10rem;
+
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-pill: 100px;
+
+            --ease-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--ivory);
+            color: var(--charcoal);
+            line-height: 1.6;
+        }
+
+        img { max-width: 100%; display: block; }
+        a { text-decoration: none; color: inherit; }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 var(--space-lg);
+        }
+
+        /* ============================================
+           NAVIGATION
+           ============================================ */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: var(--space-md) var(--space-xl);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(248, 247, 245, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav__logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .nav__menu {
+            display: flex;
+            gap: var(--space-lg);
+            list-style: none;
+        }
+
+        .nav__link {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--charcoal);
+            transition: color 0.3s;
+        }
+
+        .nav__link:hover {
+            color: var(--gold);
+        }
+
+        .nav__cta {
+            padding: 12px 28px;
+            background: var(--gold-gradient);
+            color: var(--obsidian);
+            font-weight: 600;
+            border-radius: var(--radius-pill);
+        }
+
+        /* All Pages Dropdown */
+        .nav__item--allpages { position: relative; list-style: none; }
+        .nav__link--allpages { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+        .nav__arrow { width: 14px; height: 14px; transition: transform 0.3s; }
+        .nav__item--allpages.expanded .nav__arrow { transform: rotate(180deg); }
+        .dropdown--allpages {
+            position: absolute; top: 100%; right: 0; width: 280px; max-height: 70vh;
+            overflow-y: auto; background: var(--pure); border-radius: var(--radius-md);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15); padding: var(--space-md);
+            opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s; z-index: 1000;
+        }
+        .nav__item--allpages.expanded .dropdown--allpages { opacity: 1; visibility: visible; transform: translateY(0); }
+        .dropdown__section { margin-bottom: var(--space-sm); padding-bottom: var(--space-sm); border-bottom: 1px solid var(--pearl); }
+        .dropdown__section:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+        .dropdown__section-title { display: block; font-size: 0.7rem; font-weight: 600; color: var(--gold); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+        .dropdown__item--simple { display: block; padding: 6px 12px; font-size: 0.85rem; color: var(--charcoal); border-radius: var(--radius-sm); transition: background 0.2s; }
+        .dropdown__item--simple:hover { background: var(--pearl); }
+
+        /* ============================================
+           HERO
+           ============================================ */
+        .hero {
+            padding: 180px 0 100px;
+            background: linear-gradient(135deg, var(--obsidian) 0%, var(--charcoal) 100%);
+            color: var(--pure);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(201, 162, 39, 0.1) 0%, transparent 70%);
+        }
+
+        .hero__content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+        }
+
+        .hero__badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(201, 162, 39, 0.2);
+            border: 1px solid var(--gold);
+            border-radius: var(--radius-pill);
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--gold-light);
+            margin-bottom: var(--space-md);
+        }
+
+        .hero__title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 400;
+            line-height: 1.2;
+            margin-bottom: var(--space-md);
+        }
+
+        .hero__title span {
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero__subtitle {
+            font-size: 1.2rem;
+            color: var(--silver);
+            line-height: 1.7;
+        }
+
+        /* ============================================
+           SECTION HEADERS
+           ============================================ */
+        .section {
+            padding: var(--space-3xl) 0;
+        }
+
+        .section--dark {
+            background: var(--obsidian);
+            color: var(--pure);
+        }
+
+        .section--light {
+            background: var(--pure);
+        }
+
+        .section--alt {
+            background: var(--ivory);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--space-2xl);
+        }
+
+        .section-header__eyebrow {
+            font-size: 0.8rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: var(--space-sm);
+        }
+
+        .section-header__title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 400;
+            margin-bottom: var(--space-sm);
+        }
+
+        .section-header__desc {
+            font-size: 1.1rem;
+            color: var(--slate);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .section--dark .section-header__desc {
+            color: var(--silver);
+        }
+
+        /* ============================================
+           MARKET OVERVIEW
+           ============================================ */
+        .market-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-md);
+            margin-bottom: var(--space-2xl);
+        }
+
+        .market-stat {
+            background: var(--pure);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+
+        .market-stat:hover {
+            transform: translateY(-4px);
+        }
+
+        .market-stat__value {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 400;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: var(--space-xs);
+        }
+
+        .market-stat__label {
+            font-size: 0.9rem;
+            color: var(--slate);
+            margin-bottom: var(--space-xs);
+        }
+
+        .market-stat__trend {
+            font-size: 0.8rem;
+            color: var(--positive);
+        }
+
+        /* Denver Market Details */
+        .denver-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: var(--space-2xl);
+        }
+
+        .denver-map {
+            background: var(--charcoal);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            color: var(--pure);
+        }
+
+        .denver-map__title {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            margin-bottom: var(--space-lg);
+        }
+
+        .neighborhood-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-sm);
+        }
+
+        .neighborhood {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-sm);
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: var(--radius-sm);
+        }
+
+        .neighborhood__dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--gold);
+        }
+
+        .neighborhood__name {
+            font-size: 0.9rem;
+        }
+
+        .neighborhood__score {
+            margin-left: auto;
+            font-size: 0.8rem;
+            color: var(--gold-light);
+        }
+
+        .denver-highlights {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+        }
+
+        .highlight-card {
+            background: var(--pure);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .highlight-card__label {
+            font-size: 0.8rem;
+            color: var(--slate);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: var(--space-xs);
+        }
+
+        .highlight-card__value {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            color: var(--charcoal);
+        }
+
+        .highlight-card__context {
+            font-size: 0.85rem;
+            color: var(--slate);
+            margin-top: var(--space-xs);
+        }
+
+        /* ============================================
+           COMPETITIVE ANALYSIS
+           ============================================ */
+        .competitor-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-lg);
+        }
+
+        .competitor-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--graphite);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            transition: all 0.4s var(--ease-smooth);
+        }
+
+        .competitor-card:hover {
+            border-color: var(--gold);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .competitor-card__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: var(--space-md);
+        }
+
+        .competitor-card__name {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .competitor-card__type {
+            padding: 4px 12px;
+            background: rgba(201, 162, 39, 0.2);
+            border-radius: var(--radius-pill);
+            font-size: 0.7rem;
+            color: var(--gold-light);
+            text-transform: uppercase;
+        }
+
+        .competitor-card__desc {
+            font-size: 0.9rem;
+            color: var(--silver);
+            margin-bottom: var(--space-lg);
+            line-height: 1.6;
+        }
+
+        .competitor-card__metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-lg);
+        }
+
+        .competitor-metric {
+            background: rgba(255, 255, 255, 0.02);
+            padding: var(--space-sm);
+            border-radius: var(--radius-sm);
+        }
+
+        .competitor-metric__label {
+            font-size: 0.7rem;
+            color: var(--silver);
+            text-transform: uppercase;
+        }
+
+        .competitor-metric__value {
+            font-weight: 600;
+            color: var(--pure);
+        }
+
+        .competitor-card__strengths,
+        .competitor-card__weaknesses {
+            margin-bottom: var(--space-md);
+        }
+
+        .competitor-card__strengths h4,
+        .competitor-card__weaknesses h4 {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: var(--space-xs);
+        }
+
+        .competitor-card__strengths h4 { color: var(--positive); }
+        .competitor-card__weaknesses h4 { color: var(--warning); }
+
+        .competitor-card__strengths ul,
+        .competitor-card__weaknesses ul {
+            list-style: none;
+        }
+
+        .competitor-card__strengths li,
+        .competitor-card__weaknesses li {
+            font-size: 0.85rem;
+            color: var(--silver);
+            padding: 4px 0;
+            padding-left: 16px;
+            position: relative;
+        }
+
+        .competitor-card__strengths li::before {
+            content: '+';
+            position: absolute;
+            left: 0;
+            color: var(--positive);
+        }
+
+        .competitor-card__weaknesses li::before {
+            content: '−';
+            position: absolute;
+            left: 0;
+            color: var(--warning);
+        }
+
+        /* ============================================
+           COMPARISON TABLE
+           ============================================ */
+        .comparison-section {
+            overflow-x: auto;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--pure);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: var(--space-md);
+            text-align: left;
+            border-bottom: 1px solid var(--pearl);
+        }
+
+        .comparison-table th {
+            background: var(--charcoal);
+            color: var(--pure);
+            font-family: var(--font-heading);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .comparison-table th:first-child {
+            border-radius: var(--radius-lg) 0 0 0;
+        }
+
+        .comparison-table th:last-child {
+            border-radius: 0 var(--radius-lg) 0 0;
+        }
+
+        .comparison-table td {
+            font-size: 0.9rem;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table__feature {
+            font-weight: 500;
+            color: var(--charcoal);
+        }
+
+        .comparison-table__check {
+            color: var(--positive);
+            font-size: 1.2rem;
+        }
+
+        .comparison-table__cross {
+            color: var(--negative);
+            font-size: 1.2rem;
+        }
+
+        .comparison-table__partial {
+            color: var(--warning);
+            font-size: 0.8rem;
+        }
+
+        .comparison-table__lux {
+            background: rgba(201, 162, 39, 0.05);
+        }
+
+        .comparison-table__lux-header {
+            background: var(--gold-gradient) !important;
+            color: var(--obsidian) !important;
+        }
+
+        /* ============================================
+           DIFFERENTIATION
+           ============================================ */
+        .differentiation-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-lg);
+        }
+
+        .diff-card {
+            background: var(--pure);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s var(--ease-smooth);
+            border: 2px solid transparent;
+        }
+
+        .diff-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .diff-card__icon {
+            width: 64px;
+            height: 64px;
+            background: var(--gold-gradient);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: var(--space-md);
+        }
+
+        .diff-card__title {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: var(--space-sm);
+        }
+
+        .diff-card__desc {
+            color: var(--slate);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* ============================================
+           SWOT ANALYSIS
+           ============================================ */
+        .swot-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-md);
+        }
+
+        .swot-card {
+            background: var(--pure);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            border-left: 4px solid;
+        }
+
+        .swot-card--strengths { border-color: var(--positive); }
+        .swot-card--weaknesses { border-color: var(--warning); }
+        .swot-card--opportunities { border-color: var(--neutral); }
+        .swot-card--threats { border-color: var(--negative); }
+
+        .swot-card__header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-md);
+        }
+
+        .swot-card__icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .swot-card--strengths .swot-card__icon { background: var(--positive-light); }
+        .swot-card--weaknesses .swot-card__icon { background: var(--warning-light); }
+        .swot-card--opportunities .swot-card__icon { background: var(--neutral-light); }
+        .swot-card--threats .swot-card__icon { background: var(--negative-light); }
+
+        .swot-card__title {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .swot-card__list {
+            list-style: none;
+        }
+
+        .swot-card__list li {
+            padding: var(--space-sm) 0;
+            border-bottom: 1px solid var(--pearl);
+            font-size: 0.9rem;
+            color: var(--slate);
+        }
+
+        .swot-card__list li:last-child {
+            border-bottom: none;
+        }
+
+        /* ============================================
+           MARKET GAP
+           ============================================ */
+        .gap-analysis {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-2xl);
+            align-items: center;
+        }
+
+        .gap-visual {
+            position: relative;
+        }
+
+        .gap-chart {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+        }
+
+        .gap-bar {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .gap-bar__label {
+            width: 120px;
+            font-size: 0.85rem;
+            color: var(--silver);
+        }
+
+        .gap-bar__track {
+            flex: 1;
+            height: 24px;
+            background: var(--graphite);
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .gap-bar__fill {
+            height: 100%;
+            border-radius: 12px;
+            transition: width 1s ease;
+        }
+
+        .gap-bar__fill--market {
+            background: var(--slate);
+        }
+
+        .gap-bar__fill--lux {
+            background: var(--gold-gradient);
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .gap-bar__values {
+            display: flex;
+            gap: var(--space-sm);
+            font-size: 0.85rem;
+        }
+
+        .gap-bar__values span:first-child {
+            color: var(--silver);
+        }
+
+        .gap-bar__values span:last-child {
+            color: var(--gold-light);
+        }
+
+        .gap-content h3 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            margin-bottom: var(--space-md);
+        }
+
+        .gap-content p {
+            color: var(--silver);
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: var(--space-md);
+        }
+
+        .gap-content ul {
+            list-style: none;
+        }
+
+        .gap-content li {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-sm) 0;
+            color: var(--silver);
+        }
+
+        .gap-content li svg {
+            color: var(--gold);
+            flex-shrink: 0;
+        }
+
+        /* ============================================
+           OPPORTUNITY SCORE
+           ============================================ */
+        .opportunity-score {
+            background: var(--gold-gradient);
+            border-radius: var(--radius-lg);
+            padding: var(--space-2xl);
+            text-align: center;
+            color: var(--obsidian);
+        }
+
+        .opportunity-score__label {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: var(--space-sm);
+        }
+
+        .opportunity-score__value {
+            font-family: var(--font-display);
+            font-size: 6rem;
+            font-weight: 400;
+            line-height: 1;
+            margin-bottom: var(--space-sm);
+            cursor: pointer;
+            position: relative;
+            display: inline-block;
+            transition: transform 0.2s ease, text-shadow 0.2s ease;
+            user-select: none;
+        }
+
+        .opportunity-score__value:hover {
+            transform: scale(1.05);
+            text-shadow: 0 0 30px rgba(201, 162, 39, 0.5);
+        }
+
+        .opportunity-score__value:active {
+            transform: scale(0.95);
+        }
+
+        .opportunity-score__desc {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Confetti Styles */
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            opacity: 0;
+            animation: confetti-fall 3s ease-out forwards;
+        }
+
+        .confetti.gold { background: linear-gradient(135deg, #E5C87A, #C9A227); }
+        .confetti.white { background: #FFFFFF; box-shadow: 0 0 6px rgba(255,255,255,0.8); }
+        .confetti.gold-dark { background: linear-gradient(135deg, #C9A227, #A68B1F); }
+
+        .confetti.circle { border-radius: 50%; }
+        .confetti.square { border-radius: 2px; }
+        .confetti.star {
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+        }
+        .confetti.diamond {
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+            10% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(0.3);
+            }
+        }
+
+        /* Explosion burst effect */
+        .score-burst {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            margin: -100px 0 0 -100px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(201,162,39,0.4) 0%, transparent 70%);
+            animation: burst 0.6s ease-out forwards;
+            pointer-events: none;
+        }
+
+        @keyframes burst {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(3);
+                opacity: 0;
+            }
+        }
+
+        /* ============================================
+           FOOTER
+           ============================================ */
+        .footer {
+            background: var(--obsidian);
+            color: var(--silver);
+            padding: var(--space-2xl) 0 var(--space-lg);
+        }
+
+        .footer__content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer__logo img {
+            height: 40px;
+            opacity: 0.8;
+        }
+
+        .footer__copy {
+            font-size: 0.85rem;
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 1200px) {
+            .market-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .competitor-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .differentiation-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .denver-grid {
+                grid-template-columns: 1fr;
+            }
+            .gap-analysis {
+                grid-template-columns: 1fr;
+            }
+            .swot-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .market-stats {
+                grid-template-columns: 1fr;
+            }
+            .competitor-grid {
+                grid-template-columns: 1fr;
+            }
+            .differentiation-grid {
+                grid-template-columns: 1fr;
+            }
+            .neighborhood-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <a href="index.html" class="nav__logo">
+            <img src="assets/images/logos/lux-markets-logo.png" alt="Lux Markets">
+        </a>
+        <ul class="nav__menu">
+            <li><a href="#overview" class="nav__link">Market Overview</a></li>
+            <li><a href="#competitors" class="nav__link">Competitors</a></li>
+            <li><a href="#differentiation" class="nav__link">Differentiation</a></li>
+            <li><a href="#opportunity" class="nav__link">Opportunity</a></li>
+            <li class="nav__item--allpages">
+                <a href="#" class="nav__link nav__link--allpages" onclick="event.preventDefault(); this.parentElement.classList.toggle('expanded');">
+                    All Pages
+                    <svg class="nav__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </a>
+                <div class="dropdown--allpages">
+                    <div class="dropdown__section"><span class="dropdown__section-title">Main</span><a href="index.html" class="dropdown__item--simple">Home</a><a href="pages/about.html" class="dropdown__item--simple">About</a><a href="pages/contact.html" class="dropdown__item--simple">Contact</a></div>
+                    <div class="dropdown__section"><span class="dropdown__section-title">Solutions</span><a href="pages/for-properties.html" class="dropdown__item--simple">For Properties</a><a href="pages/for-brands.html" class="dropdown__item--simple">For Brands</a><a href="pages/pricing.html" class="dropdown__item--simple">Pricing</a></div>
+                    <div class="dropdown__section"><span class="dropdown__section-title">Markets</span><a href="pages/our-markets.html" class="dropdown__item--simple">Our Markets</a><a href="pages/market-rules.html" class="dropdown__item--simple">Market Rules</a></div>
+                    <div class="dropdown__section"><span class="dropdown__section-title">Resources</span><a href="pages/resources.html" class="dropdown__item--simple">Resources</a><a href="pages/education.html" class="dropdown__item--simple">Education</a><a href="market-research.html" class="dropdown__item--simple">Market Research</a></div>
+                    <div class="dropdown__section"><span class="dropdown__section-title">Legal</span><a href="pages/terms-of-service.html" class="dropdown__item--simple">Terms of Service</a></div>
+                    <div class="dropdown__section"><span class="dropdown__section-title">Explore</span><a href="index-journey.html" class="dropdown__item--simple">Journey</a><a href="index-neo.html" class="dropdown__item--simple">Neo</a><a href="index-refresh.html" class="dropdown__item--simple">Refresh</a><a href="digital-profile.html" class="dropdown__item--simple">Digital Profile</a><a href="pitch-deck.html" class="dropdown__item--simple">Pitch Deck</a><a href="challenges.html" class="dropdown__item--simple">Challenges</a></div>
+                    <div class="dropdown__section"><span class="dropdown__section-title">Archive</span><a href="Landfill_index-estate.html" class="dropdown__item--simple">Estate Design</a><a href="Landfill_index-gallery.html" class="dropdown__item--simple">Gallery Design</a><a href="Landfill_index-maison.html" class="dropdown__item--simple">Maison Design</a></div>
+                    <div class="dropdown__section"><span class="dropdown__section-title">Dev</span><a href="pages/dev/insights.html" class="dropdown__item--simple">Insights</a></div>
+                </div>
+            </li>
+        </ul>
+        <a href="#contact" class="nav__cta">Get Started</a>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero__content">
+                <span class="hero__badge">Market Intelligence Report</span>
+                <h1 class="hero__title">Denver Luxury Market <span>Analysis</span></h1>
+                <p class="hero__subtitle">A comprehensive examination of the competitive landscape, market opportunities, and strategic positioning for Lux Markets in the Denver metro area.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Market Overview -->
+    <section id="overview" class="section section--alt">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-header__eyebrow">Market Overview</p>
+                <h2 class="section-header__title">Denver by the Numbers</h2>
+                <p class="section-header__desc">The Denver metro area presents a compelling opportunity for luxury lifestyle services with strong demographics and growth trends.</p>
+            </div>
+
+            <div class="market-stats">
+                <div class="market-stat">
+                    <p class="market-stat__value">2.9M</p>
+                    <p class="market-stat__label">Metro Population</p>
+                    <p class="market-stat__trend">↑ 1.4% annual growth</p>
+                </div>
+                <div class="market-stat">
+                    <p class="market-stat__value">$85K</p>
+                    <p class="market-stat__label">Median Household Income</p>
+                    <p class="market-stat__trend">↑ 14% above national avg</p>
+                </div>
+                <div class="market-stat">
+                    <p class="market-stat__value">340K+</p>
+                    <p class="market-stat__label">Multi-Family Units</p>
+                    <p class="market-stat__trend">↑ 8,500 new units/year</p>
+                </div>
+                <div class="market-stat">
+                    <p class="market-stat__value">$1,850</p>
+                    <p class="market-stat__label">Avg Class A Rent</p>
+                    <p class="market-stat__trend">↑ 4.2% YoY increase</p>
+                </div>
+            </div>
+
+            <div class="denver-grid">
+                <div class="denver-map">
+                    <h3 class="denver-map__title">Target Neighborhoods by Opportunity Score</h3>
+                    <div class="neighborhood-list">
+                        <div class="neighborhood">
+                            <span class="neighborhood__dot"></span>
+                            <span class="neighborhood__name">Cherry Creek</span>
+                            <span class="neighborhood__score">94</span>
+                        </div>
+                        <div class="neighborhood">
+                            <span class="neighborhood__dot"></span>
+                            <span class="neighborhood__name">LoDo</span>
+                            <span class="neighborhood__score">91</span>
+                        </div>
+                        <div class="neighborhood">
+                            <span class="neighborhood__dot"></span>
+                            <span class="neighborhood__name">RiNo</span>
+                            <span class="neighborhood__score">88</span>
+                        </div>
+                        <div class="neighborhood">
+                            <span class="neighborhood__dot"></span>
+                            <span class="neighborhood__name">Highlands</span>
+                            <span class="neighborhood__score">87</span>
+                        </div>
+                        <div class="neighborhood">
+                            <span class="neighborhood__dot"></span>
+                            <span class="neighborhood__name">Wash Park</span>
+                            <span class="neighborhood__score">85</span>
+                        </div>
+                        <div class="neighborhood">
+                            <span class="neighborhood__dot"></span>
+                            <span class="neighborhood__name">Capitol Hill</span>
+                            <span class="neighborhood__score">82</span>
+                        </div>
+                        <div class="neighborhood">
+                            <span class="neighborhood__dot"></span>
+                            <span class="neighborhood__name">Denver Tech Center</span>
+                            <span class="neighborhood__score">80</span>
+                        </div>
+                        <div class="neighborhood">
+                            <span class="neighborhood__dot"></span>
+                            <span class="neighborhood__name">Stapleton/Central Park</span>
+                            <span class="neighborhood__score">78</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="denver-highlights">
+                    <div class="highlight-card">
+                        <p class="highlight-card__label">Class A Properties</p>
+                        <p class="highlight-card__value">450+</p>
+                        <p class="highlight-card__context">Luxury apartment communities with 150+ units</p>
+                    </div>
+                    <div class="highlight-card">
+                        <p class="highlight-card__label">Premium Vendors</p>
+                        <p class="highlight-card__value">1,200+</p>
+                        <p class="highlight-card__context">Local luxury service providers</p>
+                    </div>
+                    <div class="highlight-card">
+                        <p class="highlight-card__label">Market Penetration</p>
+                        <p class="highlight-card__value">&lt;5%</p>
+                        <p class="highlight-card__context">Current similar service adoption</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VENDOR MARKET SATURATION ANALYSIS -->
+    <section class="section section--light" style="padding: var(--space-3xl) 0;">
+        <div class="container">
+            <div class="section-header" style="text-align: center; margin-bottom: var(--space-2xl);">
+                <p class="section-header__eyebrow">Deep Dive</p>
+                <h2 class="section-header__title">Denver Vendor Market Saturation</h2>
+                <p class="section-header__desc">Understanding the vendor landscape is critical for targeting the right partners and identifying market gaps.</p>
+            </div>
+
+            <!-- National Context -->
+            <div style="background: linear-gradient(135deg, var(--charcoal) 0%, var(--obsidian) 100%); border-radius: var(--radius-lg); padding: var(--space-xl); color: var(--pure); margin-bottom: var(--space-xl);">
+                <h3 style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 600; margin-bottom: var(--space-lg); text-align: center; color: var(--gold-light);">U.S. Catering & Events Market Context</h3>
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-lg); text-align: center;">
+                    <div>
+                        <div style="font-family: var(--font-display); font-size: 2.5rem; color: var(--gold-light);">$14.4B</div>
+                        <div style="font-size: 0.85rem; color: var(--silver);">U.S. Catering Industry Size (2025)</div>
+                    </div>
+                    <div>
+                        <div style="font-family: var(--font-display); font-size: 2.5rem; color: var(--gold-light);">13,263</div>
+                        <div style="font-size: 0.85rem; color: var(--silver);">Catering Businesses in U.S.</div>
+                    </div>
+                    <div>
+                        <div style="font-family: var(--font-display); font-size: 2.5rem; color: var(--gold-light);">12,000+</div>
+                        <div style="font-size: 0.85rem; color: var(--silver);">Event Planning Companies (U.S.)</div>
+                    </div>
+                    <div>
+                        <div style="font-family: var(--font-display); font-size: 2.5rem; color: var(--gold-light);">11.4%</div>
+                        <div style="font-size: 0.85rem; color: var(--silver);">Industry CAGR (5-year)</div>
+                    </div>
+                </div>
+                <p style="text-align: center; margin-top: var(--space-lg); font-size: 0.9rem; color: var(--silver); max-width: 800px; margin-left: auto; margin-right: auto;">The catering industry has experienced robust growth, expanding at a CAGR of 11.4% over the past five years, reflecting strong rebound from pandemic-era disruptions and increased demand for experiential services.</p>
+            </div>
+
+            <!-- Denver Vendor Ecosystem -->
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-lg); margin-bottom: var(--space-xl);">
+                <!-- Local Vendor Counts -->
+                <div style="background: var(--pure); border: 2px solid var(--pearl); border-radius: var(--radius-lg); padding: var(--space-xl);">
+                    <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-lg);">
+                        <div style="width: 56px; height: 56px; background: var(--gold-gradient); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0A0A0B" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+                        <div>
+                            <h3 style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 600;">Denver Vendor Ecosystem</h3>
+                            <p style="font-size: 0.85rem; color: var(--slate);">Estimated active vendor counts by category</p>
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-md);">
+                        <div style="background: var(--ivory); border-radius: var(--radius-md); padding: var(--space-md); text-align: center;">
+                            <div style="font-family: var(--font-display); font-size: 1.8rem; color: var(--gold);">100+</div>
+                            <div style="font-size: 0.8rem; color: var(--slate);">Cherry Creek Farmers Market Vendors</div>
+                        </div>
+                        <div style="background: var(--ivory); border-radius: var(--radius-md); padding: var(--space-md); text-align: center;">
+                            <div style="font-family: var(--font-display); font-size: 1.8rem; color: var(--gold);">150+</div>
+                            <div style="font-size: 0.8rem; color: var(--slate);">Boulder County Market Vendors</div>
+                        </div>
+                        <div style="background: var(--ivory); border-radius: var(--radius-md); padding: var(--space-md); text-align: center;">
+                            <div style="font-family: var(--font-display); font-size: 1.8rem; color: var(--gold);">40+</div>
+                            <div style="font-size: 0.8rem; color: var(--slate);">Pop-Up & Artisan Market Vendors</div>
+                        </div>
+                        <div style="background: var(--ivory); border-radius: var(--radius-md); padding: var(--space-md); text-align: center;">
+                            <div style="font-family: var(--font-display); font-size: 1.8rem; color: var(--gold);">$388K</div>
+                            <div style="font-size: 0.8rem; color: var(--slate);">Median Food Truck Revenue (CO)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Market Saturation Indicators -->
+                <div style="background: var(--pure); border: 2px solid var(--pearl); border-radius: var(--radius-lg); padding: var(--space-xl);">
+                    <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-lg);">
+                        <div style="width: 56px; height: 56px; background: var(--gold-gradient); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0A0A0B" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></div>
+                        <div>
+                            <h3 style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 600;">Saturation Analysis</h3>
+                            <p style="font-size: 0.85rem; color: var(--slate);">Market penetration by vendor type</p>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: var(--space-md);">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;"><span style="font-size: 0.9rem;">Food & Beverage Vendors</span><span style="font-weight: 600; color: var(--gold);">High (78%)</span></div>
+                        <div style="background: var(--pearl); border-radius: 4px; height: 8px;"><div style="background: var(--gold-gradient); border-radius: 4px; height: 100%; width: 78%;"></div></div>
+                    </div>
+                    <div style="margin-bottom: var(--space-md);">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;"><span style="font-size: 0.9rem;">Mobile Service Providers</span><span style="font-weight: 600; color: var(--gold);">Medium (52%)</span></div>
+                        <div style="background: var(--pearl); border-radius: 4px; height: 8px;"><div style="background: var(--gold-gradient); border-radius: 4px; height: 100%; width: 52%;"></div></div>
+                    </div>
+                    <div style="margin-bottom: var(--space-md);">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;"><span style="font-size: 0.9rem;">Artisan/Craft Pop-Ups</span><span style="font-weight: 600; color: var(--gold);">Low (34%)</span></div>
+                        <div style="background: var(--pearl); border-radius: 4px; height: 8px;"><div style="background: var(--gold-gradient); border-radius: 4px; height: 100%; width: 34%;"></div></div>
+                    </div>
+                    <div style="margin-bottom: var(--space-md);">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;"><span style="font-size: 0.9rem;">Luxury/Premium Focus</span><span style="font-weight: 600; color: #22c55e;">Very Low (15%)</span></div>
+                        <div style="background: var(--pearl); border-radius: 4px; height: 8px;"><div style="background: linear-gradient(90deg, #22c55e, #4ade80); border-radius: 4px; height: 100%; width: 15%;"></div></div>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--slate); margin-top: var(--space-md); padding-top: var(--space-md); border-top: 1px solid var(--pearl);">Green indicates opportunity gap - luxury-focused vendor aggregation is underserved in Denver.</p>
+                </div>
+            </div>
+
+            <!-- Market Opportunity Cards -->
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-lg); margin-bottom: var(--space-xl);">
+                <div style="background: rgba(201, 162, 39, 0.08); border: 2px solid var(--gold); border-radius: var(--radius-lg); padding: var(--space-xl);">
+                    <h4 style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 600; margin-bottom: var(--space-md); color: var(--gold);">Untapped Opportunity</h4>
+                    <p style="font-size: 2.5rem; font-family: var(--font-display); margin-bottom: var(--space-sm);">35%</p>
+                    <p style="font-size: 0.9rem; color: var(--slate);">of Denver vendors do pop-up events but have no centralized booking platform for apartment communities</p>
+                </div>
+                <div style="background: rgba(201, 162, 39, 0.08); border: 2px solid var(--gold); border-radius: var(--radius-lg); padding: var(--space-xl);">
+                    <h4 style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 600; margin-bottom: var(--space-md); color: var(--gold);">Vendor Acquisition Ease</h4>
+                    <p style="font-size: 2.5rem; font-family: var(--font-display); margin-bottom: var(--space-sm);">High</p>
+                    <p style="font-size: 0.9rem; color: var(--slate);">Denver BAZAAR, farmers markets, and artisan fairs prove vendors are actively seeking pop-up opportunities</p>
+                </div>
+                <div style="background: rgba(201, 162, 39, 0.08); border: 2px solid var(--gold); border-radius: var(--radius-lg); padding: var(--space-xl);">
+                    <h4 style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 600; margin-bottom: var(--space-md); color: var(--gold);">Competition Intensity</h4>
+                    <p style="font-size: 2.5rem; font-family: var(--font-display); margin-bottom: var(--space-sm);">Low</p>
+                    <p style="font-size: 0.9rem; color: var(--slate);">No direct competitor aggregates luxury vendors for apartment resident events in Denver</p>
+                </div>
+            </div>
+
+            <!-- Vendor Category Deep Dive -->
+            <div style="background: var(--pure); border: 2px solid var(--pearl); border-radius: var(--radius-lg); padding: var(--space-xl);">
+                <h3 style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 600; margin-bottom: var(--space-lg); text-align: center;">Vendor Category Analysis for Lux Markets</h3>
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background: var(--ivory);">
+                            <th style="padding: 16px; text-align: left; font-weight: 600; border-bottom: 2px solid var(--pearl);">Vendor Category</th>
+                            <th style="padding: 16px; text-align: center; font-weight: 600; border-bottom: 2px solid var(--pearl);">Est. Count (Denver)</th>
+                            <th style="padding: 16px; text-align: center; font-weight: 600; border-bottom: 2px solid var(--pearl);">Pop-Up Ready</th>
+                            <th style="padding: 16px; text-align: center; font-weight: 600; border-bottom: 2px solid var(--pearl);">Luxury Tier</th>
+                            <th style="padding: 16px; text-align: center; font-weight: 600; border-bottom: 2px solid var(--pearl);">Priority</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid var(--pearl);">
+                            <td style="padding: 14px;">Specialty Food & Beverage</td>
+                            <td style="padding: 14px; text-align: center;">250+</td>
+                            <td style="padding: 14px; text-align: center;"><span style="background: #22c55e; color: white; padding: 4px 10px; border-radius: 12px; font-size: 0.8rem;">High</span></td>
+                            <td style="padding: 14px; text-align: center;">~40%</td>
+                            <td style="padding: 14px; text-align: center;"><span style="color: var(--gold); font-weight: 600;">1</span></td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--pearl);">
+                            <td style="padding: 14px;">Artisan Goods & Crafts</td>
+                            <td style="padding: 14px; text-align: center;">150+</td>
+                            <td style="padding: 14px; text-align: center;"><span style="background: #22c55e; color: white; padding: 4px 10px; border-radius: 12px; font-size: 0.8rem;">High</span></td>
+                            <td style="padding: 14px; text-align: center;">~35%</td>
+                            <td style="padding: 14px; text-align: center;"><span style="color: var(--gold); font-weight: 600;">2</span></td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--pearl);">
+                            <td style="padding: 14px;">Mobile Wellness (Massage, Yoga)</td>
+                            <td style="padding: 14px; text-align: center;">80+</td>
+                            <td style="padding: 14px; text-align: center;"><span style="background: #f59e0b; color: white; padding: 4px 10px; border-radius: 12px; font-size: 0.8rem;">Medium</span></td>
+                            <td style="padding: 14px; text-align: center;">~60%</td>
+                            <td style="padding: 14px; text-align: center;"><span style="color: var(--gold); font-weight: 600;">3</span></td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--pearl);">
+                            <td style="padding: 14px;">Auto Detailing / Car Care</td>
+                            <td style="padding: 14px; text-align: center;">120+</td>
+                            <td style="padding: 14px; text-align: center;"><span style="background: #22c55e; color: white; padding: 4px 10px; border-radius: 12px; font-size: 0.8rem;">High</span></td>
+                            <td style="padding: 14px; text-align: center;">~25%</td>
+                            <td style="padding: 14px; text-align: center;"><span style="color: var(--gold); font-weight: 600;">4</span></td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--pearl);">
+                            <td style="padding: 14px;">Pet Services (Grooming, Photography)</td>
+                            <td style="padding: 14px; text-align: center;">60+</td>
+                            <td style="padding: 14px; text-align: center;"><span style="background: #f59e0b; color: white; padding: 4px 10px; border-radius: 12px; font-size: 0.8rem;">Medium</span></td>
+                            <td style="padding: 14px; text-align: center;">~30%</td>
+                            <td style="padding: 14px; text-align: center;"><span style="color: var(--gold); font-weight: 600;">5</span></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 14px;">Fashion & Boutique Retail</td>
+                            <td style="padding: 14px; text-align: center;">100+</td>
+                            <td style="padding: 14px; text-align: center;"><span style="background: #f59e0b; color: white; padding: 4px 10px; border-radius: 12px; font-size: 0.8rem;">Medium</span></td>
+                            <td style="padding: 14px; text-align: center;">~50%</td>
+                            <td style="padding: 14px; text-align: center;"><span style="color: var(--gold); font-weight: 600;">6</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="font-size: 0.85rem; color: var(--slate); margin-top: var(--space-md); text-align: center;">Priority ranking based on pop-up readiness, luxury concentration, and apartment resident appeal.</p>
+            </div>
+
+            <!-- Key Vendor Markets -->
+            <div style="margin-top: var(--space-xl); background: var(--ivory); border-radius: var(--radius-lg); padding: var(--space-xl);">
+                <h3 style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 600; margin-bottom: var(--space-lg);">Key Denver Vendor Markets to Scout</h3>
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-md);">
+                    <div style="background: var(--pure); border-radius: var(--radius-md); padding: var(--space-lg); text-align: center; border: 1px solid var(--pearl);">
+                        <h4 style="font-size: 1rem; font-weight: 600; margin-bottom: var(--space-xs);">Cherry Creek Farmers Market</h4>
+                        <p style="font-size: 0.85rem; color: var(--slate);">100+ vendors, highest luxury concentration</p>
+                        <span style="display: inline-block; margin-top: var(--space-sm); background: var(--gold-gradient); color: var(--obsidian); padding: 4px 12px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">Priority 1</span>
+                    </div>
+                    <div style="background: var(--pure); border-radius: var(--radius-md); padding: var(--space-lg); text-align: center; border: 1px solid var(--pearl);">
+                        <h4 style="font-size: 1rem; font-weight: 600; margin-bottom: var(--space-xs);">Denver BAZAAR</h4>
+                        <p style="font-size: 0.85rem; color: var(--slate);">Pop-up specialist, fashion + food focus</p>
+                        <span style="display: inline-block; margin-top: var(--space-sm); background: var(--gold-gradient); color: var(--obsidian); padding: 4px 12px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">Priority 2</span>
+                    </div>
+                    <div style="background: var(--pure); border-radius: var(--radius-md); padding: var(--space-lg); text-align: center; border: 1px solid var(--pearl);">
+                        <h4 style="font-size: 1rem; font-weight: 600; margin-bottom: var(--space-xs);">South Pearl Street Market</h4>
+                        <p style="font-size: 0.85rem; color: var(--slate);">Artisan + neighborhood community vibe</p>
+                        <span style="display: inline-block; margin-top: var(--space-sm); background: var(--silver); color: var(--charcoal); padding: 4px 12px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">Priority 3</span>
+                    </div>
+                    <div style="background: var(--pure); border-radius: var(--radius-md); padding: var(--space-lg); text-align: center; border: 1px solid var(--pearl);">
+                        <h4 style="font-size: 1rem; font-weight: 600; margin-bottom: var(--space-xs);">RiNo/Dairy Block Events</h4>
+                        <p style="font-size: 0.85rem; color: var(--slate);">Young professional demographic, trendy</p>
+                        <span style="display: inline-block; margin-top: var(--space-sm); background: var(--silver); color: var(--charcoal); padding: 4px 12px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">Priority 4</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Competitive Analysis -->
+    <section id="competitors" class="section section--dark">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-header__eyebrow" style="color: var(--gold-light);">Competitive Landscape</p>
+                <h2 class="section-header__title" style="color: var(--pure);">Who's in the Market?</h2>
+                <p class="section-header__desc">Understanding the current players helps identify gaps and positioning opportunities.</p>
+            </div>
+
+            <div class="competitor-grid">
+                <!-- Competitor 1 -->
+                <div class="competitor-card">
+                    <div class="competitor-card__header">
+                        <h3 class="competitor-card__name">Fetch Package</h3>
+                        <span class="competitor-card__type">Amenity Service</span>
+                    </div>
+                    <p class="competitor-card__desc">Package delivery and concierge services for apartment communities. Focus on logistics rather than experiences.</p>
+                    <div class="competitor-card__metrics">
+                        <div class="competitor-metric">
+                            <p class="competitor-metric__label">Markets</p>
+                            <p class="competitor-metric__value">25+ cities</p>
+                        </div>
+                        <div class="competitor-metric">
+                            <p class="competitor-metric__label">Focus</p>
+                            <p class="competitor-metric__value">Logistics</p>
+                        </div>
+                    </div>
+                    <div class="competitor-card__strengths">
+                        <h4>Strengths</h4>
+                        <ul>
+                            <li>Established property relationships</li>
+                            <li>Strong logistics infrastructure</li>
+                            <li>Recognized brand</li>
+                        </ul>
+                    </div>
+                    <div class="competitor-card__weaknesses">
+                        <h4>Weaknesses</h4>
+                        <ul>
+                            <li>No vendor marketplace</li>
+                            <li>Not experience-focused</li>
+                            <li>Limited resident engagement</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Competitor 2 -->
+                <div class="competitor-card">
+                    <div class="competitor-card__header">
+                        <h3 class="competitor-card__name">Amenify</h3>
+                        <span class="competitor-card__type">Services Platform</span>
+                    </div>
+                    <p class="competitor-card__desc">On-demand services booking for apartment residents including cleaning, pet care, and personal services.</p>
+                    <div class="competitor-card__metrics">
+                        <div class="competitor-metric">
+                            <p class="competitor-metric__label">Markets</p>
+                            <p class="competitor-metric__value">50+ cities</p>
+                        </div>
+                        <div class="competitor-metric">
+                            <p class="competitor-metric__label">Focus</p>
+                            <p class="competitor-metric__value">Personal Services</p>
+                        </div>
+                    </div>
+                    <div class="competitor-card__strengths">
+                        <h4>Strengths</h4>
+                        <ul>
+                            <li>Wide service selection</li>
+                            <li>Scalable platform</li>
+                            <li>Property integrations</li>
+                        </ul>
+                    </div>
+                    <div class="competitor-card__weaknesses">
+                        <h4>Weaknesses</h4>
+                        <ul>
+                            <li>Generic, not luxury focused</li>
+                            <li>No pop-up retail/events</li>
+                            <li>Commodity positioning</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Competitor 3 -->
+                <div class="competitor-card">
+                    <div class="competitor-card__header">
+                        <h3 class="competitor-card__name">Local Event Planners</h3>
+                        <span class="competitor-card__type">Traditional Services</span>
+                    </div>
+                    <p class="competitor-card__desc">Independent event coordinators and property management staff handling resident events ad-hoc.</p>
+                    <div class="competitor-card__metrics">
+                        <div class="competitor-metric">
+                            <p class="competitor-metric__label">Markets</p>
+                            <p class="competitor-metric__value">Local only</p>
+                        </div>
+                        <div class="competitor-metric">
+                            <p class="competitor-metric__label">Focus</p>
+                            <p class="competitor-metric__value">Events</p>
+                        </div>
+                    </div>
+                    <div class="competitor-card__strengths">
+                        <h4>Strengths</h4>
+                        <ul>
+                            <li>Local relationships</li>
+                            <li>Personalized service</li>
+                            <li>Flexibility</li>
+                        </ul>
+                    </div>
+                    <div class="competitor-card__weaknesses">
+                        <h4>Weaknesses</h4>
+                        <ul>
+                            <li>No scalable platform</li>
+                            <li>Limited vendor network</li>
+                            <li>Inconsistent quality</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Table -->
+    <section class="section section--light">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-header__eyebrow">Feature Comparison</p>
+                <h2 class="section-header__title">How We Stack Up</h2>
+                <p class="section-header__desc">A direct comparison of capabilities across key market players.</p>
+            </div>
+
+            <div class="comparison-section">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Fetch</th>
+                            <th>Amenify</th>
+                            <th>Local Planners</th>
+                            <th class="comparison-table__lux-header">Lux Markets</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="comparison-table__feature">Curated Vendor Marketplace</td>
+                            <td><span class="comparison-table__cross">✗</span></td>
+                            <td><span class="comparison-table__partial">Partial</span></td>
+                            <td><span class="comparison-table__cross">✗</span></td>
+                            <td class="comparison-table__lux"><span class="comparison-table__check">✓</span></td>
+                        </tr>
+                        <tr>
+                            <td class="comparison-table__feature">Pop-Up Retail Events</td>
+                            <td><span class="comparison-table__cross">✗</span></td>
+                            <td><span class="comparison-table__cross">✗</span></td>
+                            <td><span class="comparison-table__partial">Partial</span></td>
+                            <td class="comparison-table__lux"><span class="comparison-table__check">✓</span></td>
+                        </tr>
+                        <tr>
+                            <td class="comparison-table__feature">Luxury Brand Focus</td>
+                            <td><span class="comparison-table__cross">✗</span></td>
+                            <td><span class="comparison-table__cross">✗</span></td>
+                            <td><span class="comparison-table__partial">Varies</span></td>
+                            <td class="comparison-table__lux"><span class="comparison-table__check">✓</span></td>
+                        </tr>
+                        <tr>
+                            <td class="comparison-table__feature">Integrated Payment Platform</td>
+                            <td><span class="comparison-table__check">✓</span></td>
+                            <td><span class="comparison-table__check">✓</span></td>
+                            <td><span class="comparison-table__cross">✗</span></td>
+                            <td class="comparison-table__lux"><span class="comparison-table__check">✓</span></td>
+                        </tr>
+                        <tr>
+                            <td class="comparison-table__feature">Partner Tier System</td>
+                            <td><span class="comparison-table__cross">✗</span></td>
+                            <td><span class="comparison-table__cross">✗</span></td>
+                            <td><span class="comparison-table__cross">✗</span></td>
+                            <td class="comparison-table__lux"><span class="comparison-table__check">✓</span></td>
+                        </tr>
+                        <tr>
+                            <td class="comparison-table__feature">Revenue Sharing Model</td>
+                            <td><span class="comparison-table__cross">✗</span></td>
+                            <td><span class="comparison-table__partial">Limited</span></td>
+                            <td><span class="comparison-table__cross">✗</span></td>
+                            <td class="comparison-table__lux"><span class="comparison-table__check">✓</span></td>
+                        </tr>
+                        <tr>
+                            <td class="comparison-table__feature">Co-Marketing Programs</td>
+                            <td><span class="comparison-table__cross">✗</span></td>
+                            <td><span class="comparison-table__cross">✗</span></td>
+                            <td><span class="comparison-table__cross">✗</span></td>
+                            <td class="comparison-table__lux"><span class="comparison-table__check">✓</span></td>
+                        </tr>
+                        <tr>
+                            <td class="comparison-table__feature">Performance Analytics</td>
+                            <td><span class="comparison-table__check">✓</span></td>
+                            <td><span class="comparison-table__check">✓</span></td>
+                            <td><span class="comparison-table__cross">✗</span></td>
+                            <td class="comparison-table__lux"><span class="comparison-table__check">✓</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Differentiation -->
+    <section id="differentiation" class="section section--alt">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-header__eyebrow">Competitive Advantage</p>
+                <h2 class="section-header__title">How Lux Markets Stands Out</h2>
+                <p class="section-header__desc">Key differentiators that position Lux Markets uniquely in the market.</p>
+            </div>
+
+            <div class="differentiation-grid">
+                <div class="diff-card">
+                    <div class="diff-card__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                    <h3 class="diff-card__title">Luxury-First Positioning</h3>
+                    <p class="diff-card__desc">Unlike commodity platforms, Lux Markets exclusively curates premium vendors and targets affluent properties. This focus creates a higher-value ecosystem where quality attracts quality.</p>
+                </div>
+                <div class="diff-card">
+                    <div class="diff-card__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h20M5 20V8l7-6 7 6v12M9 20v-5h6v5"/><path d="M12 2v5M9 8l3-3 3 3"/></svg></div>
+                    <h3 class="diff-card__title">Pop-Up Retail Model</h3>
+                    <p class="diff-card__desc">No competitor offers a true pop-up marketplace experience. Bringing curated vendors directly to residents creates discovery moments and community engagement that service platforms can't match.</p>
+                </div>
+                <div class="diff-card">
+                    <div class="diff-card__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+                    <h3 class="diff-card__title">Three-Party Value Creation</h3>
+                    <p class="diff-card__desc">The tiered system creates aligned incentives between properties, vendors, and Lux Markets. Everyone benefits from success, creating powerful network effects and retention.</p>
+                </div>
+                <div class="diff-card">
+                    <div class="diff-card__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></div>
+                    <h3 class="diff-card__title">Data-Driven Matching</h3>
+                    <p class="diff-card__desc">Our algorithms match vendors to properties based on resident demographics, ensuring higher conversion rates and satisfaction for all parties.</p>
+                </div>
+                <div class="diff-card">
+                    <div class="diff-card__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></div>
+                    <h3 class="diff-card__title">Gamified Progression</h3>
+                    <p class="diff-card__desc">The tier system with milestones and incentives creates engagement loops that keep partners active and striving for advancement—a feature no competitor offers.</p>
+                </div>
+                <div class="diff-card">
+                    <div class="diff-card__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+                    <h3 class="diff-card__title">Regional Expansion Model</h3>
+                    <p class="diff-card__desc">Event Manager territories allow for local expertise while maintaining platform standards. This "franchise-like" model enables rapid, quality-controlled growth.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SWOT Analysis -->
+    <section class="section section--light">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-header__eyebrow">Strategic Analysis</p>
+                <h2 class="section-header__title">SWOT for Denver Launch</h2>
+                <p class="section-header__desc">An honest assessment of our position entering the Denver market.</p>
+            </div>
+
+            <div class="swot-grid">
+                <div class="swot-card swot-card--strengths">
+                    <div class="swot-card__header">
+                        <div class="swot-card__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-2.54Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-2.54Z"/></svg></div>
+                        <h3 class="swot-card__title">Strengths</h3>
+                    </div>
+                    <ul class="swot-card__list">
+                        <li>Proven model from Austin market operations</li>
+                        <li>Established software stack and processes</li>
+                        <li>Unique luxury positioning with no direct competitor</li>
+                        <li>Scalable platform ready for new markets</li>
+                        <li>Strong value proposition for all stakeholders</li>
+                    </ul>
+                </div>
+
+                <div class="swot-card swot-card--weaknesses">
+                    <div class="swot-card__header">
+                        <div class="swot-card__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+                        <h3 class="swot-card__title">Weaknesses</h3>
+                    </div>
+                    <ul class="swot-card__list">
+                        <li>No existing Denver relationships or brand awareness</li>
+                        <li>New market requires ground-up vendor recruitment</li>
+                        <li>Limited local market knowledge initially</li>
+                        <li>Resource constraints during expansion</li>
+                        <li>Learning curve for Denver-specific dynamics</li>
+                    </ul>
+                </div>
+
+                <div class="swot-card swot-card--opportunities">
+                    <div class="swot-card__header">
+                        <div class="swot-card__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+                        <h3 class="swot-card__title">Opportunities</h3>
+                    </div>
+                    <ul class="swot-card__list">
+                        <li>Large underserved luxury apartment market</li>
+                        <li>Strong local vendor community seeking B2B channels</li>
+                        <li>Property managers actively seeking resident amenities</li>
+                        <li>Growing affluent population and development pipeline</li>
+                        <li>Low competition in luxury pop-up retail space</li>
+                    </ul>
+                </div>
+
+                <div class="swot-card swot-card--threats">
+                    <div class="swot-card__header">
+                        <div class="swot-card__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 8v4M12 16h.01"/></svg></div>
+                        <h3 class="swot-card__title">Threats</h3>
+                    </div>
+                    <ul class="swot-card__list">
+                        <li>Established players could pivot to compete</li>
+                        <li>Economic downturn could reduce luxury spending</li>
+                        <li>Property manager consolidation limiting targets</li>
+                        <li>Local competitors with existing relationships</li>
+                        <li>Vendor resistance to platform fees</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Market Gap -->
+    <section id="opportunity" class="section section--dark">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-header__eyebrow" style="color: var(--gold-light);">The Opportunity</p>
+                <h2 class="section-header__title" style="color: var(--pure);">Where the Gap Exists</h2>
+                <p class="section-header__desc">Current market solutions leave significant value uncaptured that Lux Markets is positioned to address.</p>
+            </div>
+
+            <div class="gap-analysis">
+                <div class="gap-visual">
+                    <div class="gap-chart">
+                        <div class="gap-bar">
+                            <span class="gap-bar__label">Luxury Focus</span>
+                            <div class="gap-bar__track">
+                                <div class="gap-bar__fill gap-bar__fill--market" style="width: 25%"></div>
+                                <div class="gap-bar__fill gap-bar__fill--lux" style="width: 95%"></div>
+                            </div>
+                            <div class="gap-bar__values">
+                                <span>25%</span>
+                                <span>95%</span>
+                            </div>
+                        </div>
+                        <div class="gap-bar">
+                            <span class="gap-bar__label">Pop-Up Events</span>
+                            <div class="gap-bar__track">
+                                <div class="gap-bar__fill gap-bar__fill--market" style="width: 10%"></div>
+                                <div class="gap-bar__fill gap-bar__fill--lux" style="width: 90%"></div>
+                            </div>
+                            <div class="gap-bar__values">
+                                <span>10%</span>
+                                <span>90%</span>
+                            </div>
+                        </div>
+                        <div class="gap-bar">
+                            <span class="gap-bar__label">Revenue Share</span>
+                            <div class="gap-bar__track">
+                                <div class="gap-bar__fill gap-bar__fill--market" style="width: 15%"></div>
+                                <div class="gap-bar__fill gap-bar__fill--lux" style="width: 85%"></div>
+                            </div>
+                            <div class="gap-bar__values">
+                                <span>15%</span>
+                                <span>85%</span>
+                            </div>
+                        </div>
+                        <div class="gap-bar">
+                            <span class="gap-bar__label">Partner Tiers</span>
+                            <div class="gap-bar__track">
+                                <div class="gap-bar__fill gap-bar__fill--market" style="width: 5%"></div>
+                                <div class="gap-bar__fill gap-bar__fill--lux" style="width: 100%"></div>
+                            </div>
+                            <div class="gap-bar__values">
+                                <span>5%</span>
+                                <span>100%</span>
+                            </div>
+                        </div>
+                        <div class="gap-bar">
+                            <span class="gap-bar__label">Co-Promotion</span>
+                            <div class="gap-bar__track">
+                                <div class="gap-bar__fill gap-bar__fill--market" style="width: 20%"></div>
+                                <div class="gap-bar__fill gap-bar__fill--lux" style="width: 80%"></div>
+                            </div>
+                            <div class="gap-bar__values">
+                                <span>20%</span>
+                                <span>80%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="margin-top: var(--space-md); font-size: 0.85rem; color: var(--silver);">Gray = Market Avg | Gold = Lux Markets</p>
+                </div>
+
+                <div class="gap-content">
+                    <h3>A Category of One</h3>
+                    <p>The Denver market has service platforms and event planners, but no one combining luxury curation, pop-up retail experiences, and a three-party value system.</p>
+                    <p>This creates a blue ocean opportunity where Lux Markets can define the category rather than compete within it.</p>
+                    <ul>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                            No luxury-focused pop-up marketplace exists
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                            Property managers need amenity differentiation
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                            Vendors seeking affluent customer access
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                            First mover advantage available
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="opportunity-score" style="margin-top: var(--space-2xl); position: relative; overflow: visible;">
+                <p class="opportunity-score__label">Denver Market Opportunity Score</p>
+                <p class="opportunity-score__value" id="score-trigger" onclick="triggerConfetti(this)">87</p>
+                <p class="opportunity-score__desc">Based on market size, competition density, demographic alignment, and growth trajectory—Denver ranks as a high-priority expansion market.</p>
+                <p style="font-size: 0.8rem; margin-top: var(--space-sm); opacity: 0.7;">Click the score!</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function triggerConfetti(element) {
+            // Get element position
+            const rect = element.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            // Create burst effect behind the number
+            const burst = document.createElement('div');
+            burst.className = 'score-burst';
+            element.style.position = 'relative';
+            element.appendChild(burst);
+            setTimeout(() => burst.remove(), 600);
+
+            // Create confetti container
+            const container = document.createElement('div');
+            container.className = 'confetti-container';
+            document.body.appendChild(container);
+
+            // Confetti settings
+            const colors = ['gold', 'white', 'gold-dark'];
+            const shapes = ['circle', 'square', 'star', 'diamond'];
+            const confettiCount = 80;
+
+            for (let i = 0; i < confettiCount; i++) {
+                const confetti = document.createElement('div');
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const shape = shapes[Math.floor(Math.random() * shapes.length)];
+
+                confetti.className = `confetti ${color} ${shape}`;
+
+                // Random size
+                const size = Math.random() * 12 + 6;
+                confetti.style.width = size + 'px';
+                confetti.style.height = size + 'px';
+
+                // Position at click center
+                confetti.style.left = centerX + 'px';
+                confetti.style.top = centerY + 'px';
+
+                // Random explosion direction (full 360 degrees)
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = Math.random() * 400 + 200;
+                const tx = Math.cos(angle) * velocity;
+                const ty = Math.sin(angle) * velocity - 100; // Bias upward slightly
+                const rot = Math.random() * 1080 - 540;
+
+                confetti.style.setProperty('--tx', tx + 'px');
+                confetti.style.setProperty('--ty', ty + 'px');
+                confetti.style.setProperty('--rot', rot + 'deg');
+
+                // Stagger animation
+                confetti.style.animationDelay = (Math.random() * 0.15) + 's';
+                confetti.style.animationDuration = (Math.random() * 1.5 + 2) + 's';
+
+                container.appendChild(confetti);
+            }
+
+            // Add some sparkle particles
+            for (let i = 0; i < 30; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'confetti white circle';
+                sparkle.style.width = '4px';
+                sparkle.style.height = '4px';
+                sparkle.style.left = centerX + 'px';
+                sparkle.style.top = centerY + 'px';
+                sparkle.style.boxShadow = '0 0 10px #fff, 0 0 20px #C9A227';
+
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = Math.random() * 300 + 150;
+                sparkle.style.setProperty('--tx', (Math.cos(angle) * velocity) + 'px');
+                sparkle.style.setProperty('--ty', (Math.sin(angle) * velocity) + 'px');
+                sparkle.style.setProperty('--rot', '0deg');
+                sparkle.style.animationDuration = '1.5s';
+
+                container.appendChild(sparkle);
+            }
+
+            // Clean up
+            setTimeout(() => container.remove(), 3500);
+        }
+    </script>
+
+    <!-- ACTIONABLE INSIGHTS SECTION -->
+    <section class="section section--light" style="padding: var(--space-3xl) 0;">
+        <div class="container">
+            <div class="section-header" style="text-align: center; margin-bottom: var(--space-2xl);">
+                <p class="section-header__eyebrow">From Research to Action</p>
+                <h2 class="section-header__title">Specific Actions Based on This Research</h2>
+                <p class="section-header__desc">Concrete steps to leverage these market insights for Denver market penetration.</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-lg);">
+                <!-- Property Targeting Actions -->
+                <div style="background: var(--pure); border: 2px solid var(--pearl); border-radius: var(--radius-lg); padding: var(--space-xl);">
+                    <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-lg);">
+                        <div style="width: 56px; height: 56px; background: var(--gold-gradient); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0A0A0B" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+                        <div>
+                            <h3 style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 600;">Property Targeting Actions</h3>
+                            <p style="font-size: 0.85rem; color: var(--slate);">Based on neighborhood opportunity scores</p>
+                        </div>
+                    </div>
+                    <ul style="list-style: none;">
+                        <li style="display: flex; align-items: flex-start; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--pearl);">
+                            <span style="color: var(--gold); font-weight: 600;">1.</span>
+                            <div>
+                                <strong style="display: block; margin-bottom: 4px;">Start in Cherry Creek (Score: 94)</strong>
+                                <span style="font-size: 0.9rem; color: var(--slate);">Highest-income residents, most receptive to luxury services. Target: The Landmark, One Cherry Creek, 250 Columbine</span>
+                            </div>
+                        </li>
+                        <li style="display: flex; align-items: flex-start; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--pearl);">
+                            <span style="color: var(--gold); font-weight: 600;">2.</span>
+                            <div>
+                                <strong style="display: block; margin-bottom: 4px;">Expand to LoDo/RiNo (Scores: 91, 88)</strong>
+                                <span style="font-size: 0.9rem; color: var(--slate);">Young professionals, high event receptivity. Target: The Coloradan, Dairy Block, NOVEL RiNo</span>
+                            </div>
+                        </li>
+                        <li style="display: flex; align-items: flex-start; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--pearl);">
+                            <span style="color: var(--gold); font-weight: 600;">3.</span>
+                            <div>
+                                <strong style="display: block; margin-bottom: 4px;">Avoid DTC Initially (Score: 80)</strong>
+                                <span style="font-size: 0.9rem; color: var(--slate);">More corporate, less community-focused. Save for Phase 2 after proving model in urban core</span>
+                            </div>
+                        </li>
+                        <li style="display: flex; align-items: flex-start; gap: 12px; padding: 14px 0;">
+                            <span style="color: var(--gold); font-weight: 600;">4.</span>
+                            <div>
+                                <strong style="display: block; margin-bottom: 4px;">Research Management Companies</strong>
+                                <span style="font-size: 0.9rem; color: var(--slate);">Identify which companies manage target properties (Greystar, Lincoln, local boutique). One relationship can unlock multiple properties</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Vendor Acquisition Actions -->
+                <div style="background: var(--pure); border: 2px solid var(--pearl); border-radius: var(--radius-lg); padding: var(--space-xl);">
+                    <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-lg);">
+                        <div style="width: 56px; height: 56px; background: var(--gold-gradient); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0A0A0B" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+                        <div>
+                            <h3 style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 600;">Vendor Acquisition Actions</h3>
+                            <p style="font-size: 0.85rem; color: var(--slate);">Based on competitive gaps identified</p>
+                        </div>
+                    </div>
+                    <ul style="list-style: none;">
+                        <li style="display: flex; align-items: flex-start; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--pearl);">
+                            <span style="color: var(--gold); font-weight: 600;">1.</span>
+                            <div>
+                                <strong style="display: block; margin-bottom: 4px;">Target Cherry Creek North Retailers First</strong>
+                                <span style="font-size: 0.9rem; color: var(--slate);">Boutiques already serving luxury demographic. Lower education barrier. Examples: Max, Lawrence Covell, Show of Hands</span>
+                            </div>
+                        </li>
+                        <li style="display: flex; align-items: flex-start; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--pearl);">
+                            <span style="color: var(--gold); font-weight: 600;">2.</span>
+                            <div>
+                                <strong style="display: block; margin-bottom: 4px;">Recruit Mobile Service Providers</strong>
+                                <span style="font-size: 0.9rem; color: var(--slate);">Car detailing, pet grooming, massage therapists. Already set up for on-site visits. Search Yelp for 4.5+ ratings</span>
+                            </div>
+                        </li>
+                        <li style="display: flex; align-items: flex-start; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--pearl);">
+                            <span style="color: var(--gold); font-weight: 600;">3.</span>
+                            <div>
+                                <strong style="display: block; margin-bottom: 4px;">Partner with Local Food/Beverage</strong>
+                                <span style="font-size: 0.9rem; color: var(--slate);">Coffee roasters, chocolatiers, wine shops. High-margin, easy transport, universal appeal</span>
+                            </div>
+                        </li>
+                        <li style="display: flex; align-items: flex-start; gap: 12px; padding: 14px 0;">
+                            <span style="color: var(--gold); font-weight: 600;">4.</span>
+                            <div>
+                                <strong style="display: block; margin-bottom: 4px;">Approach Farmers Market Vendors</strong>
+                                <span style="font-size: 0.9rem; color: var(--slate);">Cherry Creek Farmers Market vendors already do pop-ups. Built-in experience and portable setups</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Competitive Response Playbook -->
+            <div style="margin-top: var(--space-xl); background: linear-gradient(135deg, var(--charcoal) 0%, var(--obsidian) 100%); border-radius: var(--radius-lg); padding: var(--space-xl); color: var(--pure);">
+                <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-lg);">
+                    <div style="width: 56px; height: 56px; background: var(--gold-gradient); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0A0A0B" stroke-width="2"><path d="M14.5 17.5L3 6V3h3l11.5 11.5"/><path d="M13 19l6-6"/><path d="M16 16l4 4"/><path d="M19 21l2-2"/></svg></div>
+                    <div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 600;">Competitive Response Playbook</h3>
+                        <p style="font-size: 0.85rem; color: var(--silver);">How to position against each competitor type</p>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-lg);">
+                    <div style="background: rgba(255,255,255,0.03); border-radius: var(--radius-md); padding: var(--space-lg);">
+                        <h4 style="font-size: 1rem; margin-bottom: var(--space-sm); color: var(--gold-light);">vs. Fetch Package</h4>
+                        <p style="font-size: 0.9rem; color: var(--silver); margin-bottom: var(--space-md);">"We're not logistics—we're experiences"</p>
+                        <ul style="list-style: none; font-size: 0.85rem; color: var(--silver);">
+                            <li style="padding: 6px 0;">• Emphasize resident engagement metrics</li>
+                            <li style="padding: 6px 0;">• Show satisfaction score improvements</li>
+                            <li style="padding: 6px 0;">• Position as amenity enhancement, not operations</li>
+                        </ul>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.03); border-radius: var(--radius-md); padding: var(--space-lg);">
+                        <h4 style="font-size: 1rem; margin-bottom: var(--space-sm); color: var(--gold-light);">vs. Amenify</h4>
+                        <p style="font-size: 0.9rem; color: var(--silver); margin-bottom: var(--space-md);">"We're curated luxury, not commodity services"</p>
+                        <ul style="list-style: none; font-size: 0.85rem; color: var(--silver);">
+                            <li style="padding: 6px 0;">• Highlight vendor vetting process</li>
+                            <li style="padding: 6px 0;">• Show premium brand partnerships</li>
+                            <li style="padding: 6px 0;">• Emphasize exclusivity and curation</li>
+                        </ul>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.03); border-radius: var(--radius-md); padding: var(--space-lg);">
+                        <h4 style="font-size: 1rem; margin-bottom: var(--space-sm); color: var(--gold-light);">vs. Local Planners</h4>
+                        <p style="font-size: 0.9rem; color: var(--silver); margin-bottom: var(--space-md);">"We're scalable systems, not one-off events"</p>
+                        <ul style="list-style: none; font-size: 0.85rem; color: var(--silver);">
+                            <li style="padding: 6px 0;">• Show platform benefits: booking, payments, analytics</li>
+                            <li style="padding: 6px 0;">• Demonstrate vendor network breadth</li>
+                            <li style="padding: 6px 0;">• Highlight consistency across properties</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 1 Research Tasks -->
+            <div style="margin-top: var(--space-xl); background: rgba(201, 162, 39, 0.08); border: 2px solid var(--gold); border-radius: var(--radius-lg); padding: var(--space-xl);">
+                <h3 style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 600; margin-bottom: var(--space-lg); text-align: center;">Your Week 1 Research Tasks</h3>
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-md);">
+                    <div style="text-align: center;">
+                        <div style="font-family: var(--font-display); font-size: 2.5rem; color: var(--gold);">50</div>
+                        <div style="font-size: 0.9rem; color: var(--slate); margin-bottom: var(--space-sm);">Properties to Research</div>
+                        <div style="font-size: 0.8rem; color: var(--slate);">Name, address, unit count, management company, amenity photos</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-family: var(--font-display); font-size: 2.5rem; color: var(--gold);">100</div>
+                        <div style="font-size: 0.9rem; color: var(--slate); margin-bottom: var(--space-sm);">Vendors to Identify</div>
+                        <div style="font-size: 0.8rem; color: var(--slate);">Name, Instagram, rating, category, pop-up capability</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-family: var(--font-display); font-size: 2.5rem; color: var(--gold);">25</div>
+                        <div style="font-size: 0.9rem; color: var(--slate); margin-bottom: var(--space-sm);">PM Contacts to Find</div>
+                        <div style="font-size: 0.8rem; color: var(--slate);">LinkedIn profiles, email addresses for priority targets</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-family: var(--font-display); font-size: 2.5rem; color: var(--gold);">5</div>
+                        <div style="font-size: 0.9rem; color: var(--slate); margin-bottom: var(--space-sm);">Competitor Events to Attend</div>
+                        <div style="font-size: 0.8rem; color: var(--slate);">Observe how others do resident events, take notes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <a href="index.html" class="footer__logo">
+                    <img src="assets/images/logos/lux-markets-logo.png" alt="Lux Markets">
+                </a>
+                <p class="footer__copy">&copy; 2025 Lux Markets. Market Research Report.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,1559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lux Markets | Process Pitch Deck</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Outfit:wght@200;300;400;500;600&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --obsidian: #0A0A0B;
+            --charcoal: #1A1A1C;
+            --graphite: #2D2D30;
+            --slate: #4A4A4F;
+            --silver: #9A9AA0;
+            --pearl: #E8E8EC;
+            --ivory: #F8F7F5;
+            --pure: #FFFFFF;
+
+            --gold-light: #E5C87A;
+            --gold: #C9A227;
+            --gold-dark: #A68B1F;
+            --gold-gradient: linear-gradient(135deg, #E5C87A 0%, #C9A227 50%, #A68B1F 100%);
+
+            --font-display: 'Cormorant Garamond', Georgia, serif;
+            --font-heading: 'Syne', sans-serif;
+            --font-body: 'Outfit', -apple-system, sans-serif;
+
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 1.5rem;
+            --space-lg: 2.5rem;
+            --space-xl: 4rem;
+            --space-2xl: 6rem;
+            --space-3xl: 10rem;
+
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-pill: 100px;
+
+            --ease-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--obsidian);
+            color: var(--pure);
+            line-height: 1.6;
+        }
+
+        img { max-width: 100%; display: block; }
+        a { text-decoration: none; color: inherit; }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 var(--space-lg);
+        }
+
+        /* ============================================
+           NAVIGATION
+           ============================================ */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: var(--space-md) var(--space-xl);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 10, 11, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--graphite);
+        }
+
+        .nav__logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .nav__menu {
+            display: flex;
+            gap: var(--space-lg);
+            list-style: none;
+        }
+
+        .nav__link {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--silver);
+            transition: color 0.3s;
+        }
+
+        .nav__link:hover {
+            color: var(--gold);
+        }
+
+        .nav__cta {
+            padding: 12px 28px;
+            background: var(--gold-gradient);
+            color: var(--obsidian);
+            font-weight: 600;
+            border-radius: var(--radius-pill);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .nav__cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(201, 162, 39, 0.3);
+        }
+
+        /* All Pages Dropdown */
+        .nav__item--allpages { position: relative; list-style: none; }
+        .nav__link--allpages { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+        .nav__arrow { width: 14px; height: 14px; transition: transform 0.3s; }
+        .nav__item--allpages.expanded .nav__arrow { transform: rotate(180deg); }
+        .dropdown--allpages {
+            position: absolute; top: 100%; right: 0; width: 280px; max-height: 70vh;
+            overflow-y: auto; background: var(--pure); border-radius: var(--radius-md);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3); padding: var(--space-md);
+            opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s; z-index: 1000;
+        }
+        .nav__item--allpages.expanded .dropdown--allpages { opacity: 1; visibility: visible; transform: translateY(0); }
+        .dropdown__section { margin-bottom: var(--space-sm); padding-bottom: var(--space-sm); border-bottom: 1px solid var(--graphite); }
+        .dropdown__section:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+        .dropdown__section-title { display: block; font-size: 0.7rem; font-weight: 600; color: var(--gold); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+        .dropdown__item--simple { display: block; padding: 6px 12px; font-size: 0.85rem; color: var(--charcoal); border-radius: var(--radius-sm); transition: background 0.2s; }
+        .dropdown__item--simple:hover { background: var(--pearl); }
+
+        /* ============================================
+           SLIDE SYSTEM
+           ============================================ */
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 120px 0 80px;
+            position: relative;
+        }
+
+        .slide--dark {
+            background: var(--obsidian);
+        }
+
+        .slide--light {
+            background: var(--ivory);
+            color: var(--charcoal);
+        }
+
+        .slide--gradient {
+            background: linear-gradient(135deg, var(--charcoal) 0%, var(--obsidian) 100%);
+        }
+
+        .slide__number {
+            position: absolute;
+            top: 120px;
+            right: var(--space-xl);
+            font-family: var(--font-display);
+            font-size: 8rem;
+            font-weight: 300;
+            color: rgba(201, 162, 39, 0.1);
+            line-height: 1;
+        }
+
+        .slide__content {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+        }
+
+        .slide__eyebrow {
+            font-size: 0.8rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: var(--space-sm);
+        }
+
+        .slide__title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 400;
+            line-height: 1.1;
+            margin-bottom: var(--space-md);
+        }
+
+        .slide__title span {
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .slide--light .slide__title span {
+            color: var(--gold);
+            background: none;
+            -webkit-text-fill-color: var(--gold);
+        }
+
+        .slide__subtitle {
+            font-size: 1.3rem;
+            color: var(--silver);
+            max-width: 700px;
+            line-height: 1.7;
+        }
+
+        .slide--light .slide__subtitle {
+            color: var(--slate);
+        }
+
+        /* ============================================
+           TITLE SLIDE
+           ============================================ */
+        .title-slide {
+            text-align: center;
+            justify-content: center;
+        }
+
+        .title-slide__logo {
+            width: 120px;
+            margin: 0 auto var(--space-lg);
+        }
+
+        .title-slide__badge {
+            display: inline-block;
+            padding: 10px 24px;
+            background: rgba(201, 162, 39, 0.15);
+            border: 1px solid var(--gold);
+            border-radius: var(--radius-pill);
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--gold-light);
+            margin-bottom: var(--space-lg);
+        }
+
+        .title-slide h1 {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 7vw, 6rem);
+            font-weight: 400;
+            line-height: 1.1;
+            margin-bottom: var(--space-md);
+        }
+
+        .title-slide h1 span {
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .title-slide p {
+            font-size: 1.4rem;
+            color: var(--silver);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* ============================================
+           PROCESS STEPS
+           ============================================ */
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-md);
+            margin-top: var(--space-2xl);
+        }
+
+        .process-step {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--graphite);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            transition: all 0.4s var(--ease-smooth);
+            position: relative;
+        }
+
+        .process-step::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gold-gradient);
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s var(--ease-smooth);
+        }
+
+        .process-step:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--gold);
+            transform: translateY(-8px);
+        }
+
+        .process-step:hover::before {
+            transform: scaleX(1);
+        }
+
+        .process-step__number {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 300;
+            color: var(--gold);
+            margin-bottom: var(--space-sm);
+        }
+
+        .process-step__title {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: var(--space-sm);
+        }
+
+        .process-step__desc {
+            font-size: 0.95rem;
+            color: var(--silver);
+            line-height: 1.6;
+        }
+
+        /* ============================================
+           DATA REVIEW SECTION
+           ============================================ */
+        .data-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-2xl);
+            align-items: center;
+        }
+
+        .data-visual {
+            background: var(--charcoal);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            border: 1px solid var(--graphite);
+        }
+
+        .data-visual__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-lg);
+            padding-bottom: var(--space-md);
+            border-bottom: 1px solid var(--graphite);
+        }
+
+        .data-visual__title {
+            font-family: var(--font-heading);
+            font-size: 1rem;
+        }
+
+        .data-visual__badge {
+            padding: 4px 12px;
+            background: rgba(201, 162, 39, 0.2);
+            border-radius: var(--radius-pill);
+            font-size: 0.7rem;
+            color: var(--gold-light);
+        }
+
+        .data-rows {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+
+        .data-row {
+            display: grid;
+            grid-template-columns: 1fr 2fr 80px;
+            gap: var(--space-md);
+            align-items: center;
+            padding: var(--space-sm);
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: var(--radius-sm);
+        }
+
+        .data-row__label {
+            font-size: 0.85rem;
+            color: var(--silver);
+        }
+
+        .data-row__bar {
+            height: 8px;
+            background: var(--graphite);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .data-row__fill {
+            height: 100%;
+            background: var(--gold-gradient);
+            border-radius: 4px;
+        }
+
+        .data-row__value {
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-align: right;
+            color: var(--gold-light);
+        }
+
+        .criteria-list {
+            list-style: none;
+        }
+
+        .criteria-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-md);
+            padding: var(--space-md) 0;
+            border-bottom: 1px solid var(--graphite);
+        }
+
+        .criteria-list li:last-child {
+            border-bottom: none;
+        }
+
+        .criteria-list__icon {
+            width: 48px;
+            height: 48px;
+            background: var(--gold-gradient);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+        }
+
+        .criteria-list__content h4 {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            margin-bottom: var(--space-xs);
+        }
+
+        .criteria-list__content p {
+            font-size: 0.9rem;
+            color: var(--silver);
+        }
+
+        /* ============================================
+           PROPERTIES & VENDORS
+           ============================================ */
+        .approach-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-lg);
+            margin-top: var(--space-xl);
+        }
+
+        .approach-card {
+            background: var(--pure);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            transition: all 0.4s var(--ease-smooth);
+            border: 2px solid transparent;
+        }
+
+        .approach-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+            border-color: var(--gold);
+        }
+
+        .approach-card__icon {
+            width: 64px;
+            height: 64px;
+            background: var(--gold-gradient);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: var(--space-md);
+        }
+
+        .approach-card__title {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: var(--space-sm);
+            color: var(--charcoal);
+        }
+
+        .approach-card__desc {
+            color: var(--slate);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: var(--space-md);
+        }
+
+        .approach-card__checklist {
+            list-style: none;
+        }
+
+        .approach-card__checklist li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 0;
+            font-size: 0.85rem;
+            color: var(--slate);
+        }
+
+        .approach-card__checklist svg {
+            width: 16px;
+            height: 16px;
+            color: var(--gold);
+        }
+
+        /* ============================================
+           SOFTWARE STACK
+           ============================================ */
+        .software-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-lg);
+            margin-top: var(--space-xl);
+        }
+
+        .software-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--graphite);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            text-align: center;
+            transition: all 0.4s var(--ease-smooth);
+        }
+
+        .software-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--gold);
+            transform: scale(1.02);
+        }
+
+        .software-card__logo {
+            width: 80px;
+            height: 80px;
+            background: var(--charcoal);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--space-md);
+            font-size: 2rem;
+        }
+
+        .software-card__name {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: var(--space-xs);
+        }
+
+        .software-card__purpose {
+            font-size: 0.85rem;
+            color: var(--gold-light);
+            margin-bottom: var(--space-md);
+        }
+
+        .software-card__features {
+            list-style: none;
+            text-align: left;
+        }
+
+        .software-card__features li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 0;
+            font-size: 0.85rem;
+            color: var(--silver);
+        }
+
+        .software-card__features li::before {
+            content: '•';
+            color: var(--gold);
+        }
+
+        /* ============================================
+           ONBOARDING FLOW
+           ============================================ */
+        .flow-container {
+            margin-top: var(--space-xl);
+        }
+
+        .flow-track {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            padding: var(--space-xl) 0;
+        }
+
+        .flow-track::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 60px;
+            right: 60px;
+            height: 4px;
+            background: var(--graphite);
+            transform: translateY(-50%);
+        }
+
+        .flow-track::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 60px;
+            width: 70%;
+            height: 4px;
+            background: var(--gold-gradient);
+            transform: translateY(-50%);
+        }
+
+        .flow-step {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            width: 120px;
+        }
+
+        .flow-step__dot {
+            width: 60px;
+            height: 60px;
+            background: var(--charcoal);
+            border: 4px solid var(--gold);
+            border-radius: 50%;
+            margin: 0 auto var(--space-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+        }
+
+        .flow-step.completed .flow-step__dot {
+            background: var(--gold-gradient);
+        }
+
+        .flow-step__label {
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .flow-step__time {
+            font-size: 0.75rem;
+            color: var(--silver);
+            margin-top: 4px;
+        }
+
+        /* ============================================
+           VALUE GENERATION
+           ============================================ */
+        .value-metrics {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-md);
+            margin-top: var(--space-xl);
+        }
+
+        .value-metric {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--graphite);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            text-align: center;
+            transition: all 0.4s var(--ease-smooth);
+        }
+
+        .value-metric:hover {
+            border-color: var(--gold);
+            transform: translateY(-4px);
+        }
+
+        .value-metric__value {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 400;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: var(--space-xs);
+        }
+
+        .value-metric__label {
+            font-size: 0.9rem;
+            color: var(--silver);
+            margin-bottom: var(--space-sm);
+        }
+
+        .value-metric__trend {
+            font-size: 0.8rem;
+            color: var(--gold-light);
+        }
+
+        /* Revenue Flow Diagram */
+        .revenue-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-lg);
+            margin-top: var(--space-2xl);
+            padding: var(--space-xl);
+            background: var(--charcoal);
+            border-radius: var(--radius-lg);
+        }
+
+        .revenue-node {
+            text-align: center;
+            padding: var(--space-md);
+        }
+
+        .revenue-node__icon {
+            width: 70px;
+            height: 70px;
+            background: var(--gold-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin: 0 auto var(--space-sm);
+        }
+
+        .revenue-node__label {
+            font-weight: 500;
+            margin-bottom: var(--space-xs);
+        }
+
+        .revenue-node__amount {
+            font-size: 0.85rem;
+            color: var(--gold-light);
+        }
+
+        .revenue-arrow {
+            font-size: 2rem;
+            color: var(--gold);
+        }
+
+        /* ============================================
+           CTA SLIDE
+           ============================================ */
+        .cta-slide {
+            text-align: center;
+        }
+
+        .cta-slide__actions {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-md);
+            margin-top: var(--space-xl);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 18px 40px;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: var(--radius-pill);
+            transition: all 0.3s var(--ease-smooth);
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn--primary {
+            background: var(--gold-gradient);
+            color: var(--obsidian);
+        }
+
+        .btn--primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(201, 162, 39, 0.4);
+        }
+
+        .btn--secondary {
+            background: transparent;
+            color: var(--pure);
+            border: 2px solid var(--gold);
+        }
+
+        .btn--secondary:hover {
+            background: var(--gold);
+            color: var(--obsidian);
+        }
+
+        /* ============================================
+           SLIDE NAV DOTS
+           ============================================ */
+        .slide-nav {
+            position: fixed;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .slide-nav__dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--graphite);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .slide-nav__dot:hover {
+            background: var(--gold);
+        }
+
+        .slide-nav__dot.active {
+            background: var(--gold-gradient);
+            transform: scale(1.3);
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 1200px) {
+            .process-steps {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .approach-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .software-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .value-metrics {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .data-grid {
+                grid-template-columns: 1fr;
+            }
+            .flow-track {
+                flex-direction: column;
+                gap: var(--space-lg);
+            }
+            .flow-track::before,
+            .flow-track::after {
+                display: none;
+            }
+            .revenue-flow {
+                flex-direction: column;
+            }
+            .revenue-arrow {
+                transform: rotate(90deg);
+            }
+            .slide-nav {
+                display: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .process-steps {
+                grid-template-columns: 1fr;
+            }
+            .approach-cards {
+                grid-template-columns: 1fr;
+            }
+            .software-grid {
+                grid-template-columns: 1fr;
+            }
+            .value-metrics {
+                grid-template-columns: 1fr;
+            }
+            .cta-slide__actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <a href="index.html" class="nav__logo">
+            <img src="assets/images/logos/lux-markets-logo.png" alt="Lux Markets">
+        </a>
+        <ul class="nav__menu">
+            <li><a href="#process" class="nav__link">Process</a></li>
+            <li><a href="#data" class="nav__link">Data Review</a></li>
+            <li><a href="#software" class="nav__link">Software</a></li>
+            <li><a href="#value" class="nav__link">Value</a></li>
+            <li class="nav__item--allpages">
+                <a href="#" class="nav__link nav__link--allpages" onclick="event.preventDefault(); this.parentElement.classList.toggle('expanded');">
+                    All Pages
+                    <svg class="nav__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </a>
+                <div class="dropdown--allpages">
+                    <div class="dropdown__section"><span class="dropdown__section-title">Main</span><a href="index.html" class="dropdown__item--simple">Home</a><a href="pages/about.html" class="dropdown__item--simple">About</a><a href="pages/contact.html" class="dropdown__item--simple">Contact</a></div>
+                    <div class="dropdown__section"><span class="dropdown__section-title">Solutions</span><a href="pages/for-properties.html" class="dropdown__item--simple">For Properties</a><a href="pages/for-brands.html" class="dropdown__item--simple">For Brands</a><a href="pages/pricing.html" class="dropdown__item--simple">Pricing</a></div>
+                    <div class="dropdown__section"><span class="dropdown__section-title">Markets</span><a href="pages/our-markets.html" class="dropdown__item--simple">Our Markets</a><a href="pages/market-rules.html" class="dropdown__item--simple">Market Rules</a></div>
+                    <div class="dropdown__section"><span class="dropdown__section-title">Resources</span><a href="pages/resources.html" class="dropdown__item--simple">Resources</a><a href="pages/education.html" class="dropdown__item--simple">Education</a><a href="market-research.html" class="dropdown__item--simple">Market Research</a></div>
+                    <div class="dropdown__section"><span class="dropdown__section-title">Legal</span><a href="pages/terms-of-service.html" class="dropdown__item--simple">Terms of Service</a></div>
+                    <div class="dropdown__section"><span class="dropdown__section-title">Explore</span><a href="index-journey.html" class="dropdown__item--simple">Journey</a><a href="index-neo.html" class="dropdown__item--simple">Neo</a><a href="index-refresh.html" class="dropdown__item--simple">Refresh</a><a href="digital-profile.html" class="dropdown__item--simple">Digital Profile</a><a href="pitch-deck.html" class="dropdown__item--simple">Pitch Deck</a><a href="challenges.html" class="dropdown__item--simple">Challenges</a></div>
+                    <div class="dropdown__section"><span class="dropdown__section-title">Archive</span><a href="Landfill_index-estate.html" class="dropdown__item--simple">Estate Design</a><a href="Landfill_index-gallery.html" class="dropdown__item--simple">Gallery Design</a><a href="Landfill_index-maison.html" class="dropdown__item--simple">Maison Design</a></div>
+                    <div class="dropdown__section"><span class="dropdown__section-title">Dev</span><a href="pages/dev/insights.html" class="dropdown__item--simple">Insights</a></div>
+                </div>
+            </li>
+        </ul>
+        <a href="#contact" class="nav__cta">Get Started</a>
+    </nav>
+
+    <!-- Slide Navigation -->
+    <div class="slide-nav">
+        <div class="slide-nav__dot active" data-slide="1"></div>
+        <div class="slide-nav__dot" data-slide="2"></div>
+        <div class="slide-nav__dot" data-slide="3"></div>
+        <div class="slide-nav__dot" data-slide="4"></div>
+        <div class="slide-nav__dot" data-slide="5"></div>
+        <div class="slide-nav__dot" data-slide="6"></div>
+        <div class="slide-nav__dot" data-slide="7"></div>
+        <div class="slide-nav__dot" data-slide="8"></div>
+        <div class="slide-nav__dot" data-slide="9"></div>
+    </div>
+
+    <!-- Slide 1: Title -->
+    <section class="slide slide--dark title-slide" data-slide="1">
+        <div class="container">
+            <img src="assets/images/logos/lux-markets-logo.png" alt="Lux Markets" class="title-slide__logo">
+            <span class="title-slide__badge">Denver Market Expansion</span>
+            <h1>From Data to <span>Value</span></h1>
+            <p>A comprehensive process for identifying opportunities, onboarding partners, and generating sustainable revenue in the Denver luxury market.</p>
+        </div>
+        <span class="slide__number">01</span>
+    </section>
+
+    <!-- Slide 2: Process Overview -->
+    <section id="process" class="slide slide--gradient" data-slide="2">
+        <div class="container">
+            <div class="slide__content">
+                <p class="slide__eyebrow">The Framework</p>
+                <h2 class="slide__title">Four Phases to <span>Success</span></h2>
+                <p class="slide__subtitle">Our systematic approach transforms market data into profitable partnerships through proven methodologies.</p>
+
+                <div class="process-steps">
+                    <div class="process-step">
+                        <span class="process-step__number">01</span>
+                        <h3 class="process-step__title">Data Review</h3>
+                        <p class="process-step__desc">Analyze market demographics, property data, and vendor landscapes to identify high-potential targets.</p>
+                    </div>
+                    <div class="process-step">
+                        <span class="process-step__number">02</span>
+                        <h3 class="process-step__title">Strategic Outreach</h3>
+                        <p class="process-step__desc">Approach qualified properties and vendors with tailored value propositions and partnership models.</p>
+                    </div>
+                    <div class="process-step">
+                        <span class="process-step__number">03</span>
+                        <h3 class="process-step__title">System Integration</h3>
+                        <p class="process-step__desc">Onboard partners to our platform, configure their profiles, and integrate scheduling + payment systems.</p>
+                    </div>
+                    <div class="process-step">
+                        <span class="process-step__number">04</span>
+                        <h3 class="process-step__title">Value Generation</h3>
+                        <p class="process-step__desc">Launch events, track performance metrics, and optimize partnerships for continuous growth.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <span class="slide__number">02</span>
+    </section>
+
+    <!-- Slide 3: Data Review -->
+    <section id="data" class="slide slide--dark" data-slide="3">
+        <div class="container">
+            <div class="slide__content">
+                <p class="slide__eyebrow">Phase 1</p>
+                <h2 class="slide__title">Market <span>Data Review</span></h2>
+
+                <div class="data-grid">
+                    <div class="data-visual">
+                        <div class="data-visual__header">
+                            <span class="data-visual__title">Denver Market Opportunity Score</span>
+                            <span class="data-visual__badge">Updated Q1 2025</span>
+                        </div>
+                        <div class="data-rows">
+                            <div class="data-row">
+                                <span class="data-row__label">Affluent Demographics</span>
+                                <div class="data-row__bar"><div class="data-row__fill" style="width: 85%"></div></div>
+                                <span class="data-row__value">85%</span>
+                            </div>
+                            <div class="data-row">
+                                <span class="data-row__label">Luxury Property Density</span>
+                                <div class="data-row__bar"><div class="data-row__fill" style="width: 72%"></div></div>
+                                <span class="data-row__value">72%</span>
+                            </div>
+                            <div class="data-row">
+                                <span class="data-row__label">Vendor Market Gap</span>
+                                <div class="data-row__bar"><div class="data-row__fill" style="width: 91%"></div></div>
+                                <span class="data-row__value">91%</span>
+                            </div>
+                            <div class="data-row">
+                                <span class="data-row__label">Competition Saturation</span>
+                                <div class="data-row__bar"><div class="data-row__fill" style="width: 34%"></div></div>
+                                <span class="data-row__value">34%</span>
+                            </div>
+                            <div class="data-row">
+                                <span class="data-row__label">Growth Potential</span>
+                                <div class="data-row__bar"><div class="data-row__fill" style="width: 88%"></div></div>
+                                <span class="data-row__value">88%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <ul class="criteria-list">
+                        <li>
+                            <div class="criteria-list__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></div>
+                            <div class="criteria-list__content">
+                                <h4>Demographic Analysis</h4>
+                                <p>Income levels, age distribution, lifestyle preferences, and spending patterns in target neighborhoods.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="criteria-list__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4M9 9v.01M9 12v.01M9 15v.01M9 18v.01"/></svg></div>
+                            <div class="criteria-list__content">
+                                <h4>Property Intelligence</h4>
+                                <p>Unit counts, amenity quality, resident satisfaction scores, and management company profiles.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="criteria-list__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+                            <div class="criteria-list__content">
+                                <h4>Vendor Mapping</h4>
+                                <p>Local luxury vendors, service quality ratings, current B2B relationships, and market positioning.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="criteria-list__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></svg></div>
+                            <div class="criteria-list__content">
+                                <h4>Opportunity Scoring</h4>
+                                <p>Weighted algorithm combining all factors to prioritize outreach targets by conversion likelihood.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <span class="slide__number">03</span>
+    </section>
+
+    <!-- Slide 4: Properties & Vendors -->
+    <section class="slide slide--light" data-slide="4">
+        <div class="container">
+            <div class="slide__content">
+                <p class="slide__eyebrow">Phase 2</p>
+                <h2 class="slide__title">Finding <span>Partners</span></h2>
+                <p class="slide__subtitle">Strategic approaches for both property managers and vendors, tailored to their unique needs and motivations.</p>
+
+                <div class="approach-cards">
+                    <div class="approach-card">
+                        <div class="approach-card__icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0A0A0B" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+                        <h3 class="approach-card__title">Property Identification</h3>
+                        <p class="approach-card__desc">We target Class A and B+ luxury apartments with 150+ units, strong amenity packages, and engaged management teams.</p>
+                        <ul class="approach-card__checklist">
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                Average rent $1,800+/month
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                Community spaces available
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                Active resident programming
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                Management company receptive
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="approach-card">
+                        <div class="approach-card__icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0A0A0B" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+                        <h3 class="approach-card__title">Vendor Selection</h3>
+                        <p class="approach-card__desc">We seek premium local vendors with proven quality, professional operations, and growth ambitions.</p>
+                        <ul class="approach-card__checklist">
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                4.5+ star average ratings
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                Established 2+ years
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                Mobile/pop-up capability
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                B2B experience preferred
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="approach-card">
+                        <div class="approach-card__icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0A0A0B" stroke-width="2"><path d="M11 17a4 4 0 0 0 8 0m-8 0a4 4 0 0 1-4-4V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a4 4 0 0 1-4 4m-8 0v4m8-4v4"/><path d="M7 9h.01M17 9h.01M12 9h.01M12 13h.01"/></svg></div>
+                        <h3 class="approach-card__title">Outreach Strategy</h3>
+                        <p class="approach-card__desc">Multi-touch approach combining digital outreach, in-person visits, and referral networks.</p>
+                        <ul class="approach-card__checklist">
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                Personalized intro emails
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                LinkedIn connection building
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                Industry event networking
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                Partner referral incentives
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <span class="slide__number" style="color: rgba(201, 162, 39, 0.15);">04</span>
+    </section>
+
+    <!-- Slide 5: Software Stack -->
+    <section id="software" class="slide slide--dark" data-slide="5">
+        <div class="container">
+            <div class="slide__content">
+                <p class="slide__eyebrow">Phase 3</p>
+                <h2 class="slide__title">The <span>Tech Stack</span></h2>
+                <p class="slide__subtitle">Lux Markets leverages proven software solutions for seamless partner onboarding, scheduling, and payments.</p>
+
+                <div class="software-grid">
+                    <div class="software-card">
+                        <div class="software-card__logo"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+                        <h3 class="software-card__name">Calendly</h3>
+                        <p class="software-card__purpose">Scheduling & Booking</p>
+                        <ul class="software-card__features">
+                            <li>Automated availability sync</li>
+                            <li>Buffer time management</li>
+                            <li>Custom booking forms</li>
+                            <li>Calendar integrations</li>
+                            <li>Reminder automations</li>
+                        </ul>
+                    </div>
+
+                    <div class="software-card">
+                        <div class="software-card__logo"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
+                        <h3 class="software-card__name">Stripe</h3>
+                        <p class="software-card__purpose">Payment Processing</p>
+                        <ul class="software-card__features">
+                            <li>Secure card processing</li>
+                            <li>Split payments support</li>
+                            <li>Automated invoicing</li>
+                            <li>Revenue reporting</li>
+                            <li>Multi-party payouts</li>
+                        </ul>
+                    </div>
+
+                    <div class="software-card">
+                        <div class="software-card__logo"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></div>
+                        <h3 class="software-card__name">HubSpot</h3>
+                        <p class="software-card__purpose">CRM & Pipeline</p>
+                        <ul class="software-card__features">
+                            <li>Lead tracking & scoring</li>
+                            <li>Email automation</li>
+                            <li>Deal pipeline management</li>
+                            <li>Contact segmentation</li>
+                            <li>Performance analytics</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="flow-container">
+                    <h3 style="text-align: center; margin-bottom: var(--space-sm); font-family: var(--font-heading);">Onboarding Flow</h3>
+                    <div class="flow-track">
+                        <div class="flow-step completed">
+                            <div class="flow-step__dot"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+                            <span class="flow-step__label">Application</span>
+                            <span class="flow-step__time">Day 1</span>
+                        </div>
+                        <div class="flow-step completed">
+                            <div class="flow-step__dot"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+                            <span class="flow-step__label">Discovery Call</span>
+                            <span class="flow-step__time">Day 2-3</span>
+                        </div>
+                        <div class="flow-step completed">
+                            <div class="flow-step__dot"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
+                            <span class="flow-step__label">Verification</span>
+                            <span class="flow-step__time">Day 4-5</span>
+                        </div>
+                        <div class="flow-step completed">
+                            <div class="flow-step__dot"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+                            <span class="flow-step__label">Profile Setup</span>
+                            <span class="flow-step__time">Day 6-7</span>
+                        </div>
+                        <div class="flow-step">
+                            <div class="flow-step__dot"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></div>
+                            <span class="flow-step__label">Go Live</span>
+                            <span class="flow-step__time">Day 8</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <span class="slide__number">05</span>
+    </section>
+
+    <!-- Slide 6: Value Generation -->
+    <section id="value" class="slide slide--gradient" data-slide="6">
+        <div class="container">
+            <div class="slide__content">
+                <p class="slide__eyebrow">Phase 4</p>
+                <h2 class="slide__title">Generating <span>Value</span></h2>
+                <p class="slide__subtitle">Once integrated, partners generate measurable value through events, transactions, and ongoing engagement.</p>
+
+                <div class="value-metrics">
+                    <div class="value-metric">
+                        <p class="value-metric__value">$2.4K</p>
+                        <p class="value-metric__label">Avg Revenue per Event</p>
+                        <p class="value-metric__trend">↑ 18% YoY Growth</p>
+                    </div>
+                    <div class="value-metric">
+                        <p class="value-metric__value">12%</p>
+                        <p class="value-metric__label">Platform Commission</p>
+                        <p class="value-metric__trend">Industry Standard Rate</p>
+                    </div>
+                    <div class="value-metric">
+                        <p class="value-metric__value">4.2</p>
+                        <p class="value-metric__label">Events per Partner/Mo</p>
+                        <p class="value-metric__trend">↑ Growing Activity</p>
+                    </div>
+                    <div class="value-metric">
+                        <p class="value-metric__value">87%</p>
+                        <p class="value-metric__label">Partner Retention</p>
+                        <p class="value-metric__trend">High Satisfaction</p>
+                    </div>
+                </div>
+
+                <div class="revenue-flow">
+                    <div class="revenue-node">
+                        <div class="revenue-node__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+                        <p class="revenue-node__label">Property</p>
+                        <p class="revenue-node__amount">Venue Fee: 15%</p>
+                    </div>
+                    <span class="revenue-arrow">→</span>
+                    <div class="revenue-node">
+                        <div class="revenue-node__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+                        <p class="revenue-node__label">Vendor</p>
+                        <p class="revenue-node__amount">Service: 73%</p>
+                    </div>
+                    <span class="revenue-arrow">→</span>
+                    <div class="revenue-node">
+                        <div class="revenue-node__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                        <p class="revenue-node__label">Lux Markets</p>
+                        <p class="revenue-node__amount">Platform: 12%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <span class="slide__number">06</span>
+    </section>
+
+    <!-- Slide 7: User Type Onboarding Guides -->
+    <section class="slide slide--light" data-slide="7" style="padding: 120px 0;">
+        <div class="container">
+            <div class="slide__content">
+                <p class="slide__eyebrow" style="color: var(--gold);">Partner Journeys</p>
+                <h2 class="slide__title" style="color: var(--charcoal);">Onboarding by <span>User Type</span></h2>
+                <p class="slide__subtitle" style="color: var(--slate); margin-bottom: var(--space-xl);">Each partner type follows a tailored onboarding path designed to get them generating value quickly.</p>
+
+                <!-- Three User Type Cards -->
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-lg);">
+                    <!-- Property Manager Journey -->
+                    <div style="background: var(--pure); border: 2px solid var(--pearl); border-radius: var(--radius-lg); padding: var(--space-xl); transition: all 0.3s;">
+                        <div style="width: 56px; height: 56px; background: var(--gold-gradient); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; margin-bottom: var(--space-md);"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0A0A0B" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 600; margin-bottom: var(--space-xs); color: var(--charcoal);">Property Managers</h3>
+                        <p style="font-size: 0.85rem; color: var(--gold); margin-bottom: var(--space-md);">14 days to first event</p>
+                        <ol style="list-style: none; counter-reset: step;">
+                            <li style="display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--pearl); font-size: 0.9rem; color: var(--slate);"><span style="color: var(--gold); font-weight: 600;">1.</span> Discovery call (30 min)</li>
+                            <li style="display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--pearl); font-size: 0.9rem; color: var(--slate);"><span style="color: var(--gold); font-weight: 600;">2.</span> Property walkthrough</li>
+                            <li style="display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--pearl); font-size: 0.9rem; color: var(--slate);"><span style="color: var(--gold); font-weight: 600;">3.</span> Partnership agreement</li>
+                            <li style="display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--pearl); font-size: 0.9rem; color: var(--slate);"><span style="color: var(--gold); font-weight: 600;">4.</span> Profile & calendar setup</li>
+                            <li style="display: flex; gap: 12px; padding: 10px 0; font-size: 0.9rem; color: var(--slate);"><span style="color: var(--gold); font-weight: 600;">5.</span> First event launch</li>
+                        </ol>
+                    </div>
+
+                    <!-- Vendor Journey -->
+                    <div style="background: var(--pure); border: 2px solid var(--pearl); border-radius: var(--radius-lg); padding: var(--space-xl); transition: all 0.3s;">
+                        <div style="width: 56px; height: 56px; background: var(--gold-gradient); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; margin-bottom: var(--space-md);"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0A0A0B" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 600; margin-bottom: var(--space-xs); color: var(--charcoal);">Vendors</h3>
+                        <p style="font-size: 0.85rem; color: var(--gold); margin-bottom: var(--space-md);">10 days to first booking</p>
+                        <ol style="list-style: none; counter-reset: step;">
+                            <li style="display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--pearl); font-size: 0.9rem; color: var(--slate);"><span style="color: var(--gold); font-weight: 600;">1.</span> Application review</li>
+                            <li style="display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--pearl); font-size: 0.9rem; color: var(--slate);"><span style="color: var(--gold); font-weight: 600;">2.</span> Platform intro call</li>
+                            <li style="display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--pearl); font-size: 0.9rem; color: var(--slate);"><span style="color: var(--gold); font-weight: 600;">3.</span> Stripe Connect setup</li>
+                            <li style="display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--pearl); font-size: 0.9rem; color: var(--slate);"><span style="color: var(--gold); font-weight: 600;">4.</span> Portfolio upload</li>
+                            <li style="display: flex; gap: 12px; padding: 10px 0; font-size: 0.9rem; color: var(--slate);"><span style="color: var(--gold); font-weight: 600;">5.</span> First property match</li>
+                        </ol>
+                    </div>
+
+                    <!-- Event Manager Journey -->
+                    <div style="background: var(--pure); border: 2px solid var(--gold); border-radius: var(--radius-lg); padding: var(--space-xl); transition: all 0.3s; box-shadow: 0 8px 30px rgba(201, 162, 39, 0.15);">
+                        <div style="width: 56px; height: 56px; background: var(--gold-gradient); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; margin-bottom: var(--space-md);"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0A0A0B" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 600; margin-bottom: var(--space-xs); color: var(--charcoal);">Event Manager (You)</h3>
+                        <p style="font-size: 0.85rem; color: var(--gold); margin-bottom: var(--space-md);">30 days to independence</p>
+                        <ol style="list-style: none; counter-reset: step;">
+                            <li style="display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--pearl); font-size: 0.9rem; color: var(--slate);"><span style="color: var(--gold); font-weight: 600;">1.</span> System & CRM training</li>
+                            <li style="display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--pearl); font-size: 0.9rem; color: var(--slate);"><span style="color: var(--gold); font-weight: 600;">2.</span> Market mapping (50+100)</li>
+                            <li style="display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--pearl); font-size: 0.9rem; color: var(--slate);"><span style="color: var(--gold); font-weight: 600;">3.</span> Outreach campaign launch</li>
+                            <li style="display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--pearl); font-size: 0.9rem; color: var(--slate);"><span style="color: var(--gold); font-weight: 600;">4.</span> First 5 partners signed</li>
+                            <li style="display: flex; gap: 12px; padding: 10px 0; font-size: 0.9rem; color: var(--slate);"><span style="color: var(--gold); font-weight: 600;">5.</span> Pilot events executed</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <span class="slide__number" style="color: rgba(201, 162, 39, 0.15);">07</span>
+    </section>
+
+    <!-- Slide 8: Specific Actionable Tasks -->
+    <section class="slide slide--dark" data-slide="8" style="padding: 120px 0;">
+        <div class="container">
+            <div class="slide__content">
+                <p class="slide__eyebrow">Your Playbook</p>
+                <h2 class="slide__title">Specific <span>Actions</span> to Take</h2>
+                <p class="slide__subtitle" style="margin-bottom: var(--space-xl);">Concrete, measurable tasks for acquiring properties, signing vendors, and executing successful events.</p>
+
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-lg);">
+                    <!-- Property Acquisition Actions -->
+                    <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--graphite); border-radius: var(--radius-lg); padding: var(--space-xl);">
+                        <div style="display: flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-lg);">
+                            <div style="background: var(--gold-gradient); width: 44px; height: 44px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0A0A0B" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+                            <h3 style="font-family: var(--font-heading); font-size: 1.2rem;">Property Acquisition Checklist</h3>
+                        </div>
+                        <ul style="list-style: none;">
+                            <li style="display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--graphite);">
+                                <span style="color: var(--gold);">□</span>
+                                <div>
+                                    <strong style="display: block; margin-bottom: 4px;">Build Target List from Apartments.com</strong>
+                                    <span style="font-size: 0.85rem; color: var(--silver);">Filter: 150+ units, $1,800+ rent, amenity spaces visible</span>
+                                </div>
+                            </li>
+                            <li style="display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--graphite);">
+                                <span style="color: var(--gold);">□</span>
+                                <div>
+                                    <strong style="display: block; margin-bottom: 4px;">Find Property Manager Contacts via LinkedIn</strong>
+                                    <span style="font-size: 0.85rem; color: var(--silver);">Search "[Property Name]" + "Community Manager" or "Property Manager"</span>
+                                </div>
+                            </li>
+                            <li style="display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--graphite);">
+                                <span style="color: var(--gold);">□</span>
+                                <div>
+                                    <strong style="display: block; margin-bottom: 4px;">Send Personalized Cold Email</strong>
+                                    <span style="font-size: 0.85rem; color: var(--silver);">Reference specific amenity space, resident count, and value prop</span>
+                                </div>
+                            </li>
+                            <li style="display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--graphite);">
+                                <span style="color: var(--gold);">□</span>
+                                <div>
+                                    <strong style="display: block; margin-bottom: 4px;">Follow Up Sequence (Days 3, 7, 14)</strong>
+                                    <span style="font-size: 0.85rem; color: var(--silver);">Add value each touch: case study, event photos, testimonial</span>
+                                </div>
+                            </li>
+                            <li style="display: flex; align-items: flex-start; gap: 12px; padding: 12px 0;">
+                                <span style="color: var(--gold);">□</span>
+                                <div>
+                                    <strong style="display: block; margin-bottom: 4px;">Schedule On-Site Walkthrough</strong>
+                                    <span style="font-size: 0.85rem; color: var(--silver);">Bring one-pager, assess space, discuss pilot event date</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Vendor Signing Actions -->
+                    <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--graphite); border-radius: var(--radius-lg); padding: var(--space-xl);">
+                        <div style="display: flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-lg);">
+                            <div style="background: var(--gold-gradient); width: 44px; height: 44px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0A0A0B" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+                            <h3 style="font-family: var(--font-heading); font-size: 1.2rem;">Vendor Signing Checklist</h3>
+                        </div>
+                        <ul style="list-style: none;">
+                            <li style="display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--graphite);">
+                                <span style="color: var(--gold);">□</span>
+                                <div>
+                                    <strong style="display: block; margin-bottom: 4px;">Scout Local Luxury Vendors on Instagram</strong>
+                                    <span style="font-size: 0.85rem; color: var(--silver);">Search: #DenverLuxury, #CherryCreek, #LoDoEvents, 4.5+ ratings</span>
+                                </div>
+                            </li>
+                            <li style="display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--graphite);">
+                                <span style="color: var(--gold);">□</span>
+                                <div>
+                                    <strong style="display: block; margin-bottom: 4px;">Verify Pop-Up Capability</strong>
+                                    <span style="font-size: 0.85rem; color: var(--silver);">Can they set up/tear down in 2 hrs? Mobile-friendly product/service?</span>
+                                </div>
+                            </li>
+                            <li style="display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--graphite);">
+                                <span style="color: var(--gold);">□</span>
+                                <div>
+                                    <strong style="display: block; margin-bottom: 4px;">DM Outreach with Clear Value Prop</strong>
+                                    <span style="font-size: 0.85rem; color: var(--silver);">"Access to 5,000+ affluent residents at premium apartments"</span>
+                                </div>
+                            </li>
+                            <li style="display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--graphite);">
+                                <span style="color: var(--gold);">□</span>
+                                <div>
+                                    <strong style="display: block; margin-bottom: 4px;">Conduct 20-Min Intro Call</strong>
+                                    <span style="font-size: 0.85rem; color: var(--silver);">Explain platform, 12% fee, booking flow, payment timing</span>
+                                </div>
+                            </li>
+                            <li style="display: flex; align-items: flex-start; gap: 12px; padding: 12px 0;">
+                                <span style="color: var(--gold);">□</span>
+                                <div>
+                                    <strong style="display: block; margin-bottom: 4px;">Onboard to Stripe + Create Profile</strong>
+                                    <span style="font-size: 0.85rem; color: var(--silver);">Walk through Stripe Connect, upload photos, set availability</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Event Execution Checklist -->
+                <div style="margin-top: var(--space-lg); background: rgba(201, 162, 39, 0.1); border: 1px solid var(--gold); border-radius: var(--radius-lg); padding: var(--space-xl);">
+                    <div style="display: flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-lg);">
+                        <div style="background: var(--gold-gradient); width: 44px; height: 44px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0A0A0B" stroke-width="2"><path d="M2 20h20M5 20V8l7-6 7 6v12M9 20v-5h6v5"/><path d="M12 2v5M9 8l3-3 3 3"/></svg></div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.2rem;">Event Day Execution Checklist</h3>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-md);">
+                        <div>
+                            <h4 style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold-light); margin-bottom: var(--space-sm);">Pre-Event (Day Before)</h4>
+                            <ul style="list-style: none; font-size: 0.85rem; color: var(--silver);">
+                                <li style="padding: 6px 0;">□ Confirm vendor arrival time</li>
+                                <li style="padding: 6px 0;">□ Verify property access details</li>
+                                <li style="padding: 6px 0;">□ Send resident reminder blast</li>
+                                <li style="padding: 6px 0;">□ Charge camera/phone</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold-light); margin-bottom: var(--space-sm);">Setup (1 Hour Early)</h4>
+                            <ul style="list-style: none; font-size: 0.85rem; color: var(--silver);">
+                                <li style="padding: 6px 0;">□ Meet property manager</li>
+                                <li style="padding: 6px 0;">□ Confirm vendor setup spot</li>
+                                <li style="padding: 6px 0;">□ Test WiFi/payment processing</li>
+                                <li style="padding: 6px 0;">□ Place signage/wayfinding</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold-light); margin-bottom: var(--space-sm);">During Event</h4>
+                            <ul style="list-style: none; font-size: 0.85rem; color: var(--silver);">
+                                <li style="padding: 6px 0;">□ Greet residents, introduce vendor</li>
+                                <li style="padding: 6px 0;">□ Document with photos/video</li>
+                                <li style="padding: 6px 0;">□ Collect feedback forms (5 min)</li>
+                                <li style="padding: 6px 0;">□ Note peak times, issues</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold-light); margin-bottom: var(--space-sm);">Post-Event (24 hrs)</h4>
+                            <ul style="list-style: none; font-size: 0.85rem; color: var(--silver);">
+                                <li style="padding: 6px 0;">□ Send thank you to property</li>
+                                <li style="padding: 6px 0;">□ Debrief call with vendor</li>
+                                <li style="padding: 6px 0;">□ Log metrics in dashboard</li>
+                                <li style="padding: 6px 0;">□ Schedule next event</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <span class="slide__number">08</span>
+    </section>
+
+    <!-- Slide 9: CTA -->
+    <section class="slide slide--gradient cta-slide" data-slide="9">
+        <div class="container">
+            <div class="slide__content">
+                <p class="slide__eyebrow">Ready to Begin?</p>
+                <h2 class="slide__title">Let's Build <span>Denver Together</span></h2>
+                <p class="slide__subtitle" style="max-width: 600px; margin: 0 auto;">The framework is proven. The technology is ready. The actions are defined. Let's discuss how we can bring Lux Markets to the Denver luxury market.</p>
+
+                <div class="cta-slide__actions">
+                    <a href="#contact" class="btn btn--primary">
+                        Schedule Discussion
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                    <a href="digital-profile.html" class="btn btn--secondary">
+                        View Partner System
+                    </a>
+                </div>
+            </div>
+        </div>
+        <span class="slide__number">09</span>
+    </section>
+
+    <script>
+        // Slide navigation
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.slide-nav__dot');
+
+        // Update active dot on scroll
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.5
+        };
+
+        const slideObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const slideNum = entry.target.dataset.slide;
+                    dots.forEach(dot => {
+                        dot.classList.remove('active');
+                        if (dot.dataset.slide === slideNum) {
+                            dot.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, observerOptions);
+
+        slides.forEach(slide => slideObserver.observe(slide));
+
+        // Click on dots to navigate
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const targetSlide = document.querySelector(`[data-slide="${dot.dataset.slide}"]`);
+                targetSlide.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
