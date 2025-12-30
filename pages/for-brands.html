@@ -6,14 +6,41 @@
     <meta name="description" content="Access premium customers at Austin's most exclusive venues. Join 200+ curated brands selling at luxury residential communities.">
     <title>For Brands | Lux Markets - Access Premium Customers</title>
 
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="For Brands | Lux Markets">
+    <meta property="og:description" content="Access premium customers at Austin's most exclusive venues. Join 200+ curated brands.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://luxmarketsbyjacob.org/pages/for-brands.html">
+    <meta name="twitter:card" content="summary_large_image">
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="../src/css/styles.css">
+    <style>
+        /* Skip link for accessibility */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--navy);
+            color: white;
+            padding: 8px 16px;
+            z-index: 10000;
+            text-decoration: none;
+            border-radius: 0 0 4px 0;
+        }
+        .skip-link:focus {
+            top: 0;
+        }
+    </style>
 </head>
 <body>
+    <!-- Skip Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <!-- Announcement Bar -->
     <div class="announcement-bar">
         <p>New vendors: Apply now for Q1 2025 markets. <a href="#apply">Submit your application</a></p>
@@ -81,7 +108,7 @@
         </nav>
     </header>
 
-    <main>
+    <main id="main-content">
         <!-- Hero Section -->
         <section class="page-hero page-hero--brands">
             <div class="page-hero__background"></div>
@@ -692,7 +719,7 @@
             </div>
 
             <div class="footer__bottom">
-                <p class="footer__copyright">&copy; 2024 Lux Markets LLC. All rights reserved.</p>
+                <p class="footer__copyright">&copy; 2025 Lux Markets LLC. All rights reserved.</p>
                 <p class="footer__location">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
