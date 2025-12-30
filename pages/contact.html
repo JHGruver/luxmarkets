@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Contact Lux Markets - Reach out to discuss partnership opportunities for properties and brands in Austin, Texas.">
     <title>Contact Us | Lux Markets - Get in Touch</title>
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="Contact Lux Markets">
+    <meta property="og:description" content="Reach out to discuss partnership opportunities for properties and brands in Austin, Texas.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://luxmarketsbyjacob.org/pages/contact.html">
+    <meta name="twitter:card" content="summary_large_image">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
@@ -119,9 +126,60 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* Skip link for accessibility */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--navy);
+            color: white;
+            padding: 8px 16px;
+            z-index: 10000;
+            text-decoration: none;
+            border-radius: 0 0 4px 0;
+        }
+        .skip-link:focus {
+            top: 0;
+        }
+
+        /* Focus visible for contact paths */
+        .contact-path:focus-visible {
+            outline: 2px solid var(--gold);
+            outline-offset: 2px;
+        }
+
+        /* Form validation styles */
+        .form-group input:invalid:not(:placeholder-shown),
+        .form-group textarea:invalid:not(:placeholder-shown),
+        .form-group select:invalid {
+            border-color: #e53e3e;
+        }
+
+        .form-group input:valid:not(:placeholder-shown),
+        .form-group textarea:valid:not(:placeholder-shown) {
+            border-color: #38a169;
+        }
+
+        /* Success message styling */
+        .form-success {
+            display: none;
+            padding: var(--space-6);
+            background-color: #f0fff4;
+            border: 1px solid #38a169;
+            border-radius: var(--radius-lg);
+            text-align: center;
+            color: #276749;
+        }
+        .form-success.show {
+            display: block;
+        }
     </style>
 </head>
 <body>
+    <!-- Skip Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <!-- Announcement Bar -->
     <div class="announcement-bar">
         Now accepting applications for Q1 2025 markets. <a href="for-brands.html">Apply now</a> to secure your spot.
@@ -189,7 +247,7 @@
     </header>
 
     <!-- Page Hero -->
-    <section class="page-hero">
+    <section class="page-hero" id="main-content">
         <div class="page-hero__background"></div>
         <div class="container">
             <div class="page-hero__content">
@@ -208,36 +266,36 @@
                 <h2 class="section-title">Select Your Path</h2>
             </div>
 
-            <div class="contact-paths">
-                <div class="contact-path" data-form="property" onclick="showForm('property')">
+            <div class="contact-paths" role="group" aria-label="Choose your contact path">
+                <button class="contact-path" data-form="property" type="button" aria-expanded="false" aria-controls="property-form">
                     <div class="contact-path__icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" />
                         </svg>
                     </div>
                     <h3 class="contact-path__title">I'm a Property</h3>
                     <p class="contact-path__desc">Interested in hosting Lux Markets events at your luxury residential community</p>
-                </div>
+                </button>
 
-                <div class="contact-path" data-form="brand" onclick="showForm('brand')">
+                <button class="contact-path" data-form="brand" type="button" aria-expanded="false" aria-controls="brand-form">
                     <div class="contact-path__icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 21v-7.5a.75.75 0 01.75-.75h3a.75.75 0 01.75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349m-16.5 11.65V9.35m0 0a3.001 3.001 0 003.75-.615A2.993 2.993 0 009.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 002.25 1.016c.896 0 1.7-.393 2.25-1.016a3.001 3.001 0 003.75.614m-16.5 0a3.004 3.004 0 01-.621-4.72L4.318 3.44A1.5 1.5 0 015.378 3h13.243a1.5 1.5 0 011.06.44l1.19 1.189a3 3 0 01-.621 4.72m-13.5 8.65h3.75a.75.75 0 00.75-.75V13.5a.75.75 0 00-.75-.75H6.75a.75.75 0 00-.75.75v3.75c0 .415.336.75.75.75z" />
                         </svg>
                     </div>
                     <h3 class="contact-path__title">I'm a Brand</h3>
                     <p class="contact-path__desc">Looking to participate in markets and connect with affluent consumers</p>
-                </div>
+                </button>
 
-                <div class="contact-path" data-form="general" onclick="showForm('general')">
+                <button class="contact-path" data-form="general" type="button" aria-expanded="false" aria-controls="general-form">
                     <div class="contact-path__icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
                         </svg>
                     </div>
                     <h3 class="contact-path__title">General Inquiry</h3>
                     <p class="contact-path__desc">Questions about Lux Markets, partnerships, press, or other inquiries</p>
-                </div>
+                </button>
             </div>
 
             <!-- Property Form -->
@@ -522,7 +580,7 @@
                 </div>
             </div>
             <div class="footer__bottom">
-                <p class="footer__copyright">&copy; 2024 Lux Markets LLC. All rights reserved.</p>
+                <p class="footer__copyright">&copy; 2025 Lux Markets LLC. All rights reserved.</p>
                 <div class="footer__location">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
@@ -536,15 +594,29 @@
 
     <script src="../src/js/main.js"></script>
     <script>
-        // Contact form path switching
+        // Contact form path switching with accessibility support
+        document.addEventListener('DOMContentLoaded', function() {
+            const pathButtons = document.querySelectorAll('.contact-path');
+
+            pathButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const formType = this.dataset.form;
+                    showForm(formType);
+                });
+            });
+        });
+
         function showForm(formType) {
-            // Remove active from all paths
+            // Remove active from all paths and update ARIA
             document.querySelectorAll('.contact-path').forEach(path => {
                 path.classList.remove('active');
+                path.setAttribute('aria-expanded', 'false');
             });
 
             // Add active to clicked path
-            document.querySelector(`[data-form="${formType}"]`).classList.add('active');
+            const activeButton = document.querySelector(`[data-form="${formType}"]`);
+            activeButton.classList.add('active');
+            activeButton.setAttribute('aria-expanded', 'true');
 
             // Hide all form sections
             document.querySelectorAll('.contact-form-section').forEach(section => {
@@ -552,10 +624,17 @@
             });
 
             // Show selected form section
-            document.getElementById(`${formType}-form`).classList.add('active');
+            const formSection = document.getElementById(`${formType}-form`);
+            formSection.classList.add('active');
 
-            // Scroll to form
-            document.getElementById(`${formType}-form`).scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // Scroll to form smoothly
+            formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            // Focus on first input for accessibility
+            setTimeout(() => {
+                const firstInput = formSection.querySelector('input, select, textarea');
+                if (firstInput) firstInput.focus();
+            }, 500);
         }
     </script>
 </body>
