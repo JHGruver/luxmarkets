@@ -594,6 +594,41 @@
             color: var(--gold);
         }
 
+        /* Collapsible dropdown sections */
+        .dropdown__section-title {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .dropdown__section-title::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-right: 1.5px solid var(--gold);
+            border-bottom: 1.5px solid var(--gold);
+            transform: rotate(-45deg);
+            transition: transform 0.3s ease;
+            opacity: 0;
+        }
+
+        .dropdown__section--collapsible .dropdown__section-title::after {
+            opacity: 1;
+        }
+
+        .dropdown__section--collapsible.dropdown__section--expanded .dropdown__section-title::after {
+            transform: rotate(45deg);
+        }
+
+        .dropdown__section--collapsible .dropdown__item--simple {
+            display: none;
+        }
+
+        .dropdown__section--collapsible.dropdown__section--expanded .dropdown__item--simple {
+            display: block;
+        }
+
         /* ============================================
            PROGRESS BAR
            ============================================ */
@@ -2089,10 +2124,10 @@
                     <div class="dropdown__section"><span class="dropdown__section-title">Main</span><a href="index.html" class="dropdown__item--simple">Home</a><a href="pages/about.html" class="dropdown__item--simple">About</a><a href="pages/contact.html" class="dropdown__item--simple">Contact</a></div>
                     <div class="dropdown__section"><span class="dropdown__section-title">Solutions</span><a href="pages/for-properties.html" class="dropdown__item--simple">For Properties</a><a href="pages/for-brands.html" class="dropdown__item--simple">For Brands</a><a href="pages/pricing.html" class="dropdown__item--simple">Pricing</a></div>
                     <div class="dropdown__section"><span class="dropdown__section-title">Markets</span><a href="pages/our-markets.html" class="dropdown__item--simple">Our Markets</a><a href="pages/market-rules.html" class="dropdown__item--simple">Market Rules</a></div>
-                    <div class="dropdown__section"><span class="dropdown__section-title">Resources</span><a href="pages/resources.html" class="dropdown__item--simple">Resources</a><a href="pages/education.html" class="dropdown__item--simple">Education</a><a href="market-research.html" class="dropdown__item--simple">Market Research</a></div>
+                    <div class="dropdown__section dropdown__section--collapsible"><span class="dropdown__section-title">Resources</span><a href="pages/resources.html" class="dropdown__item--simple">Resources Hub</a><a href="pages/education.html" class="dropdown__item--simple">Education</a><a href="market-research.html" class="dropdown__item--simple">Market Research</a></div>
                     <div class="dropdown__section"><span class="dropdown__section-title">Legal</span><a href="pages/terms-of-service.html" class="dropdown__item--simple">Terms of Service</a></div>
                     <div class="dropdown__section"><span class="dropdown__section-title">Explore</span><a href="index-journey.html" class="dropdown__item--simple">Journey</a><a href="index-neo.html" class="dropdown__item--simple">Neo</a><a href="index-refresh.html" class="dropdown__item--simple">Refresh</a><a href="digital-profile.html" class="dropdown__item--simple">Digital Profile</a><a href="pitch-deck.html" class="dropdown__item--simple">Pitch Deck</a><a href="challenges.html" class="dropdown__item--simple">Challenges</a></div>
-                    <div class="dropdown__section"><span class="dropdown__section-title">Archive</span><a href="Landfill_index-estate.html" class="dropdown__item--simple">Estate Design</a><a href="Landfill_index-gallery.html" class="dropdown__item--simple">Gallery Design</a><a href="Landfill_index-maison.html" class="dropdown__item--simple">Maison Design</a></div>
+                    <div class="dropdown__section dropdown__section--collapsible"><span class="dropdown__section-title">Archive</span><a href="Landfill_index-estate.html" class="dropdown__item--simple">Estate Design</a><a href="Landfill_index-gallery.html" class="dropdown__item--simple">Gallery Design</a><a href="Landfill_index-maison.html" class="dropdown__item--simple">Maison Design</a></div>
                     <div class="dropdown__section"><span class="dropdown__section-title">Dev</span><a href="pages/dev/insights.html" class="dropdown__item--simple">Insights</a></div>
                 </div>
             </li>
@@ -2591,6 +2626,21 @@
                 }
             });
         }
+
+        // ============================================
+        // Collapsible Dropdown Sections
+        // ============================================
+        const collapsibleSections = document.querySelectorAll('.dropdown__section--collapsible');
+        collapsibleSections.forEach(section => {
+            const title = section.querySelector('.dropdown__section-title');
+            if (title) {
+                title.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    section.classList.toggle('dropdown__section--expanded');
+                });
+            }
+        });
     </script>
 </body>
 </html>
