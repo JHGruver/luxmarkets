@@ -68,6 +68,328 @@
         }
 
         /* ============================================
+           LOADING SCREEN - Immersive Intro
+           ============================================ */
+        .loader {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--black);
+            transition: opacity 0.8s var(--ease-out-expo), visibility 0.8s;
+        }
+
+        .loader.loader--hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .loader__background {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+
+        /* Gold shimmer effect */
+        .loader__shimmer {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background:
+                radial-gradient(ellipse at 30% 40%, rgba(201, 162, 39, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 60%, rgba(229, 200, 122, 0.1) 0%, transparent 40%),
+                radial-gradient(ellipse at 50% 50%, rgba(139, 112, 25, 0.08) 0%, transparent 60%);
+            animation: shimmerMove 4s ease-in-out infinite;
+        }
+
+        @keyframes shimmerMove {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+                opacity: 0.6;
+            }
+            25% {
+                transform: translate(5%, 3%) rotate(1deg);
+                opacity: 1;
+            }
+            50% {
+                transform: translate(-3%, 5%) rotate(-1deg);
+                opacity: 0.8;
+            }
+            75% {
+                transform: translate(3%, -3%) rotate(0.5deg);
+                opacity: 1;
+            }
+        }
+
+        /* Gold particles */
+        .loader__particles {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+
+        .loader__particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--gold);
+            border-radius: 50%;
+            opacity: 0;
+            animation: particleFloat 3s ease-in-out infinite;
+        }
+
+        .loader__particle:nth-child(1) { left: 20%; top: 30%; animation-delay: 0s; }
+        .loader__particle:nth-child(2) { left: 80%; top: 20%; animation-delay: 0.5s; }
+        .loader__particle:nth-child(3) { left: 10%; top: 70%; animation-delay: 1s; }
+        .loader__particle:nth-child(4) { left: 90%; top: 60%; animation-delay: 1.5s; }
+        .loader__particle:nth-child(5) { left: 50%; top: 80%; animation-delay: 0.3s; }
+        .loader__particle:nth-child(6) { left: 30%; top: 50%; animation-delay: 0.8s; }
+        .loader__particle:nth-child(7) { left: 70%; top: 40%; animation-delay: 1.2s; }
+        .loader__particle:nth-child(8) { left: 40%; top: 15%; animation-delay: 0.6s; }
+
+        @keyframes particleFloat {
+            0%, 100% {
+                opacity: 0;
+                transform: translateY(20px) scale(0.5);
+            }
+            50% {
+                opacity: 0.8;
+                transform: translateY(-20px) scale(1);
+            }
+        }
+
+        /* Loader logo */
+        .loader__logo-container {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .loader__logo {
+            width: 180px;
+            height: auto;
+            opacity: 0;
+            transform: scale(0.9);
+            animation: loaderLogoIn 1s var(--ease-out-expo) 0.2s forwards;
+            filter: drop-shadow(0 0 40px rgba(201, 162, 39, 0.3));
+        }
+
+        @keyframes loaderLogoIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Loading bar */
+        .loader__bar-container {
+            width: 200px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeIn 0.5s ease 0.5s forwards;
+        }
+
+        .loader__bar {
+            height: 100%;
+            width: 0%;
+            background: var(--gold-gradient);
+            border-radius: 2px;
+            animation: loadingBar 2s var(--ease-out-quint) 0.6s forwards;
+        }
+
+        @keyframes loadingBar {
+            0% { width: 0%; }
+            20% { width: 20%; }
+            50% { width: 60%; }
+            80% { width: 85%; }
+            100% { width: 100%; }
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* Loader tagline */
+        .loader__tagline {
+            font-family: var(--font-serif);
+            font-size: 0.9rem;
+            font-weight: 300;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--silver);
+            opacity: 0;
+            animation: fadeIn 0.5s ease 0.8s forwards;
+        }
+
+        /* Logo transition to nav */
+        .loader--transitioning .loader__logo {
+            animation: logoToNav 1s var(--ease-out-expo) forwards;
+        }
+
+        @keyframes logoToNav {
+            0% {
+                transform: scale(1) translate(0, 0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0.29) translate(0, calc(-50vh + 70px));
+                opacity: 0;
+            }
+        }
+
+        .loader--transitioning .loader__bar-container,
+        .loader--transitioning .loader__tagline {
+            animation: fadeOutQuick 0.3s ease forwards;
+        }
+
+        @keyframes fadeOutQuick {
+            to {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+        }
+
+        /* Page content initially hidden - Professional reveal */
+        .page-content {
+            opacity: 0;
+            transform: translateY(40px) scale(0.98);
+            transition:
+                opacity 1.2s var(--ease-out-expo),
+                transform 1.4s var(--ease-out-expo);
+            will-change: opacity, transform;
+        }
+
+        .page-content.page-content--visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* Elegant curtain reveal overlay */
+        .page-reveal {
+            position: fixed;
+            inset: 0;
+            z-index: 9998;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .page-reveal__curtain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: linear-gradient(180deg, var(--black) 0%, var(--obsidian) 100%);
+            transform: translateY(0);
+            transition: transform 1.2s var(--ease-out-expo);
+        }
+
+        .page-reveal__curtain::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: linear-gradient(180deg, transparent 0%, rgba(201, 162, 39, 0.1) 100%);
+        }
+
+        .page-reveal--complete .page-reveal__curtain {
+            transform: translateY(-100%);
+        }
+
+        /* Staggered element reveals for hero content */
+        .hero__content > * {
+            opacity: 0;
+            transform: translateY(20px);
+            transition:
+                opacity 0.8s var(--ease-out-expo),
+                transform 0.8s var(--ease-out-expo);
+        }
+
+        .page-content--visible .hero__content > *:nth-child(1) {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.15s;
+        }
+
+        .page-content--visible .hero__content > *:nth-child(2) {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.3s;
+        }
+
+        .page-content--visible .hero__content > *:nth-child(3) {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.45s;
+        }
+
+        /* Hero scroll hint staggered reveal */
+        .hero__scroll-hint {
+            opacity: 0 !important;
+            transform: translateY(20px);
+            transition:
+                opacity 0.8s var(--ease-out-expo),
+                transform 0.8s var(--ease-out-expo) !important;
+        }
+
+        .page-content--visible .hero__scroll-hint {
+            opacity: 1 !important;
+            transform: translateY(0);
+            transition-delay: 1.5s !important;
+        }
+
+        /* Background image elegant reveal */
+        .hero__image {
+            transform: scale(1.1);
+            filter: brightness(0.3);
+            transition:
+                transform 2s var(--ease-out-expo),
+                filter 1.5s var(--ease-out-expo);
+        }
+
+        .page-content--visible .hero__image {
+            transform: scale(1);
+            filter: brightness(1);
+        }
+
+        /* Nav initially hidden, appears with logo */
+        .nav {
+            opacity: 0;
+            transform: translateX(-50%) translateY(-20px);
+            transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+        }
+
+        .nav.nav--visible {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Nav logo animation */
+        .nav__logo {
+            opacity: 0;
+            transform: scale(1.5);
+            transition: opacity 0.6s var(--ease-out-expo), transform 0.6s var(--ease-out-expo);
+        }
+
+        .nav__logo.nav__logo--visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* ============================================
            DESIGN BADGE
            ============================================ */
         .design-badge {
@@ -99,7 +421,7 @@
         }
 
         /* ============================================
-           NAVIGATION - Floating minimal
+           NAVIGATION - Glassmorphic floating
            ============================================ */
         .nav {
             position: fixed;
@@ -109,23 +431,33 @@
             z-index: 1000;
             display: flex;
             align-items: center;
-            gap: 50px;
-            padding: 14px 36px;
-            background: rgba(10, 10, 10, 0.85);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            gap: 40px;
+            padding: 16px 32px;
+            /* Glassmorphism effect */
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.08) 0%,
+                rgba(255, 255, 255, 0.03) 100%
+            );
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 100px;
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                0 0 0 1px rgba(0, 0, 0, 0.1);
         }
 
         .nav__logo img {
-            height: 52px;
+            height: 48px;
             width: auto;
             filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
         }
 
         .nav__links {
             display: flex;
-            gap: 40px;
+            gap: 32px;
             list-style: none;
         }
 
@@ -135,6 +467,7 @@
             color: var(--pearl);
             letter-spacing: 0.02em;
             transition: color 0.3s ease;
+            white-space: nowrap;
         }
 
         .nav__link:hover {
@@ -142,38 +475,124 @@
         }
 
         .nav__cta {
-            padding: 12px 28px;
-            background: var(--gold);
+            padding: 12px 24px;
+            background: linear-gradient(
+                135deg,
+                rgba(201, 162, 39, 0.9) 0%,
+                rgba(201, 162, 39, 1) 100%
+            );
             color: var(--black);
             font-size: 0.8rem;
             font-weight: 600;
             letter-spacing: 0.05em;
             border-radius: 100px;
             transition: all 0.4s var(--ease-out-expo);
+            white-space: nowrap;
+            box-shadow:
+                0 4px 16px rgba(201, 162, 39, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
         }
 
         .nav__cta:hover {
             background: var(--white);
             transform: scale(1.05);
+            box-shadow:
+                0 8px 24px rgba(255, 255, 255, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5);
         }
 
         /* All Pages Dropdown */
-        .nav__item--allpages { position: relative; list-style: none; }
-        .nav__link--allpages { display: flex; align-items: center; gap: 6px; cursor: pointer; }
-        .nav__arrow { width: 14px; height: 14px; transition: transform 0.3s; }
-        .nav__item--allpages.expanded .nav__arrow { transform: rotate(180deg); }
-        .dropdown--allpages {
-            position: absolute; top: 100%; right: 0; width: 280px; max-height: 70vh;
-            overflow-y: auto; background: var(--white); border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3); padding: 16px;
-            opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s; z-index: 1000;
+        .nav__item--allpages {
+            position: relative;
+            list-style: none;
         }
-        .nav__item--allpages.expanded .dropdown--allpages { opacity: 1; visibility: visible; transform: translateY(0); }
-        .dropdown__section { margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .dropdown__section:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
-        .dropdown__section-title { display: block; font-size: 0.7rem; font-weight: 600; color: var(--gold); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
-        .dropdown__item--simple { display: block; padding: 6px 12px; font-size: 0.85rem; color: var(--black); border-radius: 6px; transition: background 0.2s; }
-        .dropdown__item--simple:hover { background: rgba(201,162,39,0.1); }
+
+        .nav__link--allpages {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .nav__arrow {
+            width: 14px;
+            height: 14px;
+            transition: transform 0.3s;
+        }
+
+        .nav__item--allpages.expanded .nav__arrow {
+            transform: rotate(180deg);
+        }
+
+        .dropdown--allpages {
+            position: absolute;
+            top: calc(100% + 12px);
+            right: 0;
+            width: 280px;
+            max-height: 70vh;
+            overflow-y: auto;
+            /* Glassmorphic dropdown */
+            background: linear-gradient(
+                135deg,
+                rgba(30, 30, 30, 0.95) 0%,
+                rgba(20, 20, 20, 0.98) 100%
+            );
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            padding: 16px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s var(--ease-out-expo);
+            z-index: 1000;
+        }
+        .nav__item--allpages.expanded .dropdown--allpages {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown__section {
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .dropdown__section:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .dropdown__section-title {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+        }
+
+        .dropdown__item--simple {
+            display: block;
+            padding: 8px 12px;
+            font-size: 0.85rem;
+            color: var(--pearl);
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .dropdown__item--simple:hover {
+            background: rgba(201, 162, 39, 0.15);
+            color: var(--gold);
+        }
 
         /* ============================================
            PROGRESS BAR
@@ -213,6 +632,11 @@
             position: relative;
         }
 
+        .chapter-dot:hover {
+            border-color: var(--gold);
+            transform: scale(1.2);
+        }
+
         .chapter-dot.active {
             border-color: var(--gold);
             background: var(--gold);
@@ -231,10 +655,15 @@
             color: var(--silver);
             white-space: nowrap;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            pointer-events: none;
+            transition: all 0.3s ease;
         }
 
-        .chapter-dot:hover::after,
+        .chapter-dot:hover::after {
+            opacity: 1;
+            color: var(--gold);
+        }
+
         .chapter-dot.active::after {
             opacity: 1;
         }
@@ -298,12 +727,22 @@
             box-shadow: inset 0 0 200px rgba(0,0,0,0.8);
         }
 
+        .hero__dark-overlay {
+            position: absolute;
+            inset: 0;
+            background: var(--black);
+            opacity: 0.55;
+            pointer-events: none;
+            will-change: opacity;
+        }
+
         .hero__content {
             position: relative;
             z-index: 1;
             text-align: center;
             max-width: 1000px;
             padding: 0 40px;
+            padding-top: 160px; /* More space for header and breathing room */
         }
 
         .hero__logo {
@@ -391,6 +830,368 @@
         }
 
         /* ============================================
+           HERO CTA CARDS - Minimalist Luxury
+           Clean design with subtle elegance
+           ============================================ */
+        .hero-cta-grid {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 48px;
+            perspective: 1200px;
+        }
+
+        .hero-cta-card {
+            position: relative;
+            width: 240px;
+            padding: 28px 24px 24px;
+            background: rgba(20, 20, 20, 0.85);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            text-align: center;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: all 0.5s var(--ease-out-expo);
+            overflow: hidden;
+            opacity: 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Shimmer effect - only visible on hover */
+        .hero-cta-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(201, 162, 39, 0.08) 50%,
+                transparent 100%
+            );
+            transition: left 0.6s var(--ease-out-expo);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .hero-cta-card:hover::before {
+            left: 100%;
+        }
+
+        /* Subtle gold border on hover only */
+        .hero-cta-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            border: 1px solid rgba(201, 162, 39, 0);
+            transition: border-color 0.5s var(--ease-out-expo);
+            pointer-events: none;
+        }
+
+        .hero-cta-card:hover::after {
+            border-color: rgba(201, 162, 39, 0.4);
+        }
+
+        /* Hide decorative elements in default - show on hover */
+        .hero-cta-card__inner-glow,
+        .hero-cta-card__particles,
+        .hero-cta-card__particle {
+            display: none;
+        }
+
+        .hero-cta-card--left {
+            animation: slideInLeft 1s var(--ease-out-expo) 0.9s forwards;
+        }
+
+        .hero-cta-card--right {
+            animation: slideInRight 1s var(--ease-out-expo) 1.05s forwards;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-60px) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) translateY(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(60px) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) translateY(0);
+            }
+        }
+
+        /* ============================================
+           HOVER STATE - Elegant Transformation
+           ============================================ */
+        .hero-cta-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(201, 162, 39, 0.3);
+            background: rgba(25, 25, 25, 0.95);
+            box-shadow:
+                0 20px 40px rgba(0, 0, 0, 0.4),
+                0 0 40px rgba(201, 162, 39, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        /* Light sweep element - hidden, using ::before instead */
+        .hero-cta-card__light-sweep {
+            display: none;
+        }
+
+        /* Icon container - Minimalist styling */
+        .hero-cta-card__icon {
+            position: relative;
+            width: 52px;
+            height: 52px;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: 1px solid rgba(201, 162, 39, 0.25);
+            border-radius: 50%;
+            transition: all 0.5s var(--ease-out-expo);
+        }
+
+        .hero-cta-card__icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--gold);
+            stroke-width: 1.5;
+            transition: all 0.5s var(--ease-out-expo);
+        }
+
+        .hero-cta-card:hover .hero-cta-card__icon {
+            background: rgba(201, 162, 39, 0.1);
+            border-color: var(--gold);
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(201, 162, 39, 0.2);
+        }
+
+        .hero-cta-card:hover .hero-cta-card__icon svg {
+            stroke: var(--gold-light);
+        }
+
+        /* Label styling */
+        .hero-cta-card__label {
+            font-size: 0.55rem;
+            font-weight: 600;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 8px;
+            opacity: 0.8;
+            transition: all 0.5s var(--ease-out-expo);
+        }
+
+        .hero-cta-card:hover .hero-cta-card__label {
+            opacity: 1;
+        }
+
+        /* Title - Clean typography */
+        .hero-cta-card__title {
+            font-family: var(--font-serif);
+            font-size: 1.35rem;
+            font-weight: 400;
+            color: var(--white);
+            margin-bottom: 10px;
+            transition: all 0.5s var(--ease-out-expo);
+        }
+
+        .hero-cta-card:hover .hero-cta-card__title {
+            color: var(--gold-light);
+        }
+
+        /* Description */
+        .hero-cta-card__desc {
+            font-size: 0.8rem;
+            font-weight: 300;
+            color: var(--silver);
+            line-height: 1.5;
+            margin-bottom: 16px;
+            transition: all 0.5s var(--ease-out-expo);
+        }
+
+        .hero-cta-card:hover .hero-cta-card__desc {
+            color: var(--pearl);
+        }
+
+        /* Arrow button - Clean minimal */
+        .hero-cta-card__arrow {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            transition: all 0.5s var(--ease-out-expo);
+        }
+
+        .hero-cta-card__arrow svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--pearl);
+            stroke-width: 2;
+            transition: all 0.5s var(--ease-out-expo);
+        }
+
+        .hero-cta-card:hover .hero-cta-card__arrow {
+            background: var(--gold);
+            border-color: var(--gold);
+            transform: translateX(4px);
+        }
+
+        .hero-cta-card:hover .hero-cta-card__arrow svg {
+            stroke: var(--black);
+        }
+
+        /* Active/pressed state */
+        .hero-cta-card:active {
+            transform: translateY(-4px) scale(1.01);
+            transition: all 0.15s ease;
+        }
+
+        /* Hide spotlight - cleaner look */
+        .hero-cta-card__spotlight {
+            display: none;
+        }
+
+
+        /* Floating Orbs Background */
+        .hero__orbs {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .hero__orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.4;
+        }
+
+        .hero__orb--1 {
+            width: 400px;
+            height: 400px;
+            background: rgba(201, 162, 39, 0.3);
+            top: 10%;
+            left: -5%;
+            animation: floatOrb1 20s ease-in-out infinite;
+        }
+
+        .hero__orb--2 {
+            width: 300px;
+            height: 300px;
+            background: rgba(201, 162, 39, 0.2);
+            bottom: 20%;
+            right: -5%;
+            animation: floatOrb2 25s ease-in-out infinite;
+        }
+
+        .hero__orb--3 {
+            width: 200px;
+            height: 200px;
+            background: rgba(201, 162, 39, 0.15);
+            top: 50%;
+            left: 30%;
+            animation: floatOrb3 18s ease-in-out infinite;
+        }
+
+        @keyframes floatOrb1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(50px, 30px) scale(1.1); }
+            66% { transform: translate(-30px, 50px) scale(0.9); }
+        }
+
+        @keyframes floatOrb2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(-40px, -30px) scale(0.95); }
+            66% { transform: translate(30px, -50px) scale(1.05); }
+        }
+
+        @keyframes floatOrb3 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(40px, -40px) scale(1.15); }
+        }
+
+        /* Hero Logo Animation */
+        .hero__logo {
+            width: 140px;
+            height: auto;
+            margin: 0 auto 40px;
+            opacity: 0;
+            transform: scale(0.8);
+            animation: logoEntrance 1s var(--ease-out-expo) 0.3s forwards;
+        }
+
+        @keyframes logoEntrance {
+            0% {
+                opacity: 0;
+                transform: scale(0.8) translateY(20px);
+            }
+            60% {
+                transform: scale(1.05) translateY(0);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        /* Updated Hero Title for CTA version */
+        .hero__tagline {
+            font-family: var(--font-serif);
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            font-weight: 300;
+            line-height: 1.3;
+            color: var(--white);
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 1s var(--ease-out-expo) 0.6s forwards;
+            text-shadow:
+                0 2px 4px rgba(0, 0, 0, 0.5),
+                0 4px 12px rgba(0, 0, 0, 0.4),
+                0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero__tagline em {
+            font-style: italic;
+            color: var(--gold);
+            -webkit-text-fill-color: var(--gold);
+        }
+
+        /* Divider line */
+        .hero__divider {
+            width: 60px;
+            height: 1px;
+            background: var(--gold-gradient);
+            margin: 40px auto 0;
+            opacity: 0;
+            animation: fadeUp 1s var(--ease-out-expo) 0.75s forwards;
+        }
+
+        /* ============================================
            CHAPTER 2 - THE PROBLEM: Split Reveal
            ============================================ */
         .chapter-problem {
@@ -473,6 +1274,35 @@
             font-weight: 300;
             color: var(--pearl);
             line-height: 1.7;
+        }
+
+        .problem-panel__cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--gold);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .problem-panel__cta:hover {
+            color: var(--white);
+            gap: 12px;
+        }
+
+        .problem-panel__cta svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        .problem-panel__cta:hover svg {
+            transform: translateX(4px);
         }
 
         .problem-panel__icon {
@@ -980,6 +1810,55 @@
                 display: none;
             }
 
+            /* Hero CTA Responsive - Tablet */
+            .hero-cta-grid {
+                flex-direction: column;
+                align-items: center;
+                gap: 16px;
+            }
+
+            .hero-cta-card {
+                width: 100%;
+                max-width: 320px;
+                padding: 24px 20px 20px;
+            }
+
+            .hero-cta-card--left {
+                animation: slideInUp 1s var(--ease-out-expo) 0.9s forwards;
+            }
+
+            .hero-cta-card--right {
+                animation: slideInUp 1s var(--ease-out-expo) 1.05s forwards;
+            }
+
+            @keyframes slideInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            /* Simplify effects for tablet */
+            .hero-cta-card__particles {
+                display: none;
+            }
+
+            .hero__tagline {
+                font-size: clamp(1.5rem, 5vw, 2.2rem);
+            }
+
+            .hero__logo {
+                width: 120px;
+            }
+
+            .hero__scroll-hint {
+                bottom: 40px;
+            }
+
             .chapter-problem__sticky {
                 flex-direction: column;
             }
@@ -1019,6 +1898,97 @@
         }
 
         @media (max-width: 768px) {
+            /* Hero CTA Responsive - Mobile */
+            .hero__content {
+                padding: 130px 24px 0;
+            }
+
+            .hero-cta-grid {
+                gap: 14px;
+                margin-top: 28px;
+                padding: 0 20px;
+            }
+
+            .hero-cta-card {
+                padding: 22px 18px 18px;
+                max-width: 280px;
+                border-radius: 14px;
+            }
+
+            /* Simplify hover for touch */
+            .hero-cta-card:hover {
+                transform: translateY(-4px);
+            }
+
+            .hero-cta-card__icon {
+                width: 44px;
+                height: 44px;
+                margin-bottom: 12px;
+            }
+
+            .hero-cta-card__icon svg {
+                width: 20px;
+                height: 20px;
+            }
+
+            .hero-cta-card__label {
+                font-size: 0.5rem;
+                letter-spacing: 0.2em;
+                margin-bottom: 6px;
+            }
+
+            .hero-cta-card__title {
+                font-size: 1.15rem;
+                margin-bottom: 8px;
+            }
+
+            .hero-cta-card__desc {
+                font-size: 0.75rem;
+                margin-bottom: 14px;
+                line-height: 1.4;
+            }
+
+            .hero-cta-card__arrow {
+                width: 32px;
+                height: 32px;
+            }
+
+            .hero-cta-card__arrow svg {
+                width: 14px;
+                height: 14px;
+            }
+
+            .hero__tagline {
+                font-size: 1.4rem;
+            }
+
+            .hero__logo {
+                width: 100px;
+                margin-bottom: 28px;
+            }
+
+            .hero__divider {
+                margin-top: 28px;
+            }
+
+            .hero__scroll-hint {
+                bottom: 24px;
+            }
+
+            .hero__scroll-line {
+                height: 50px;
+            }
+
+            /* Hide orbs on mobile for performance */
+            .hero__orb--3 {
+                display: none;
+            }
+
+            .hero__orb--1,
+            .hero__orb--2 {
+                opacity: 0.25;
+            }
+
             .stats-grid {
                 grid-template-columns: 1fr;
             }
@@ -1042,15 +2012,68 @@
                 justify-content: center;
             }
         }
+
+        @media (max-width: 480px) {
+            .hero-cta-card {
+                padding: 32px 24px;
+            }
+
+            .hero-cta-card__title {
+                font-size: 1.3rem;
+            }
+
+            .hero-cta-card__desc {
+                font-size: 0.85rem;
+            }
+
+            .hero__tagline {
+                font-size: 1.25rem;
+            }
+
+            .hero__logo {
+                width: 80px;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- ============================================
+         LOADING SCREEN
+         ============================================ -->
+    <div class="loader" id="loader">
+        <div class="loader__background">
+            <div class="loader__shimmer"></div>
+            <div class="loader__particles">
+                <div class="loader__particle"></div>
+                <div class="loader__particle"></div>
+                <div class="loader__particle"></div>
+                <div class="loader__particle"></div>
+                <div class="loader__particle"></div>
+                <div class="loader__particle"></div>
+                <div class="loader__particle"></div>
+                <div class="loader__particle"></div>
+            </div>
+        </div>
+        <div class="loader__logo-container">
+            <img src="assets/images/logos/lux-markets-logo.png" alt="Lux Markets" class="loader__logo">
+            <div class="loader__bar-container">
+                <div class="loader__bar"></div>
+            </div>
+            <p class="loader__tagline">Curated Luxury Experiences</p>
+        </div>
+    </div>
+
+    <!-- Page Reveal Curtain -->
+    <div class="page-reveal" id="pageReveal">
+        <div class="page-reveal__curtain"></div>
+    </div>
+
     <!-- Progress Bar -->
     <div class="progress-bar" id="progressBar"></div>
 
     <!-- Navigation -->
-    <nav class="nav">
-        <a href="index.html" class="nav__logo">
+    <nav class="nav" id="mainNav">
+        <a href="index.html" class="nav__logo" id="navLogo">
             <img src="assets/images/logos/lux-markets-logo.png" alt="Lux Markets">
         </a>
         <ul class="nav__links">
@@ -1088,7 +2111,7 @@
     </div>
 
     <!-- Main Content -->
-    <main>
+    <main class="page-content" id="pageContent">
         <!-- Chapter 1: Hero -->
         <section class="hero" data-chapter="1">
             <div class="hero__sticky">
@@ -1096,19 +2119,82 @@
                     <img src="assets/images/features/apartment-onion-creek.png" alt="Luxury Venue" class="hero__image" id="heroImage">
                     <div class="hero__gradient"></div>
                     <div class="hero__vignette"></div>
+                    <div class="hero__dark-overlay" id="heroDarkOverlay"></div>
+                </div>
+
+                <!-- Floating Orbs -->
+                <div class="hero__orbs">
+                    <div class="hero__orb hero__orb--1"></div>
+                    <div class="hero__orb hero__orb--2"></div>
+                    <div class="hero__orb hero__orb--3"></div>
                 </div>
 
                 <div class="hero__content">
-                    <h1 class="hero__title">
-                        <span class="hero__title-line">Where <em>Exceptional</em></span>
-                        <span class="hero__title-line">Brands Meet</span>
-                        <span class="hero__title-line">Discerning Customers</span>
+                    <!-- Tagline -->
+                    <h1 class="hero__tagline">
+                        Where <em>Exceptional</em> Brands Meet<br>Discerning Customers
                     </h1>
-                    <p class="hero__subtitle">A journey through curated luxury experiences</p>
+
+                    <div class="hero__divider"></div>
+
+                    <!-- Dual CTA Cards -->
+                    <div class="hero-cta-grid">
+                        <!-- Property Card -->
+                        <a href="pages/for-properties.html" class="hero-cta-card hero-cta-card--left">
+                            <div class="hero-cta-card__inner-glow"></div>
+                            <div class="hero-cta-card__spotlight"></div>
+                            <div class="hero-cta-card__light-sweep"></div>
+                            <div class="hero-cta-card__particles">
+                                <div class="hero-cta-card__particle"></div>
+                                <div class="hero-cta-card__particle"></div>
+                                <div class="hero-cta-card__particle"></div>
+                            </div>
+                            <div class="hero-cta-card__icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                                    <polyline points="9,22 9,12 15,12 15,22"/>
+                                </svg>
+                            </div>
+                            <p class="hero-cta-card__label">For Luxury Properties</p>
+                            <h2 class="hero-cta-card__title">I am a Property</h2>
+                            <p class="hero-cta-card__desc">Elevate resident experiences with turnkey curated markets. Zero effort, maximum impact.</p>
+                            <div class="hero-cta-card__arrow">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                                </svg>
+                            </div>
+                        </a>
+
+                        <!-- Brand Card -->
+                        <a href="pages/for-brands.html" class="hero-cta-card hero-cta-card--right">
+                            <div class="hero-cta-card__inner-glow"></div>
+                            <div class="hero-cta-card__spotlight"></div>
+                            <div class="hero-cta-card__light-sweep"></div>
+                            <div class="hero-cta-card__particles">
+                                <div class="hero-cta-card__particle"></div>
+                                <div class="hero-cta-card__particle"></div>
+                                <div class="hero-cta-card__particle"></div>
+                            </div>
+                            <div class="hero-cta-card__icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/>
+                                    <line x1="7" y1="7" x2="7.01" y2="7"/>
+                                </svg>
+                            </div>
+                            <p class="hero-cta-card__label">For Artisan Brands</p>
+                            <h2 class="hero-cta-card__title">I am a Brand</h2>
+                            <p class="hero-cta-card__desc">Connect with affluent customers in exclusive settings. Premium positioning, higher sales.</p>
+                            <div class="hero-cta-card__arrow">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                                </svg>
+                            </div>
+                        </a>
+                    </div>
                 </div>
 
                 <div class="hero__scroll-hint">
-                    <span class="hero__scroll-text">Begin the Journey</span>
+                    <span class="hero__scroll-text">Discover More</span>
                     <div class="hero__scroll-line"></div>
                 </div>
             </div>
@@ -1132,6 +2218,12 @@
                     <div class="problem-panel__solution">
                         <p class="problem-panel__solution-label">The Lux Markets Solution</p>
                         <p class="problem-panel__solution-text">Turnkey market events that elevate your resident experience. We handle everything—you take the credit.</p>
+                        <a href="for-properties.html" class="problem-panel__cta">
+                            Learn More
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </a>
                     </div>
                 </div>
 
@@ -1150,6 +2242,12 @@
                     <div class="problem-panel__solution">
                         <p class="problem-panel__solution-label">The Lux Markets Solution</p>
                         <p class="problem-panel__solution-text">Exclusive access to affluent customers in curated settings. Less competition, higher sales, premium positioning.</p>
+                        <a href="for-brands.html" class="problem-panel__cta">
+                            Learn More
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -1289,6 +2387,58 @@
     </footer>
 
     <script>
+        // ============================================
+        // LOADING SCREEN ANIMATION
+        // ============================================
+        const loader = document.getElementById('loader');
+        const mainNav = document.getElementById('mainNav');
+        const navLogo = document.getElementById('navLogo');
+        const pageContent = document.getElementById('pageContent');
+
+        // Disable scrolling during load
+        document.body.style.overflow = 'hidden';
+
+        // Loading sequence with professional page reveal
+        const pageReveal = document.getElementById('pageReveal');
+
+        function initLoadingSequence() {
+            // After loading bar completes (2.6s total), start transition
+            setTimeout(() => {
+                // Add transitioning class for logo animation
+                loader.classList.add('loader--transitioning');
+
+                // Show nav (without logo initially)
+                setTimeout(() => {
+                    mainNav.classList.add('nav--visible');
+                }, 300);
+
+                // Animate logo into nav
+                setTimeout(() => {
+                    navLogo.classList.add('nav__logo--visible');
+                }, 600);
+
+                // Hide loader and trigger page reveal
+                setTimeout(() => {
+                    loader.classList.add('loader--hidden');
+
+                    // Trigger curtain reveal
+                    setTimeout(() => {
+                        pageReveal.classList.add('page-reveal--complete');
+                    }, 100);
+
+                    // Show main content with staggered animations
+                    setTimeout(() => {
+                        pageContent.classList.add('page-content--visible');
+                        document.body.style.overflow = '';
+                    }, 200);
+                }, 800);
+
+            }, 2800); // Wait for loading bar to complete
+        }
+
+        // Start the loading sequence
+        initLoadingSequence();
+
         // Progress bar
         const progressBar = document.getElementById('progressBar');
 
@@ -1345,12 +2495,24 @@
             });
         });
 
-        // Parallax hero image
+        // Parallax hero image and dark overlay fade
         const heroImage = document.getElementById('heroImage');
+        const heroDarkOverlay = document.getElementById('heroDarkOverlay');
+        const heroSection = document.querySelector('.hero');
+
         window.addEventListener('scroll', () => {
             const scrolled = window.scrollY;
-            if (scrolled < window.innerHeight * 2) {
+            const heroHeight = heroSection ? heroSection.offsetHeight : window.innerHeight * 2;
+
+            if (scrolled < heroHeight) {
+                // Parallax effect
                 heroImage.style.transform = `scale(${1.1 + scrolled * 0.0002}) translateY(${scrolled * 0.1}px)`;
+
+                // Dark overlay fade: 55% at top -> 0% at end of hero section
+                // Calculate progress through hero section (0 to 1)
+                const progress = Math.min(scrolled / (heroHeight - window.innerHeight), 1);
+                const overlayOpacity = 0.55 * (1 - progress);
+                heroDarkOverlay.style.opacity = overlayOpacity;
             }
         });
 
@@ -1389,6 +2551,46 @@
             item.style.transition = 'all 1s cubic-bezier(0.19, 1, 0.22, 1)';
             galleryObserver.observe(item);
         });
+
+        // ============================================
+        // CTA Cards - 3D Tilt Effect
+        // ============================================
+        const ctaCards = document.querySelectorAll('.hero-cta-card');
+
+        // Subtle 3D tilt effect on hover
+        ctaCards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                // Subtle rotation (max 4 degrees)
+                const rotateX = ((y - centerY) / centerY) * -4;
+                const rotateY = ((x - centerX) / centerX) * 4;
+
+                card.style.transform = `translateY(-8px) scale(1.02) perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+            });
+        });
+
+        // ============================================
+        // Scroll Hint Click - Smooth scroll to next section
+        // ============================================
+        const scrollHint = document.querySelector('.hero__scroll-hint');
+        if (scrollHint) {
+            scrollHint.style.cursor = 'pointer';
+            scrollHint.addEventListener('click', () => {
+                const nextSection = document.querySelector('[data-chapter="2"]');
+                if (nextSection) {
+                    nextSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        }
     </script>
 </body>
 </html>
