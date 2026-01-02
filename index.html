@@ -538,7 +538,7 @@
                     </div>
                 </a>
 
-                <a href="Landfill_index.html" class="card card--featured">
+                <a href="Landfill_index.html" class="card card--featured card--archive">
                     <div class="card__preview">
                         <img src="assets/images/thumbnails/landfill-index.png" alt="Original Homepage" class="card__preview-img" onerror="this.style.display='none'">
                         <span class="card__badge card__badge--archive">Archive</span>
@@ -557,7 +557,7 @@
                     </div>
                 </a>
 
-                <a href="Landfill_index-estate.html" class="card card--featured">
+                <a href="Landfill_index-estate.html" class="card card--featured card--archive">
                     <div class="card__preview">
                         <img src="assets/images/thumbnails/landfill-estate.png" alt="The Estate Homepage" class="card__preview-img" onerror="this.style.display='none'">
                         <span class="card__badge card__badge--archive">Archive</span>
@@ -576,7 +576,7 @@
                     </div>
                 </a>
 
-                <a href="Landfill_index-gallery.html" class="card card--featured">
+                <a href="Landfill_index-gallery.html" class="card card--featured card--archive">
                     <div class="card__preview">
                         <img src="assets/images/thumbnails/landfill-gallery.png" alt="The Gallery Homepage" class="card__preview-img" onerror="this.style.display='none'">
                         <span class="card__badge card__badge--archive">Archive</span>
@@ -595,7 +595,7 @@
                     </div>
                 </a>
 
-                <a href="Landfill_index-maison.html" class="card card--featured">
+                <a href="Landfill_index-maison.html" class="card card--featured card--archive">
                     <div class="card__preview">
                         <img src="assets/images/thumbnails/landfill-maison.png" alt="The Maison Homepage" class="card__preview-img" onerror="this.style.display='none'">
                         <span class="card__badge card__badge--archive">Archive</span>
@@ -762,7 +762,7 @@
             </div>
             <div class="card-grid">
 
-                <a href="pages/resources.html" class="card">
+                <a href="pages/resources.html" class="card card--resources-only">
                     <div class="card__preview">
                         <img src="assets/images/thumbnails/resources.png" alt="Resources" class="card__preview-img" onerror="this.style.display='none'">
                         <span class="card__badge card__badge--live">Live</span>
@@ -781,7 +781,7 @@
                     </div>
                 </a>
 
-                <a href="pages/education.html" class="card">
+                <a href="pages/education.html" class="card card--resources-only">
                     <div class="card__preview">
                         <img src="assets/images/thumbnails/education.png" alt="Education" class="card__preview-img" onerror="this.style.display='none'">
                         <span class="card__badge card__badge--live">Live</span>
@@ -1006,6 +1006,8 @@
     <script>
         const filterBtns = document.querySelectorAll('.filter-btn');
         const sections = document.querySelectorAll('.section');
+        const archiveCards = document.querySelectorAll('.card--archive');
+        const resourcesOnlyCards = document.querySelectorAll('.card--resources-only');
 
         // Categories to hide when "All" is selected
         const hiddenFromAll = ['core'];
@@ -1033,14 +1035,44 @@
                         section.style.display = 'none';
                     }
                 });
+
+                // Show/hide archive cards
+                // Hide when "All Pages" is selected, show when "Homepage Concepts" is selected
+                archiveCards.forEach(card => {
+                    if (filter === 'all') {
+                        card.style.display = 'none';
+                    } else if (filter === 'homepage') {
+                        card.style.display = '';
+                    }
+                });
+
+                // Show/hide resources-only cards
+                // Hide when "All Pages" is selected, show when "Resources" is selected
+                resourcesOnlyCards.forEach(card => {
+                    if (filter === 'all') {
+                        card.style.display = 'none';
+                    } else if (filter === 'resources') {
+                        card.style.display = '';
+                    }
+                });
             });
         });
 
-        // Initialize: hide core sections on page load
+        // Initialize: hide core sections and filtered cards on page load
         sections.forEach(section => {
             if (hiddenFromAll.includes(section.dataset.category)) {
                 section.style.display = 'none';
             }
+        });
+
+        // Hide archive cards by default (All Pages is selected on load)
+        archiveCards.forEach(card => {
+            card.style.display = 'none';
+        });
+
+        // Hide resources-only cards by default (All Pages is selected on load)
+        resourcesOnlyCards.forEach(card => {
+            card.style.display = 'none';
         });
     </script>
 </body>
